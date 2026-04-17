@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+
+<head>
+	<link href="../../css/txtcolor.css" rel="stylesheet" type="text/css">
+	<link href="Disp.css" rel="stylesheet" type="text/css">
+	<link href="../../css/common.css" rel="stylesheet" type="text/css">
+	<script src="../../js/zoom.js" defer></script>
+	<style type="text/css">
+		@keyframes blueSpectrumSinePulse {
+			0%, 100% { 
+				opacity: 0.85; 
+				filter: hue-rotate(0deg) saturate(0.3);
+				text-shadow: 0 0 10px rgba(191, 232, 255, 0.4);
+			}
+			15% { 
+				opacity: 0.72; 
+				text-shadow: 0 0 15px rgba(191, 232, 255, 0.5);
+			}
+			30% { 
+				opacity: 0.88; 
+				filter: hue-rotate(45deg) saturate(0.3);
+				text-shadow: 0 0 12px rgba(191, 232, 255, 0.4);
+			}
+			45% { 
+				opacity: 0.80; 
+				filter: hue-rotate(90deg) saturate(0.3);
+				text-shadow: 0 0 20px rgba(191, 232, 255, 0.6);
+			}
+			60% { 
+				opacity: 0.95; 
+				filter: hue-rotate(180deg) saturate(0.3);
+				text-shadow: 0 0 30px rgba(191, 232, 255, 0.8);
+			}
+			80% { 
+				opacity: 0.75; 
+				filter: hue-rotate(270deg) saturate(0.3);
+				text-shadow: 0 0 15px rgba(191, 232, 255, 0.5);
+			}
+		}
+
+		.archive-title-glow {
+			animation: blueSpectrumSinePulse 35s ease-in-out infinite;
+			color: #BFE8FF;
+		}
+
+		#informative-box {
+			animation: bdrPulse 8s ease-in-out infinite;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+		}
+
+		@keyframes bdrPulse {
+
+			0%,
+			100% {
+				border-color: rgba(191, 232, 255, 0.2);
+			}
+
+			50% {
+				border-color: rgba(191, 232, 255, 0.5);
+			}
+		}
+
+		/* Paginator Resizing & Alignment */
+		#pagination {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 1.5rem;
+		}
+
+		.smallbtn {
+			background: transparent;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			color: white;
+			border-radius: 50%;
+			width: 4.5rem; /* Major Inbiggening */
+			height: 4.5rem;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 2.5rem;
+		}
+
+		.classy-input {
+			background: transparent;
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			color: white;
+			text-align: center;
+			width: 6rem; /* Major Inbiggening */
+			font-family: 'CaslonAntique', serif;
+			font-size: 2.2rem;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div class="flx" style="width: 100%; padding: 0 5%; box-sizing: border-box;">
+
+		<!-- Header with backar.png -->
+		<div id="header" class="flx" style="width: 100%; margin: 4rem 0; justify-content: flex-start; padding-left: 5%;">
+			<img src="https://captainscurses.org/Images/dispersals/backar.png" onclick="window.history.back()"
+				style="height: 12vh; width: auto; cursor: pointer; opacity: 0.7;">
+		</div>
+
+		<div class="ttl archive-title-glow" style="font-size: 4rem; text-align: center; width: 100%; margin-bottom: 3rem; line-height: 1.1; display: flex; align-items: center; justify-content: center; gap: 2rem;">
+			<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height: 0.75vh; width: auto; opacity: 0.6;" alt="orn">
+			<span>Archive of <br>Solar Treasures</span>
+			<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height: 0.75vh; width: auto; opacity: 0.6; transform: scaleX(-1);" alt="orn">
+		</div>
+
+		<div id="controls-container" class="flx" style="width: 100%; margin-bottom: 3rem; flex-direction: row; justify-content: flex-end; align-items: center; gap: 3rem; justify-content: space-between">
+			
+			<!-- Running Count -->
+			<div id="rc-container" class="flx archive-title-glow"
+				style="flex-direction: column; align-items: flex-start; gap: 0rem; font-size: 1.8rem; text-align: left;">
+				<span>Running Count:</span>
+				<span id="enactment-count" style="font-size: 2.8rem;">1</span>
+			</div>
+
+			<!-- Main Pagination -->
+			<div id="pagination" class="flx">
+				<button id="date-prev" class="smallbtn">«</button>
+
+				<div class="pagebox" style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+					<input type="number" id="numbox" class="classy-input" min="1" value="1">
+					<button id="date-go" class="smallbtn" style="width: 2.7rem; height: 2.7rem; font-size: 1.2rem;">•</button>
+				</div>
+
+				<button id="date-next" class="smallbtn">»</button>
+			</div>
+		</div>
+
+		<div class="flx seps" style="height: 2vh; width: 100%; margin-bottom: 3rem;">
+			<img src="https://captainscurses.org/Images/subsep.png" style="height: 100%; width: auto; opacity: 0.4;">
+		</div>
+
+		<!-- Date & Author -->
+		<div id="meta-display" class="flx" style="margin-bottom: 3rem; text-align: center;">
+			<div id="date-display" class="archive-title-glow" style="font-size: 2rem;">Date: 04/07/26</div>
+			<div id="name-display" style="font-size: 1.5rem; opacity: 0.8; margin-top: 0.5rem;">Enacted by <span
+					class="tc">T.C.</span></div>
+		</div>
+
+		<!-- Scrolling Text Box -->
+		<div id="informative-box" class="flx"
+			style="width: 90%; height: 40vh; margin: 0 auto 3rem auto; border: 2px solid rgba(191, 232, 255, 0.2); border-radius: 15px; background: rgba(191, 232, 255, 0.03); padding: 2.5rem; overflow-y: auto; scrollbar-width: none;">
+			<p id="writing-box" class="archive-title-glow" style="font-size: 2rem; line-height: 1.5; text-align: justify; margin: 0; color: #F0F8FF;"></p>
+		</div>
+
+		<!-- Photo Browser removed -->
+
+		<!-- Candle Footer -->
+		<div class="flx seps" style="margin-top: 4rem; width: 100%;">
+			<video autoplay muted loop playsinline class="archive-title-glow"
+				style="height: 12vh; width: auto; margin: 3rem 0; filter: brightness(0.8);">
+				<source src="../../webm/index candle compound.mp4" type="video/mp4">
+			</video>
+		</div>
+
+	</div>
+
+	<!-- Modal & Magnifier -->
+	<div id="photo-modal" class="flx"
+		style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center;">
+		<span id="photo-modal-close"
+			style="position:absolute; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>
+		<img id="photo-modal-content" style="max-width:90%; max-height:90%; object-fit:contain;">
+	</div>
+	<div id="magnifier"
+		style="display:none; position:absolute; width:180px; height:180px; border:3px solid #fff; border-radius:50%; cursor:none; pointer-events:none; z-index:10000; box-shadow:0 0 15px rgba(0,0,0,0.5); background-repeat:no-repeat; overflow:hidden;">
+	</div>
+
+	<script>
+		const archiveData = [
+			{
+				date: "04/07/26",
+				name: 'T.C.',
+				colorClass: "tc",
+				writings: [
+					"Coins and Directional stick Dispersed aside our Solar Friend. It was a beautiful day! I placed a couple of stones below the altar as well."
+				],
+				images: ["../../Images/dispersals/Disp1/earth.jpg", "../../Images/dispersals/Disp1/sky.jpg"]
+			}
+		];
+
+		let dateIndex = 0;
+		let imgIndex = 0;
+
+		const elements = {
+			dateDisplay: document.getElementById("date-display"),
+			nameDisplay: document.getElementById("name-display"),
+			wBox: document.getElementById("writing-box"),
+			countEl: document.getElementById("enactment-count"),
+			numbox: document.getElementById("numbox")
+		};
+
+		function renderAll() {
+			const data = archiveData[dateIndex];
+			elements.dateDisplay.textContent = `Date: ${data.date}`;
+			elements.nameDisplay.innerHTML = `Enacted by <span class="${data.colorClass}">${data.name}</span>`;
+			elements.wBox.textContent = data.writings[0];
+			elements.numbox.value = dateIndex + 1;
+			elements.countEl.textContent = archiveData.length;
+		}
+
+		renderAll();
+	</script>
+</body>
+
+</html>

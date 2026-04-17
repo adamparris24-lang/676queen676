@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="Ledger/css/Ledger_main.css" rel="stylesheet" type="text/css">
+    <link href="css/txtcolor.css" rel="stylesheet" type="text/css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Caslon Antique', serif;
+            overflow-x: hidden;
+        }
+
+        .flx {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .flxr {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .flxc {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes headerGlow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+                opacity: 0.85;
+            }
+
+            50% {
+                filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+                opacity: 0.95;
+            }
+        }
+
+        @keyframes titleGlow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+                opacity: 0.7;
+            }
+
+            50% {
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+                opacity: 1;
+            }
+        }
+
+        /* --- GRADUATED RITUAL PULSES --- */
+        @keyframes pulseLv1 {
+
+            0%,
+            85.7%,
+            100% {
+                opacity: 0.6;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+                filter: saturate(0) hue-rotate(0deg);
+            }
+
+            42.8% {
+                opacity: 1;
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+                filter: saturate(0) hue-rotate(0deg);
+            }
+        }
+
+        @keyframes pulseLv2 {
+
+            0%,
+            87.2%,
+            100% {
+                opacity: 0.6;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+                filter: saturate(0.27) hue-rotate(45deg);
+            }
+
+            43.6% {
+                opacity: 1;
+                text-shadow: 0 0 20px rgba(210, 230, 255, 0.7);
+                filter: saturate(0.27) hue-rotate(45deg);
+            }
+        }
+
+        @keyframes pulseLv3 {
+
+            0%,
+            88.5%,
+            100% {
+                opacity: 0.6;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+                filter: saturate(0.53) hue-rotate(120deg);
+            }
+
+            44.2% {
+                opacity: 1;
+                text-shadow: 0 0 25px rgba(180, 210, 255, 0.8);
+                filter: saturate(0.53) hue-rotate(120deg);
+            }
+        }
+
+        @keyframes pulseLv4 {
+
+            0%,
+            89.6%,
+            100% {
+                opacity: 0.6;
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+                filter: saturate(0.8) hue-rotate(200deg);
+            }
+
+            44.8% {
+                opacity: 1;
+                text-shadow: 0 0 30px rgba(150, 180, 255, 0.9);
+                filter: saturate(0.8) hue-rotate(200deg);
+            }
+        }
+
+        .ritual-pulse-lv1 {
+            animation: pulseLv1 7s linear infinite;
+        }
+
+        .ritual-pulse-lv2 {
+            animation: pulseLv2 7.86s linear infinite;
+        }
+
+        .ritual-pulse-lv3 {
+            animation: pulseLv3 8.74s linear infinite;
+        }
+
+        .ritual-pulse-lv4 {
+            animation: pulseLv4 9.6s linear infinite;
+        }
+
+        .rainbow-glow {
+            animation: rainbowPulse 8s linear infinite !important;
+        }
+
+        @keyframes collRitHeaderGlow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(191, 232, 255, 0.4)) drop-shadow(0 0 20px rgba(191, 232, 255, 0.2)) saturate(0.3) hue-rotate(0deg) brightness(0.87);
+                opacity: 0.88;
+                transform: skewX(0deg) scale(1);
+            }
+
+            50% {
+                filter: drop-shadow(0 0 18px rgba(191, 232, 255, 0.7)) drop-shadow(0 0 35px rgba(191, 232, 255, 0.4)) saturate(0.4) hue-rotate(10deg) brightness(1.5);
+                opacity: 0.95;
+                transform: skewX(0.5deg) scale(1.01);
+            }
+        }
+
+        .coll-rit-header-glow {
+            animation: collRitHeaderGlow 8s ease-in-out infinite;
+            filter: brightness(0.87) contrast(1.1);
+            /* Final darkening */
+        }
+
+        @keyframes rainbowPulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 10px rgba(255, 200, 200, 0.5), 0 0 20px rgba(200, 255, 200, 0.3);
+                filter: hue-rotate(0deg);
+            }
+
+            33% {
+                text-shadow: 0 0 10px rgba(200, 255, 200, 0.5), 0 0 20px rgba(200, 200, 255, 0.3);
+                filter: hue-rotate(120deg);
+            }
+
+            66% {
+                text-shadow: 0 0 10px rgba(200, 200, 255, 0.5), 0 0 20px rgba(255, 200, 200, 0.3);
+                filter: hue-rotate(240deg);
+            }
+        }
+
+        @keyframes subtleGlowLv1 {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+        }
+
+        @keyframes subtleGlowLv2 {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(210, 230, 255, 0.1);
+                border-color: rgba(210, 230, 255, 0.15);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(210, 230, 255, 0.3);
+                border-color: rgba(210, 230, 255, 0.3);
+            }
+        }
+
+        @keyframes subtleGlowLv3 {
+
+            0%,
+            100% {
+                box-shadow: 0 0 15px rgba(180, 210, 255, 0.15);
+                border-color: rgba(180, 210, 255, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(180, 210, 255, 0.4);
+                border-color: rgba(180, 210, 255, 0.4);
+            }
+        }
+
+        @keyframes subtleGlowLv4 {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(150, 180, 255, 0.2);
+                border-color: rgba(150, 180, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 35px rgba(150, 180, 255, 0.5);
+                border-color: rgba(150, 180, 255, 0.6);
+            }
+        }
+
+        .glow-lv1 {
+            animation: subtleGlowLv1 5s ease-in-out infinite;
+        }
+
+        .glow-lv2 {
+            animation: subtleGlowLv2 6s ease-in-out infinite;
+        }
+
+        .glow-lv3 {
+            animation: subtleGlowLv3 7s ease-in-out infinite;
+        }
+
+        .glow-lv4 {
+            animation: subtleGlowLv4 8s ease-in-out infinite;
+        }
+
+        .cr-header-glow {
+            animation: headerGlow 18s ease-in-out infinite;
+        }
+
+        .cr-level-glow {
+            animation: titleGlow 9s ease-in-out infinite;
+        }
+
+        @keyframes blueSpectrumSinePulse {
+
+            0%,
+            100% {
+                opacity: 0.85;
+                filter: hue-rotate(0deg) saturate(0.3);
+                text-shadow: 0 0 10px rgba(191, 232, 255, 0.4);
+            }
+
+            15% {
+                opacity: 0.72;
+                text-shadow: 0 0 15px rgba(191, 232, 255, 0.5);
+            }
+
+            30% {
+                opacity: 0.88;
+                filter: hue-rotate(45deg) saturate(0.3);
+                text-shadow: 0 0 12px rgba(191, 232, 255, 0.4);
+            }
+
+            45% {
+                opacity: 0.80;
+                filter: hue-rotate(90deg) saturate(0.3);
+                text-shadow: 0 0 20px rgba(191, 232, 255, 0.6);
+            }
+
+            60% {
+                opacity: 0.95;
+                filter: hue-rotate(180deg) saturate(0.3);
+                text-shadow: 0 0 30px rgba(191, 232, 255, 0.8);
+            }
+
+            80% {
+                opacity: 0.75;
+                filter: hue-rotate(270deg) saturate(0.3);
+                text-shadow: 0 0 15px rgba(191, 232, 255, 0.5);
+            }
+        }
+
+        .archive-title-glow {
+            animation: blueSpectrumSinePulse 35s ease-in-out infinite;
+            color: #BFE8FF;
+        }
+
+        @keyframes bdrPulse {
+
+            0%,
+            100% {
+                border-color: rgba(191, 232, 255, 0.2);
+            }
+
+            50% {
+                border-color: rgba(191, 232, 255, 0.5);
+            }
+        }
+
+        .running-count-pulse {
+            animation: subtlePulse 9s ease-in-out infinite;
+        }
+
+        /* --- BLINKING DOTS --- */
+        @keyframes dotBlink {
+
+            0%,
+            80%,
+            100% {
+                opacity: 0;
+            }
+
+            40% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes dotHue {
+
+            0%,
+            100% {
+                filter: hue-rotate(0deg) saturate(1);
+            }
+
+            50% {
+                filter: hue-rotate(180deg) saturate(1.5);
+            }
+        }
+
+        .ritual-indicator-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 1.5rem;
+            box-sizing: border-box;
+            margin-bottom: 0.5rem;
+        }
+
+        .dot-ornament-wrap {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .dot-ornament {
+            height: 5vh;
+            width: auto;
+            mix-blend-mode: screen;
+            animation: dotBlink 5s infinite, dotHue 8s linear infinite;
+        }
+
+        /* --- CHAOTIC STAGGERING (12 unique delays) --- */
+        .lv1-dot1 {
+            animation-delay: 0.2s, -1s;
+        }
+
+        .lv1-dot2 {
+            animation-delay: 1.5s, -3s;
+        }
+
+        .lv1-dot3 {
+            animation-delay: 3.1s, -5s;
+        }
+
+        .lv2-dot1 {
+            animation-delay: 0.8s, -2s;
+        }
+
+        .lv2-dot2 {
+            animation-delay: 2.3s, -4s;
+        }
+
+        .lv2-dot3 {
+            animation-delay: 4.0s, -6s;
+        }
+
+        .lv3-dot1 {
+            animation-delay: 1.2s, -3.5s;
+        }
+
+        .lv3-dot2 {
+            animation-delay: 3.4s, -5.5s;
+        }
+
+        .lv3-dot3 {
+            animation-delay: 4.8s, -7.5s;
+        }
+
+        .lv4-dot1 {
+            animation-delay: 0.5s, -1.5s;
+        }
+
+        .lv4-dot2 {
+            animation-delay: 1.9s, -3s;
+        }
+
+        .lv4-dot3 {
+            animation-delay: 3.8s, -4.5s;
+        }
+
+        /* --- ACCORDION --- */
+        .cr-list {
+            width: 100%;
+            margin-top: 0rem;
+        }
+
+        .cr-item {
+            margin-top: 1rem;
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cr-level-btn {
+            font-size: 1.25rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            cursor: pointer;
+            padding: 0.5rem 1.2rem;
+            background: none;
+            border: none;
+            transition: opacity 0.3s;
+        }
+
+        .cr-level-btn:hover {
+            opacity: 0.8;
+        }
+
+        .cr-arrow {
+            margin-right: 0.8rem;
+            font-size: 0.9rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            opacity: 0.6;
+        }
+
+        .cr-expanded .cr-arrow {
+            transform: rotate(90deg);
+        }
+
+        .cr-content {
+            display: none;
+            padding: 1rem 1.2rem;
+        }
+
+        .cr-expanded .cr-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .osci-sep-wrap {
+            position: relative;
+            height: 8vh;
+            min-width: 70px;
+            /* approximation to hold space */
+            margin-left: 1.2rem;
+            align-self: flex-start;
+        }
+
+        .osci-sep {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: auto;
+            height: 100%;
+            mix-blend-mode: screen;
+            opacity: 0;
+            transition: opacity 5s ease-in-out;
+        }
+
+        .osci-sep.active {
+            opacity: 1;
+        }
+
+        /* --- EXACT INDEX_MOBI PAGINATION STYLES --- */
+        .index-pagination {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .classy-arrow {
+            cursor: pointer;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+            width: 1.6rem;
+            height: auto;
+        }
+
+        .classy-arrow:hover {
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) brightness(1.2);
+            transform: scale(1.1);
+        }
+
+        .classy-arrow.leftar {
+            transform: scaleX(-1);
+        }
+
+        .classy-arrow.leftar:hover {
+            transform: scaleX(-1) scale(1.1);
+        }
+
+        .pagebox {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            gap: 0.5rem;
+        }
+
+        .pageJump {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .classy-input {
+            width: 120px !important;
+            max-width: 25vw !important;
+            height: 34px !important;
+            max-height: 2vw !important;
+            background: rgba(10, 10, 10, 0.6) !important;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            text-align: center;
+            font-size: clamp(0.7rem, 2.5vw, 1.2rem) !important;
+            font-family: 'Caslon Antique', serif !important;
+            border-radius: 6px !important;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1) !important;
+            transition: all 0.3s ease !important;
+            margin: 0 !important;
+        }
+
+        .classy-input:focus {
+            outline: none !important;
+            border-color: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important;
+            background: rgba(20, 20, 20, 0.8) !important;
+        }
+
+        .classy-gobtn {
+            background: transparent !important;
+            color: white;
+            border: none;
+            padding: 0 0.5rem;
+            cursor: pointer;
+            font-size: clamp(1rem, 4vw, 2rem) !important;
+            line-height: 1;
+            font-family: 'Caslon Antique', serif;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            align-self: center;
+            margin: 0 !important;
+        }
+
+        .classy-gobtn:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* --- LEVEL 1 PAIR VIEW --- */
+        .lv1-pair {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lv1-item {
+            width: 90%;
+            max-width: 600px;
+            margin: 1rem 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lv1-num {
+            font-size: 1.2rem;
+            opacity: 0.5;
+            margin-bottom: 0.1rem;
+        }
+
+        .lv1-title {
+            font-size: 0.65rem;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .lv1-item p {
+            margin: 0.5rem 0;
+            line-height: 1.5;
+            font-size: 1.1rem;
+        }
+
+        /* --- LEVEL 2-4 VIEW --- */
+        .report-view {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            position: relative;
+            padding-top: 1.2rem;
+            line-height: 1.1;
+            align-self: center;
+            margin: 1rem 0 0.5rem 0;
+            text-align: center;
+        }
+
+        .lv-num-top {
+            position: absolute;
+            top: 0rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            opacity: 0.5;
+            line-height: 1;
+        }
+
+        .scroll-window {
+            width: 85%;
+            max-width: min(650px, 90vw);
+            height: 380px;
+            overflow-y: auto;
+            background: rgba(191, 232, 255, 0.03);
+            border: 2px solid rgba(191, 232, 255, 0.2);
+            padding: 2.2rem;
+            margin: 1rem auto;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            line-height: 1.5;
+            text-align: left;
+            color: #F0F8FF;
+            animation: bdrPulse 8s ease-in-out infinite;
+            scrollbar-width: none;
+        }
+
+        .scroll-window::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scroll-window::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        /* --- PAGINATOR --- */
+        .pagicon {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            height: 5vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .running-count-row-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.84rem;
+            text-align: center;
+            line-height: 1.1;
+            margin: 0 1rem;
+            opacity: 0.8;
+            color: #BFE8FF;
+        }
+
+        .count-val {
+            font-size: 1.26rem;
+            font-weight: bold;
+        }
+
+        .running-count-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #BFE8FF;
+            opacity: 0.8;
+            margin: 0.5rem 0;
+        }
+		.disp-count-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            text-align: center;
+            font-size: 0.95rem;
+            color: #BFE8FF;
+            opacity: 0.8;
+            margin: 0.5rem 0;
+        }
+
+
+        .flipx {
+            transform: scaleX(-1);
+        }
+
+        .known-its {
+            margin-top: 1rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .known-header {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+            text-align: center;
+        }
+
+        .it-link {
+            color: #fff;
+            text-decoration: none;
+            opacity: 0.6;
+            margin: 0.4rem 0;
+            transition: 0.3s;
+            font-size: 1.1rem;
+            word-break: break-word;
+            max-width: 100%;
+            display: inline-block;
+        }
+
+        .it-link:hover {
+            opacity: 1;
+            color: palegoldenrod;
+        }
+
+        #main-content {
+            padding-bottom: 5rem;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Standard Separators */
+        .subsep-wrap {
+            height: 1.4vh;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .subsep-wrap img {
+            height: 100%;
+            width: auto;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-content" class="flxc">
+        <!-- Header -->
+        <div id="headr" class="flx" style="margin-top:0.8rem; cursor: pointer;" onclick="window.history.back();">
+            <img src="https://captainscurses.org/Images/collective%20ritual%20header.png" class="coll-rit-header-glow"
+                style="height:auto; width:90%; max-width:443px;" alt="Collective Rituals">
+        </div>
+
+        <div class="flx" style="height:2vh; margin: 2rem 0 2rem 0; width: 100%;">
+            <img src="https://captainscurses.org/Images/moon%20sep.png" style="height:100%; opacity: 0.6;">
+        </div>
+
+        <!-- search box -->
+        <div class="flx fade-in" style="width: 100%; margin-bottom: 2rem;">
+            <div
+                style="display: flex; align-items: center; justify-content: center; width: 80%; max-width: 400px; position: relative;">
+                <input type="text" id="cr-search-input" class="classy-input"
+                    style="border-radius: 9999px; width: 100%; font-family: 'CaslonAntique', serif; padding: 0.5rem 1rem;"
+                    placeholder="Search...">
+            </div>
+        </div>
+
+        <!-- Search Results Container -->
+        <div id="search-results-container" class="flx" style="display: none; width: 100%; margin-bottom: 2rem;">
+            <div
+                style="width: 80%; max-width: 500px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; backdrop-filter: blur(8px); padding: 1rem; box-shadow: 0 0 15px rgba(255,255,255,0.05);">
+                <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 1.5vh; opacity: 0.5;"></div>
+                <div id="search-results-box" class="scroll-window"
+                    style="height: 8vh; padding: 0.5rem; display: flex; flex-direction: column; align-items: center;">
+                    <!-- Results dynamically injected here -->
+                </div>
+                <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 1.5vh; opacity: 0.5;"></div>
+            </div>
+        </div>
+        <div class="cr-list">
+            <!-- LEVEL 1 -->
+            
+            <div class="cr-item" style="margin:0">
+                <div class="ritual-indicator-row">
+                    <div class="osci-sep-wrap" style="margin-left:0;">
+                        <video id="ar-lv1-1" class="osci-sep active" muted playsinline>
+                            <source src="https://captainscurses.org/webm/lv1%20and%20arrow.mp4" type="video/mp4">
+                        </video>
+                        <video id="ar-lv1-2" class="osci-sep" muted playsinline>
+                            <source src="https://captainscurses.org/webm/lv1%20and%20arrow.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="running-count-row-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv1-total-count" class="count-val">1</span>
+                    </div>
+                    <div class="dot-ornament-wrap">
+                        <video class="dot-ornament lv1-dot1" autoplay muted loop playsinline>
+                            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                        </video>
+                        <video class="dot-ornament lv1-dot2" autoplay muted loop playsinline>
+                            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                        </video>
+                        <video class="dot-ornament lv1-dot3" autoplay muted loop playsinline>
+                            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <div class="cr-level-btn cr-level-glow" onclick="toggleCR(this)">
+                    <span class="cr-arrow">▶</span>
+                    <span>Level 1</span>
+                    <img src="https://captainscurses.org/Images/featherel.png" class="feather-decor"
+                        style="height:0.8vh; width:auto; margin-left:1rem; opacity: 0.6;">
+                </div>
+                <div class="cr-content">
+                <div class="report-view" id="lv1-page-1">
+                    <p class="section-title ritual-pulse-lv1 archive-title-glow" style="font-size: 2.2rem;"><span
+                            class="lv-num-top">1.</span>Coin Burial</p>
+                    <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 2vh; opacity: 0.5;">
+                    </div>
+                    <div class="scroll-window glow-lv1">
+                        <p>1. "On a lonely stretch of beach, there is a small shelter. Within this shelter, there is an altar."</p>
+                        <p style="margin-top:2rem">2. "Bury coins beneath this altar."</p>
+                    </div>
+                </div>
+                <div class="report-view" id="lv1-page-2" style="display:none;"></div>
+
+                <div class="index-pagination fade-in" style="transform: scale(0.85); margin-top: 1rem; display: none;">
+                </div>
+
+                <div class="known-its">
+                   
+                    <div class="known-header archive-title-glow">Dispersals</div>
+                    <div id="lv1-ki-count-box" class="disp-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv1-ki-count" class="count-val">1</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv1-ki-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+
+                    <div class="known-header archive-title-glow"
+                        style="margin-top: 2rem; font-family: 'CaslonAntique', serif; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                        <span style="font-size: 1.2rem;">• •</span> Variants <span style="font-size: 1.2rem;">• •</span>
+                    </div>
+                    <div id="lv1-var-count-box" class="running-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv1-var-count" class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv1-var-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 30px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin: 1.5rem 0;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEVEL 2 -->
+        <div class="cr-item">
+            <div class="ritual-indicator-row">
+                <div class="osci-sep-wrap" style="margin-left:0;">
+                    <video id="ar-lv2-1" class="osci-sep active" muted playsinline>
+                        <source src="https://captainscurses.org/webm/lv2%20and%20arrow.mp4" type="video/mp4">
+                    </video>
+                    <video id="ar-lv2-2" class="osci-sep" muted playsinline>
+                        <source src="https://captainscurses.org/webm/lv2%20and%20arrow.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="running-count-row-box running-count-pulse">
+                    <span>Running Count:</span>
+                    <span id="lv2-total-count" class="count-val">0</span>
+                </div>
+                <div class="dot-ornament-wrap">
+                    <video class="dot-ornament lv2-dot1" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                    <video class="dot-ornament lv2-dot2" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                    <video class="dot-ornament lv2-dot3" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="cr-level-btn cr-level-glow" onclick="toggleCR(this)">
+                <span class="cr-arrow">▶</span>
+                <span>Level 2</span>
+                <img src="https://captainscurses.org/Images/featherel.png" class="feather-decor"
+                    style="height:0.8vh; width:auto; margin-left:1rem; opacity: 0.6;">
+            </div>
+            <div class="cr-content">
+                <div class="report-view" id="lv2-page-1">
+                    <p class="section-title ritual-pulse-lv2 archive-title-glow" style="font-size: 2.2rem;"><span
+                            class="lv-num-top">1.</span>???</p>
+                    <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 2vh; opacity: 0.5;">
+                    </div>
+                    <div class="scroll-window glow-lv2">
+                        <p style="opacity: 0.5; font-style: italic;">Empty
+                        </p>
+                    </div>
+                </div>
+                <div class="report-view" id="lv2-page-2" style="display:none;"></div>
+
+                <div class="index-pagination fade-in" style="transform: scale(0.85); margin-top: 1rem; display: none;">
+                </div>
+
+                <div class="known-its">
+                    
+                    <div class="known-header archive-title-glow">Dispersals</div>
+                    <div id="lv2-ki-count-box" class="disp-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv2-ki-count" class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv2-ki-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin: 1.5rem 0;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+
+                    <div class="known-header archive-title-glow"
+                        style="margin-top: 2rem; font-family: 'CaslonAntique', serif; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                        <span style="font-size: 1.2rem;">• •</span> Variants <span style="font-size: 1.2rem;">• •</span>
+                    </div>
+                    <div id="lv2-var-count-box" class="running-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv2-var-count" class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv2-var-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin: 1.5rem 0;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEVEL 3 -->
+        <div class="cr-item">
+            <div class="ritual-indicator-row">
+                <div class="osci-sep-wrap" style="margin-left:0;">
+                    <video id="ar-lv3-1" class="osci-sep active" muted playsinline>
+                        <source src="https://captainscurses.org/webm/lv3%20and%20arrow.mp4" type="video/mp4">
+                    </video>
+                    <video id="ar-lv3-2" class="osci-sep" muted playsinline>
+                        <source src="https://captainscurses.org/webm/lv3%20and%20arrow.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="running-count-row-box running-count-pulse">
+                    <span>Running Count:</span>
+                    <span id="lv3-total-count" class="count-val">0</span>
+                </div>
+                <div class="dot-ornament-wrap">
+                    <video class="dot-ornament lv3-dot1" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                    <video class="dot-ornament lv3-dot2" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                    <video class="dot-ornament lv3-dot3" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="cr-level-btn cr-level-glow" onclick="toggleCR(this)">
+                <span class="cr-arrow">▶</span>
+                <span>Level 3</span>
+                <img src="https://captainscurses.org/Images/featherel.png" class="feather-decor"
+                    style="height:0.8vh; width:auto; margin-left:1rem; opacity: 0.6;">
+            </div>
+            <div class="cr-content">
+                <div class="report-view" id="lv3-page-1">
+                    <p class="section-title ritual-pulse-lv3 archive-title-glow" style="font-size: 2.2rem;"><span
+                            class="lv-num-top">1.</span>???</p>
+                    <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 2vh; opacity: 0.5;">
+                    </div>
+                    <div class="scroll-window glow-lv3">
+                        <p>Empty</p>
+                    </div>
+                </div>
+                <div class="report-view" id="lv3-page-2" style="display:none;">
+                    <p class="section-title ritual-pulse-lv3 archive-title-glow" style="font-size: 2.2rem;"><span
+                            class="lv-num-top">2.</span>Example II</p>
+                    <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 2vh; opacity: 0.5;">
+                    </div>
+                    <div class="scroll-window glow-lv3">
+                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                            officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                </div>
+
+                <div class="index-pagination fade-in" style="transform: scale(0.85); margin-top: 1rem; display: none;">
+                </div>
+
+                <div class="known-its">
+                    
+                    <div class="known-header archive-title-glow">Dispersals</div>
+                    <div id="lv3-ki-count-box" class="disp-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv3-ki-count" class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv3-ki-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin: 3rem 0;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+
+                    <div class="known-header archive-title-glow"
+                        style="margin-top: 2rem; font-family: 'CaslonAntique', serif; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                        <span style="font-size: 1.2rem;">• •</span> Variants <span style="font-size: 1.2rem;">• •</span>
+                    </div>
+                    <div id="lv3-var-count-box" class="disp-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv3-var-count" class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv3-var-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin: 3rem 0;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LEVEL 4 -->
+        <div class="cr-item">
+            <div class="ritual-indicator-row">
+                <div class="osci-sep-wrap" style="margin-left:0;">
+                    <video id="ar-lv4-1" class="osci-sep active" muted playsinline>
+                        <source src="https://captainscurses.org/webm/lv4%20and%20arrow.mp4" type="video/mp4">
+                    </video>
+                    <video id="ar-lv4-2" class="osci-sep" muted playsinline>
+                        <source src="https://captainscurses.org/webm/lv4%20and%20arrow.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="disp-count-box running-count-pulse">
+                    <span>Running Count:</span>
+                    <span id="lv4-total-count" class="count-val">0</span>
+                </div>
+                <div class="dot-ornament-wrap">
+                    <video class="dot-ornament lv4-dot1" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                    <video class="dot-ornament lv4-dot2" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                    <video class="dot-ornament lv4-dot3" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+            <div class="cr-level-btn cr-level-glow" onclick="toggleCR(this)">
+                <span class="cr-arrow">▶</span>
+                <span>Level 4</span>
+                <img src="https://captainscurses.org/Images/featherel.png" class="feather-decor"
+                    style="height:0.8vh; width:auto; margin-left:1rem; opacity: 0.6;">
+            </div>
+            <div class="cr-content">
+                <div class="report-view" id="lv4-page-1">
+                    <p class="section-title ritual-pulse-lv4 archive-title-glow" style="font-size: 2.2rem;"><span
+                            class="lv-num-top">1.</span><span class="gd-glow ethereal-glow-txt">The Great Dispersal</span></p>
+                    <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 2vh; opacity: 0.5;">
+                    </div>
+                    <div class="scroll-window glow-lv4">
+                        <p gd-glow>???</p>
+                    </div>
+                    <div class="subsep-wrap"><img src="https://captainscurses.org/Images/moon%20sep.png" style="height: 2vh; opacity: 0.5;">
+                    </div>
+                </div>
+
+                <div class="index-pagination fade-in" style="transform: scale(0.85); margin-top: 1rem; display: none;">
+                </div>
+
+                <div class="known-its disp-count-box">
+                    <div class="known-header archive-title-glow">Dispersals</div>
+                    <div id="lv4-ki-count-box" class="flx running-count-pulse">
+                        <span>Running Count:<br>
+</span>
+                        <span class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv4-ki-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin-top: 1rem;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+
+                    <div class="known-header archive-title-glow"
+                        style="margin-top: 2rem; font-family: 'CaslonAntique', serif; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                        <span style="font-size: 1.2rem;">• •</span> Variants <span style="font-size: 1.2rem;">• •</span>
+                    </div>
+                    <div id="lv4-var-count-box" class="running-count-box running-count-pulse">
+                        <span>Running Count:</span>
+                        <span id="lv4-var-count" class="count-val">0</span>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                    <div id="lv4-var-1"
+                        style="display: flex; flex-direction: column; align-items: center; min-height: 40px; justify-content: flex-start;">
+                        <p style="opacity: 0.5; font-style: italic; margin: 3rem 0;">Empty</p>
+                    </div>
+                    <div class="subsep-wrap" style="margin: 0.5rem 0;"><img src="https://captainscurses.org/Images/moon%20sep.png"
+                            style="height: 1.5vh; opacity: 0.5;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Link -->
+    </div>
+
+    <script>
+        function toggleCR(btn) {
+            const item = btn.parentElement;
+            item.classList.toggle('cr-expanded');
+        }
+
+        // Setup initial pagination states
+        let currentLv1Page = 1, totalLv1Pages = 1;
+        let currentLv2Page = 1, totalLv2Pages = 1;
+        let currentLv3Page = 1, totalLv3Pages = 1;
+        let currentLv4Page = 1, totalLv4Pages = 1;
+
+        const ritualData = {
+            lv1: {
+                p1: {
+                    rc: 1,
+                    ki: [
+                        { name: "Solar Treasures", link: "Ledger/dispersals/Disp1.html" }
+                    ],
+                    vars: []
+                }
+            },
+            lv2: {
+                p1: { rc: 0, ki: [], vars: [] }
+            },
+            lv3: {
+                p1: { rc: 0, ki: [], vars: [] }
+            },
+            lv4: {
+                p1: { rc: 1, ki: [], vars: [] }
+            }
+        };
+
+        function renderArchivalDetails(lv, page) {
+            const data = ritualData[`lv${lv}`][`p${page}`];
+            if (!data) return;
+
+            // Update running counts
+            const totalCountEl = document.getElementById(`lv${lv}-total-count`);
+            if (totalCountEl) totalCountEl.textContent = data.rc;
+
+            const kiCountEl = document.getElementById(`lv${lv}-ki-count`);
+            if (kiCountEl) kiCountEl.textContent = data.rc;
+
+            const varCountEl = document.getElementById(`lv${lv}-var-count`);
+            if (varCountEl) varCountEl.textContent = data.vars.length;
+
+            // Update KI list
+            const kiBox = document.getElementById(`lv${lv}-ki-1`);
+            if (kiBox) {
+                kiBox.innerHTML = "";
+                if (data.ki.length > 0) {
+                    data.ki.forEach(item => {
+                        const a = document.createElement("a");
+                        a.href = item.link;
+                        a.className = "it-link";
+                        a.textContent = item.name;
+                        kiBox.appendChild(a);
+                    });
+                } else {
+                    kiBox.innerHTML = '<p style="opacity: 0.5; font-style: italic; margin: 3rem 0;">Empty</p>';
+                }
+            }
+
+            // Update Variants list
+            const varBox = document.getElementById(`lv${lv}-var-1`);
+            if (varBox) {
+                varBox.innerHTML = "";
+                if (data.vars.length > 0) {
+                    data.vars.forEach(item => {
+                        const a = document.createElement("a");
+                        a.href = item.link;
+                        a.className = "it-link";
+                        a.textContent = item.name;
+                        varBox.appendChild(a);
+                    });
+                } else {
+                    varBox.innerHTML = '<p style="opacity: 0.5; font-style: italic; margin: 3rem 0;">Empty</p>';
+                }
+            }
+        }
+
+        function changeLvPage(lv, delta, current, total) {
+            const el = document.getElementById(`lv${lv}-page-${current}`);
+            if (el) el.style.display = 'none';
+            let next = current + delta;
+            if (next < 1) next = total;
+            if (next > total) next = 1;
+            const nextEl = document.getElementById(`lv${lv}-page-${next}`);
+            if (nextEl) nextEl.style.display = 'flex';
+            const numEl = document.getElementById(`lv${lv}-page-num`);
+            if (numEl) numEl.textContent = next;
+
+            // Refresh dynamic archival lists
+            renderArchivalDetails(lv, next);
+
+            return next;
+        }
+
+        function changeLv1Page(delta) { currentLv1Page = changeLvPage(1, delta, currentLv1Page, totalLv1Pages); }
+        function changeLv2Page(delta) { currentLv2Page = changeLvPage(2, delta, currentLv2Page, totalLv2Pages); }
+        function changeLv3Page(delta) { currentLv3Page = changeLvPage(3, delta, currentLv3Page, totalLv3Pages); }
+        function changeLv4Page(delta) { currentLv4Page = changeLvPage(4, delta, currentLv4Page, totalLv4Pages); }
+
+        // --- DECORATIVE ANIMATION ---
+        const feathers = document.querySelectorAll('.feather-decor');
+        function animateFeathers() {
+            const now = Date.now() / 1000;
+            const baseCycle = (Math.sin(now * (Math.PI / 15)) + 1) / 2;
+            const noiseFactor = 50 / 3;
+            const flicker = (Math.random() * 0.05) + (Math.sin(now * noiseFactor) * 0.02);
+            const finalOpacity = Math.min(1, Math.max(0.4, 0.5 + (baseCycle * 0.3) + flicker));
+            feathers.forEach(f => {
+                f.style.opacity = finalOpacity;
+                f.style.filter = `drop-shadow(0 0 ${5 + (baseCycle * 10)}px rgba(255,255,255,${0.2 + (baseCycle * 0.3)}))`;
+            });
+            requestAnimationFrame(animateFeathers);
+        }
+        // --- SMOOTH CROSSFADE LOGIC ---
+        function setupSynchronizedCrossfade(videoPairs, triggerTime, fadeDurMs) {
+            let isFading = false;
+
+            function checkLoop() {
+                const activePair = videoPairs.find(pair => pair[0].classList.contains('active') || pair[1].classList.contains('active'));
+                if (!activePair) return;
+
+                const activeVid = activePair[0].classList.contains('active') ? activePair[0] : activePair[1];
+
+                if (activeVid.currentTime >= triggerTime && !isFading) {
+                    isFading = true;
+                    videoPairs.forEach(pair => {
+                        const current = pair[0].classList.contains('active') ? pair[0] : pair[1];
+                        const next = pair[0].classList.contains('active') ? pair[1] : pair[0];
+
+                        next.style.transition = 'none';
+                        next.opacity = 0;
+                        next.currentTime = 0;
+
+                        next.play().then(() => {
+                            next.style.transition = `opacity ${fadeDurMs / 1000}s ease-in-out`;
+                            next.classList.add('active');
+                            current.classList.remove('active');
+
+                            setTimeout(() => {
+                                current.pause();
+                                isFading = false;
+                            }, fadeDurMs + 100);
+                        }).catch(e => console.error("Sync fail", e));
+                    });
+                }
+                requestAnimationFrame(checkLoop);
+            }
+
+            // Start all initial active videos
+            videoPairs.forEach(pair => pair[0].play().catch(e => console.error("Start fail", e)));
+            requestAnimationFrame(checkLoop);
+        }
+
+        setupSynchronizedCrossfade([
+            [document.getElementById('ar-lv1-1'), document.getElementById('ar-lv1-2')],
+            [document.getElementById('ar-lv2-1'), document.getElementById('ar-lv2-2')],
+            [document.getElementById('ar-lv3-1'), document.getElementById('ar-lv3-2')],
+            [document.getElementById('ar-lv4-1'), document.getElementById('ar-lv4-2')]
+        ], 10.0, 5000);
+
+        animateFeathers();
+
+        // --- GREAT DISPERSAL GLOW ANIMATION ---
+        const gdLinks = document.querySelectorAll(".gd-glow");
+        if (gdLinks.length > 0) {
+            let gdStart = Date.now() / 1000;
+            function animateGDLinks() {
+                let now = Date.now() / 1000;
+                let elapsed = now - gdStart;
+                let pulse = (Math.sin(elapsed * Math.PI - Math.PI / 2) + 1) / 2;
+                let b1 = 5 + pulse * 5;
+                let o1 = 0.4 + pulse * 0.3;
+                let b2 = 10 + pulse * 10;
+                let o2 = 0.2 + pulse * 0.3;
+                let baseSine = Math.sin(elapsed * 0.5);
+                let noise = (Math.random() * 0.2 - 0.1);
+                let hueVal = ((baseSine + noise) * 180 + elapsed * 15) % 360;
+                let hsla1 = `hsla(${hueVal.toFixed(1)}, 50%, 85%, ${o1.toFixed(3)})`;
+                let hsla2 = `hsla(${hueVal.toFixed(1)}, 50%, 85%, ${o2.toFixed(3)})`;
+                const filterStr = `drop-shadow(0 0 ${b1.toFixed(1)}px ${hsla1}) drop-shadow(0 0 ${b2.toFixed(1)}px ${hsla2})`;
+                const shadowStr = `0 0 ${b1.toFixed(1)}px ${hsla1}, 0 0 ${b2.toFixed(1)}px ${hsla2}`;
+                gdLinks.forEach(link => {
+                    link.style.filter = filterStr;
+                    link.style.textShadow = shadowStr;
+                });
+                requestAnimationFrame(animateGDLinks);
+            }
+            animateGDLinks();
+        }
+
+        // --- SEARCH FUNCTIONALITY ---
+        const ritualDatabase = [
+            { title: "Example I (Lv 1)", level: 1, page: 1 },
+            { title: "Example II (Lv 1)", level: 1, page: 2 },
+            { title: "Example I (Lv 2)", level: 2, page: 1 },
+            { title: "Example II (Lv 2)", level: 2, page: 2 },
+            { title: "Example I (Lv 3)", level: 3, page: 1 },
+            { title: "Example II (Lv 3)", level: 3, page: 2 },
+            { title: "The Great Dispersal", level: 4, page: 1 }
+        ];
+
+        const searchInput = document.getElementById("cr-search-input");
+        const resultsContainer = document.getElementById("search-results-container");
+        const resultsBox = document.getElementById("search-results-box");
+
+        function executeSearch() {
+            const query = searchInput.value.toLowerCase().trim();
+            resultsBox.innerHTML = "";
+
+            if (query === "") {
+                resultsContainer.style.display = "none";
+                return;
+            }
+
+            const matches = ritualDatabase.filter(r => r.title.toLowerCase().includes(query));
+
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    const a = document.createElement("a");
+                    a.href = "javascript:void(0)";
+                    a.className = "it-link";
+                    a.textContent = `Lv ${match.level} - ${match.title}`;
+                    a.onclick = () => navigateToRitual(match.level, match.page);
+                    resultsBox.appendChild(a);
+                });
+            } else {
+                const p = document.createElement("p");
+                p.style.cssText = "opacity: 0.5; font-style: italic; margin-top: 1rem; text-align: center;";
+                p.textContent = "No rituals found matching that query.";
+                resultsBox.appendChild(p);
+            }
+
+            resultsContainer.style.display = "flex";
+        }
+
+        searchInput.addEventListener("input", executeSearch);
+
+        searchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                executeSearch();
+            }
+        });
+
+        function navigateToRitual(level, targetPage) {
+            // Expand accordion if closed
+            const levelHeaderBtn = document.querySelectorAll(".cr-level-btn")[level - 1]; // Node list is 0-indexed
+            const crItem = levelHeaderBtn.parentElement;
+
+            if (!crItem.classList.contains("cr-expanded")) {
+                crItem.classList.add("cr-expanded");
+            }
+
+            // Execute corresponding page shift function directly to index via fake delta
+            if (level === 1) {
+                changeLv1Page(targetPage - currentLv1Page);
+            } else if (level === 2) {
+                changeLv2Page(targetPage - currentLv2Page);
+            } else if (level === 3) {
+                changeLv3Page(targetPage - currentLv3Page);
+            } else if (level === 4) {
+                changeLv4Page(targetPage - currentLv4Page);
+            }
+
+            // Scroll parent CR item into frame smoothly
+            crItem.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // Initialize first page details
+        for (let i = 1; i <= 4; i++) renderArchivalDetails(i, 1);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,494 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background: black;
+  color: white;
+  font-family: 'CaslonAntique', serif;
+  font-size: clamp(20px, 2.2vw, 22px);
+  /* Increased by ~12% */
+  overflow-wrap: break-word;
+  /* Prevent overflow */
+  margin: 0;
+  box-sizing: border-box;
+  /* Ensure padding doesn't cause overflow */
+  margin-bottom: 1rem
+}
+
+a {
+  margin: 0;
+  color: inherit;
+  /* use the text color of parent */
+  text-decoration: none;
+  /* remove underlines */
+  font-weight: inherit;
+  /* match parent font weight */
+  cursor: pointer;
+  /* optional: still looks clickable */
+}
+
+a:hover {
+  color: palegoldenrod;
+  /* or any accent color */
+  text-decoration: none;
+  /* keep it clean */
+}
+
+p {
+  white-space: pre-wrap;
+  /* Allow wrapping */
+  text-align: center;
+  margin: 0
+}
+
+span {
+  display: inline;
+  /* ensures no line breaks */
+}
+
+.leftr {
+  margin-left: 1rem
+}
+
+.rightr {
+  margin-right: 1rem
+}
+
+.phase {
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  padding: 1.2rem 0;
+  gap: 1.2rem;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* fadeIn handled by general class now, matches index */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-out both;
+}
+
+.directext {
+  margin-top: 0.5rem;
+  line-height: 1.5;
+  text-align: left;
+  opacity: 0.95;
+}
+
+.direcbox p:first-child,
+.direcbox p:nth-of-type(3) {
+  margin-top: 1.2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.oner {
+  margin-top: 1rem
+}
+
+.leftr {
+  margin-left: 1rem
+}
+
+.rightr {
+  margin-right: 1rem
+}
+
+
+.flx {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flpx {
+  transform: scaleX(-1);
+}
+
+
+#headr {
+  width: 100%;
+}
+
+#menuop {
+  font-size: 2.3rem;
+  /* Use viewport width for scaling, cap at 3.4rem, min 1.8rem */
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  /* Force single line */
+  white-space: nowrap;
+  /* Never wrap text */
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  /* Ensure parent allows full width */
+}
+
+#menuop p {
+  margin: 0 0.5vw;
+  /* Scale margin with width too */
+  font-size: inherit;
+  white-space: nowrap;
+  /* Prevent inherited pre-wrap */
+}
+
+/* ============================
+   LEDGER VIDEO DECORATIONS
+   ============================ */
+
+#ledger-decor {
+  position: absolute;
+  top: 0;
+  /* Centered on text */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.ledger-magic {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: auto;
+  max-height: 232px;
+  width: calc(50vw - 50%);
+  /* Fill from text edge to viewport edge */
+  max-width: calc(50vw - 50%);
+  /* Styling applied inline and via ledger-pro-glow for webm */
+}
+
+/* Position Left */
+.ledger-magic.left-magic {
+  right: 100%;
+  margin-right: 0;
+  /* No margin — stay flush to prevent overflow */
+  transform: translateY(-50%) scale(1.2);
+  max-width: calc(50vw - 50%);
+  /* Constrain to available space on left */
+}
+
+/* Position Right */
+.ledger-magic.right-magic {
+  left: 100%;
+  margin-left: 0;
+  transform: translateY(-50%) scale(-1.2, 1.2);
+  /* Center + Flip */
+  max-width: calc(50vw - 50%);
+  /* Constrain to available space on right */
+}
+
+@keyframes ledgerProGlow {
+
+  0%,
+  100% {
+    filter: saturate(0.8) hue-rotate(180deg) opacity(0.7);
+  }
+
+  50% {
+    filter: saturate(0.6) hue-rotate(240deg) opacity(0.95);
+    /* Swings subtly towards cool blue/purple */
+  }
+}
+
+.ledger-pro-glow {
+  /* Slow color/opacity pulse */
+  animation: ledgerProGlow 8s ease-in-out infinite;
+}
+
+/* ============================
+   CENTER DOT CROP
+   ============================ */
+.dot-crop {
+  position: absolute;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dot-crop.center-crop {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.6rem;
+  /* Reduced by 35% from 4rem */
+  height: 2.6rem;
+  /* Fade out when candles ascend (60s), never return */
+  animation: dotFadeOut 10s ease-in 60s forwards;
+}
+
+.center-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300%;
+  /* Scale up video to crop */
+  height: auto;
+  /* Preserve aspect ratio */
+  min-height: 500%;
+  /* Ensure coverage */
+  opacity: 0.4;
+  mix-blend-mode: screen;
+}
+
+@keyframes dotFadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ============================
+   GHOST TORCHES REMOVED
+   ============================ */
+
+/* ============================
+   CANDLE COMPOUND
+   ============================ */
+.candle-compound {
+  position: absolute;
+  /* Updated Position: Align with ledger-magic */
+  top: 50%;
+  height: 9vh;
+  /* Decreased by 10% (was 10vh) */
+  width: auto;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  /* On top of ghost torch */
+  mix-blend-mode: screen;
+  /* Standard 'Add' blend mode */
+  filter: contrast(1.2) brightness(0.9);
+  /* Crush blacks for clean blend */
+
+  /* Animate: Drop (3s, delay 2s), Bob (start after drop => 5s), Ascend (60s) */
+  animation:
+    candleDrop 3s ease-out 2s forwards,
+    bobLeft 4s ease-in-out 5s infinite,
+    ascend 10s ease-in 60s forwards;
+}
+
+.candle-compound.left {
+  right: 100%;
+  margin-right: -2rem;
+  transform: translateY(-50%) translateX(20%);
+}
+
+.candle-compound.right {
+  left: 100%;
+  margin-left: -2rem;
+  transform: translateY(-50%) translateX(-20%);
+  animation-name: candleDrop, bobRight, ascend;
+  /* Switch to bobRight */
+}
+
+
+
+@keyframes candleDrop {
+  0% {
+    opacity: 0;
+    margin-top: -2rem;
+    /* Start higher */
+  }
+
+  100% {
+    opacity: 0.6;
+    /* Updated opacity */
+    margin-top: 0;
+  }
+}
+
+/* Bobbing using Transform - Preserves X offset */
+@keyframes bobLeft {
+
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(20%);
+  }
+
+  50% {
+    transform: translateY(-55%) translateX(20%);
+  }
+
+  /* Bob Up */
+}
+
+@keyframes bobRight {
+
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(-20%);
+  }
+
+  50% {
+    transform: translateY(-55%) translateX(-20%);
+  }
+
+  /* Bob Up */
+}
+
+@keyframes ascend {
+  0% {
+    top: 50%;
+    opacity: 0.6;
+  }
+
+  /* Start from resting position */
+  100% {
+    top: -100vh;
+    opacity: 0;
+  }
+
+  /* Fly off top */
+}
+
+/* ============================
+   FOOTER SEPARATOR STYLES
+   ============================ */
+.sep-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  /* Center horizontal */
+}
+
+.flxr {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.sep-inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+.dot-crop {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.4rem;
+  /* 40% smaller (was 4rem) */
+  height: 2.4rem;
+  overflow: hidden;
+  z-index: 1;
+}
+
+
+.dot-crop.left {
+  right: 100%;
+  margin-right: 0.6rem;
+  /* Proportional margin */
+}
+
+.dot-crop.right {
+  left: 100%;
+  margin-left: 0.6rem;
+}
+
+.dot-video {
+  opacity: 0.7;
+  width: 500%;
+  height: 500%;
+  max-width: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.no-fade {
+  animation: none !important;
+  opacity: 0.7 !important;
+}
+
+.flipx {
+  transform: scaleX(-1);
+}
+
+/* ============================
+   MYSTIC GLOW EFFECTS (ETHEREAL PULSE)
+   ============================ */
+@keyframes etherealPulseImg {
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.32)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.16));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.25));
+  }
+}
+
+@keyframes etherealPulseTxt {
+
+  0%,
+  100% {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.32), 0 0 18px rgba(255, 255, 255, 0.16);
+  }
+
+  50% {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.45), 0 0 25px rgba(255, 255, 255, 0.25);
+  }
+}
+
+@keyframes opacityPulse {
+
+  0%,
+  100% {
+    opacity: 0.9;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.ethereal-glow-img {
+  animation: etherealPulseImg 5.75s ease-in-out infinite, opacityPulse 17.25s ease-in-out infinite;
+}
+
+.ethereal-glow-txt {
+  animation: etherealPulseTxt 5.75s ease-in-out infinite, opacityPulse 17.25s ease-in-out infinite;
+}
+
+.ttl-wrapper {
+  position: relative;
+  width: fit-content;
+  /* Ensure it wraps text tight */
+  margin: 0 auto;
+  /* Center the block */
+  display: flex;
+  /* Helps with centering internal text? or block */
+  justify-content: center;
+}

@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1" charset="utf-8">
+  <title>Dispersals</title>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRySDApVVmisl7oqPbInB0dCHSdvVhEjA&loading=async&callback=initMap">
+</script>
+  <link href="css/dispersals/dispersals.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+  <div id="mapcon">
+    <div id="map"></div>
+  </div>
+
+  <div id="overlay">
+    <!-- Left Side: Back Logo -->
+    <a href="javascript:history.back()" id="logo-link" class="fade-in">
+      <img src="https://captainscurses.org/Images/dispersals/backar.png" id="logo">
+    </a>
+
+    <!-- Middle: Filters -->
+    <div id="filter-container" class="fade-in">
+      <div id="pinchk">
+        <div>
+          <video class="pin-vid" autoplay loop muted playsinline>
+            <source src="https://captainscurses.org/webm/secondisp.webm" type="video/webm">
+          </video>
+        </div>
+        <div>
+          <video class="pin-vid" autoplay loop muted playsinline>
+            <source src="https://captainscurses.org/webm/primdisp.webm" type="video/webm">
+          </video>
+        </div>
+        <div><input type="checkbox" id="chksec" checked></div>
+        <div><input type="checkbox" id="chkprm" checked></div>
+      </div>
+
+      <div id="levels">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div><input type="checkbox" value="1" id="lv1" checked></div>
+        <div><input type="checkbox" value="2" id="lv2" checked></div>
+        <div><input type="checkbox" value="3" id="lv3" checked></div>
+        <div><input type="checkbox" value="4" id="lv4" checked></div>
+      </div>
+    </div>
+
+    <!-- Right Side: Links -->
+    <div id="links-stack" class="fade-in">
+    <a href="about_mobi.html#disp-definition" class="vis-link-box">About<br> Dispersals</a>
+      <a href="submissions.html#dispersals-section" class="vis-link-box">Submit<br> Dispersal</a>
+      <a href="disp_list.html" class="vis-link-box">List</a>
+    </div>
+  </div>
+
+  <div id="pinbox">
+    <div id="pinbox-close">×</div>
+    <div id="pinbox-content"></div>
+  </div>
+
+  <div id="running-count-badge">
+    <span id="rc-label">Running Count:</span>
+    <span id="rc-num"></span>
+  </div>
+
+  <div id="zoom-controls">
+    <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 1)">+</button>
+    <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 1)">-</button>
+  </div>
+  <script>
+    let map;
+    let allMarkers = [];
+
+    // Chromatic Logo Glow Logic
+    const logo = document.getElementById('logo');
+    const gdStart = Date.now() / 1000;
+
+    function animateLogoGlow() {
+      let now = Date.now() / 1000;
+      let elapsed = now - gdStart;
+
+      // 20% slower than index_mobi (2.5s * 1.25 = 3.125s period)
+      let pulse = (Math.sin(elapsed * (Math.PI * 2 / 3.125) - Math.PI / 2) + 1) / 2;
+
+      // Intensity matching bloodMoonPulse
+      let b1 = 5 + pulse * 5;
+      let b2 = 10 + pulse * 10;
+
+      let o1 = 0.4 + pulse * 0.3;
+      let o2 = 0.2 + pulse * 0.3;
+
+      // Chromatic drift
+      let hueVal = (elapsed * 12) % 360; // Slightly slower rotation too
+
+      // Desaturated "just a sliver more" (40% sat instead of 50%)
+      let hsla1 = `hsla(${hueVal.toFixed(1)}, 40%, 85%, ${o1.toFixed(3)})`;
+      let hsla2 = `hsla(${hueVal.toFixed(1)}, 40%, 85%, ${o2.toFixed(3)})`;
+
+      if (logo) {
+        logo.style.filter = `drop-shadow(0 0 ${b1.toFixed(1)}px ${hsla1}) drop-shadow(0 0 ${b2.toFixed(1)}px ${hsla2})`;
+      }
+      requestAnimationFrame(animateLogoGlow);
+    }
+
+    function updatePins() {
+      const checkedTypes = {
+        primary: document.getElementById("chkprm").checked,
+        secondary: document.getElementById("chksec").checked
+      };
+
+      const checkedLevels = [...document.querySelectorAll('#levels input:checked')]
+        .map(cb => Number(cb.value));
+
+      allMarkers.forEach(marker => {
+        const show = (checkedTypes[marker.type] !== false) && checkedLevels.includes(marker.level);
+        marker.map = show ? map : null;
+      });
+    }
+
+    async function initMap() {
+      const { Map } = await google.maps.importLibrary("maps");
+      const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+      map = new Map(document.getElementById("map"), {
+        center: { lat: 37.7749, lng: -122.4194 },
+        zoom: 5,
+        disableDefaultUI: true,
+        clickableIcons: false,
+        mapTypeId: 'satellite',
+        mapId: 'Maps_api', // Required for Advanced Markers
+        styles: [
+          { featureType: "poi", stylers: [{ visibility: "off" }] },
+          { featureType: "transit", stylers: [{ visibility: "off" }] }
+        ]
+      });
+
+      const pinAssets = {
+        primary: "https://captainscurses.org/Images/primdisp.png",
+        secondary: "https://captainscurses.org/Images/secondisp.png"
+      };
+
+      const pinBox = document.getElementById("pinbox");
+      const pinBoxContent = document.getElementById("pinbox-content");
+      const pinBoxClose = document.getElementById("pinbox-close");
+      const overlay = document.getElementById("overlay");
+
+      pinBoxClose.addEventListener("click", () => {
+        pinBox.classList.remove("show");
+        overlay.style.filter = "brightness(1)";
+      });
+
+      function showPinBox(pin) {
+        pinBoxContent.innerHTML = `
+          <a href="${pin.linkHref}" style="display:block;">
+            <img src="${pin.image}" style="height:34.5vh; width:auto; max-width:100%; object-fit:cover; border-radius:6px;">
+          </a>
+          <div style="margin:2rem 0 0 0; display:flex; justify-content:center;">
+            <img src="https://captainscurses.org/Images/moon%20sep.png" style="height:1.5vh; width:auto; opacity:0.7;">
+          </div>
+          <span style="display:block; text-align:center; margin-top:2rem; color:#fff; font-family:'CaslonAntique',serif; font-size:1.6rem; opacity:0.9; letter-spacing:0.05rem;">${pin.title}</span>
+        `;
+        pinBox.classList.add("show");
+        overlay.style.filter = "brightness(0.85)";
+      }
+
+      const pins = [
+        {
+          position: { lat: 40.931581, lng: -124.134848 },
+          title: "Solar Treasures",
+          number: 1,
+          level: 1,
+          type: "primary",
+          image: "https://captainscurses.org/Images/earth.jpg",
+          linkHref: "Ledger/dispersals/Disp1.html"
+        },
+        {
+          position: { lat: 40.872146, lng: -124.086236 },
+          title: "Solar Secondary",
+          number: 1,
+          level: 1,
+          type: "secondary",
+          image: "https://captainscurses.org/Images/dispersals/SDisp1/front.jpg",
+          linkHref: "Ledger/dispersals/SDisp1.html"
+        }
+      ];
+
+      pins.forEach((pin) => {
+        // Create custom element for pulsing marker
+        const container = document.createElement('div');
+        container.className = 'pin-container';
+        
+        const pulse = document.createElement('div');
+        pulse.className = 'pin-pulse';
+        
+        const img = document.createElement('img');
+        img.src = pinAssets[pin.type];
+        img.className = 'pin-img';
+        
+        container.appendChild(pulse);
+        container.appendChild(img);
+
+        const marker = new AdvancedMarkerElement({
+          map: map,
+          position: pin.position,
+          title: pin.title,
+          content: container
+        });
+
+        // Stagger pulse phases and hue starting points
+        const randDelay = Math.random() * -4; // Spread across 4s cycle
+        const randHue = Math.floor(Math.random() * 360);
+        pulse.style.animationDelay = `${randDelay}s`;
+        pulse.style.filter = `saturate(0.3) blur(4px) hue-rotate(${randHue}deg)`;
+
+        marker.type = pin.type;
+        marker.level = pin.level;
+        allMarkers.push(marker);
+
+        marker.addListener("click", () => {
+          showPinBox(pin);
+        });
+      });
+
+      document.querySelectorAll('#levels input, #pinchk input')
+        .forEach(cb => cb.addEventListener('change', updatePins));
+
+      updatePins();
+      animateLogoGlow();
+
+      // Running count
+      document.getElementById('rc-num').textContent = pins.length;
+    }
+  </script>
+
+</body>
+
+</html>

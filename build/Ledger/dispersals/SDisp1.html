@@ -1,0 +1,460 @@
+<!doctype html>
+<html>
+
+<head>
+	<link href="Disp.css" rel="stylesheet" type="text/css">
+	<link href="../../css/txtcolor.css" rel="stylesheet" type="text/css">
+	<link href="../../css/common.css" rel="stylesheet" type="text/css">
+	<script src="../../js/zoom.js" defer></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		@keyframes goldPulse {
+
+			0%,
+			100% {
+				filter: drop-shadow(0 0 8px rgba(255, 250, 224, 0.4)) drop-shadow(0 0 15px rgba(255, 250, 224, 0.2));
+			}
+
+			50% {
+				filter: drop-shadow(0 0 20px rgba(255, 250, 224, 0.7)) drop-shadow(0 0 35px rgba(255, 250, 224, 0.5));
+			}
+		}
+
+		.golden-glow-txt {
+			animation: goldPulse 4s ease-in-out infinite;
+		}
+
+		@keyframes subtleLabelPulse {
+
+			0%,
+			100% {
+				opacity: 0.7;
+				text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+			}
+
+			50% {
+				opacity: 1;
+				text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+			}
+		}
+
+		.subtle-pulse-txt {
+			animation: subtleLabelPulse 6s ease-in-out infinite;
+		}
+
+		@keyframes rainbowHueRotate {
+			from {
+				filter: hue-rotate(0deg) saturate(0.3) brightness(1.1);
+			}
+
+			to {
+				filter: hue-rotate(360deg) saturate(0.3) brightness(1.1);
+			}
+		}
+
+		.rainbow-hue-glow {
+			position: absolute;
+			top: -15px;
+			left: -15px;
+			right: -15px;
+			bottom: -15px;
+			background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 80%);
+			z-index: -1;
+			opacity: 0.2;
+			animation: rainbowHueRotate 15s linear infinite;
+			border-radius: 20px;
+			pointer-events: none;
+		}
+
+		.paginator-counter {
+			color: white;
+			font-family: 'CaslonAntique', serif;
+			font-size: 1.2rem;
+			text-align: center;
+			letter-spacing: 0.1rem;
+		}
+
+		@keyframes rainbowFilterPulse {
+
+			0%,
+			100% {
+				backdrop-filter: saturate(1) hue-rotate(0deg);
+			}
+
+			50% {
+				backdrop-filter: saturate(0.5) hue-rotate(180deg);
+			}
+		}
+
+		.rainbow-filter-layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			animation: rainbowFilterPulse 15s ease-in-out infinite;
+			z-index: 2;
+			/* Ensure it applies to what's behind it */
+			backdrop-filter: saturate(1) hue-rotate(0deg);
+			-webkit-backdrop-filter: saturate(1) hue-rotate(0deg);
+		}
+
+		.rainbow-wrap {
+			position: relative;
+			width: 6rem;
+			height: 6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			animation: fadeIn 2s ease-out forwards;
+		}
+
+		.rainbow-wrap.staggered {
+			animation-delay: 1s;
+		}
+
+		.rainbow-video {
+			width: 100%;
+			height: auto;
+			mix-blend-mode: screen;
+			opacity: 0.6;
+		}
+
+		@media screen and (max-width: 600px) {
+			#ttlbox p {
+				font-size: clamp(1.8rem, 10vw, 3.5rem) !important;
+			}
+
+			.rainbow-wrap {
+				width: 4rem;
+				height: 4rem;
+			}
+		}
+
+		/* Audio/Coord Parity & Pulse */
+		@keyframes bdrPulse {
+
+			0%,
+			100% {
+				border-color: rgba(255, 255, 255, 0.4);
+			}
+
+			50% {
+				border-color: rgba(255, 255, 255, 0.8);
+			}
+		}
+
+		#informative-box {
+			animation: bdrPulse 8s ease-in-out infinite;
+		}
+
+		.players {
+			height: 66px !important;
+			margin-top: 5px !important;
+		}
+
+		.name {
+			font-size: 32px !important;
+			/* 2rem @ 16px base */
+			padding-top: 10px !important;
+		}
+
+		.title {
+			font-size: 24px !important;
+			/* 1.5rem @ 16px base */
+		}
+
+		@keyframes dotFlicker {
+
+			0%,
+			100% {
+				opacity: 0.4;
+				filter: brightness(1);
+			}
+
+			50% {
+				opacity: 1;
+				filter: brightness(1.5) drop-shadow(0 0 5px palegoldenrod);
+			}
+		}
+
+		.dot-flicker {
+			animation: dotFlicker 3s infinite alternate;
+		}
+
+		@keyframes slowHueDesatSnow {
+
+			0%,
+			100% {
+				filter: saturate(0.2) hue-rotate(0deg);
+				opacity: 0.1;
+			}
+
+			50% {
+				filter: saturate(0.4) hue-rotate(180deg);
+				opacity: 0.4;
+			}
+		}
+
+		.slow-snow-orn {
+			width: 3rem;
+			height:3rem;
+			margin:1rem 0;
+			mix-blend-mode: screen;
+			animation: slowHueDesatSnow 45s linear infinite;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="maincon" class="flx">
+
+		<div id="header" class="ttl" onclick="window.history.back();"
+			style="cursor:pointer; height: auto; padding: 1.5rem 0; display: flex; flex-direction: row; justify-content: center; align-items: center; width: 90%; margin: 1rem 0 0.5rem 0;position: relative;">
+
+			<div class="hdside" style="flex: 0 0 auto;">
+				<div class="rainbow-wrap">
+					<video autoplay muted loop playsinline class="rainbow-video">
+						<source src="https://captainscurses.org/webm/rainbow.webm" type="video/webm">
+					</video>
+					<div class="rainbow-filter-layer"></div>
+				</div>
+			</div>
+
+			<div id="ttlbox" class="second"
+				style="position: static; transform: none; flex: 1; display: flex; justify-content: center; z-index: 5;">
+				<p style="font-size:2rem; color: inherit; line-height: 1.1; margin: 0; text-align: center;">Solar<br>
+Secondary</p>
+			</div>
+
+			<div class="hdside" style="flex: 0 0 auto;">
+				<div class="rainbow-wrap staggered">
+					<video autoplay muted loop playsinline class="rainbow-video" style="transform: scaleX(-1);">
+						<source src="https://captainscurses.org/webm/rainbow.webm" type="video/webm">
+					</video>
+					<div class="rainbow-filter-layer"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="flx" style="width:100%; position: relative;">
+
+			<div class="flx" style="height:2vh; width:100%; margin-bottom:1rem"><img src="https://captainscurses.org/Images/subsep.png"
+					style="height:100%; width:auto"></div>
+
+			<div class="flx"
+				style="flex-direction:row; align-items:center; justify-content:center; gap:2rem; width:100%;">
+
+				<video autoplay muted loop playsinline class="slow-snow-orn">
+					<source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+				</video>
+
+				<div class="flx" style="height:auto">
+
+					<p style="font-size:0.8rem"><span class="second">Secondary Dispersal</span> of<br>
+						Solar Treasures.<br>
+						<br>
+
+						-<span class="tc" style="font-size:0.7">T.C</span>
+					</p>
+				</div>
+
+				<video autoplay muted loop playsinline class="slow-snow-orn" style="transform: scaleX(-1);">
+					<source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+				</video>
+
+			</div>
+
+			<div class="flx" style="height:2vh; width:100%; margin-top:1rem"><img src="https://captainscurses.org/Images/subsep.png"
+					style="height:100%; width:auto; transform: scaleX(-1);"></div>
+
+		</div>
+			<div class="flx"
+				style="margin: 2rem 0; flex-direction: row; align-items: center; justify-content: center; gap: 2rem; width: 100%;">
+				<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="env" style="height: 1vh; width: auto;"
+					alt="orn">
+				<a href="https://maps.app.goo.gl/mHv66gwHwQN8sHhB6" style="text-decoration: underline"><p class="env" style="font-size: 1.2rem; letter-spacing: 0.1rem; margin: 0; opacity: 0.8;">
+					40.872146, -124.086236</p></a>
+				<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="env"
+					style="height: 1vh; width: auto; transform: scaleX(-1);" alt="orn">
+			</div>
+
+
+
+		<div id="photo-browser" class="flx">
+			<div id="photo-container" class="flx">
+				<div class="rainbow-hue-glow"></div>
+				<img id="photo" src="" alt="Secondary Dispersal Image" class="ethereal-glow-img zoomable-img">
+			</div>
+			<div id="arrowcon" class="flx"
+				style="flex-direction:row; gap:1.5rem; height: 5vh; align-items: center; justify-content: center; margin-top: 1rem;">
+				<img src="https://captainscurses.org/Images/subar.png" id="prev" class="arrow leftar"
+					style="opacity: 0.6; cursor: pointer; padding: 0; width: 2rem; height: auto;">
+				<div id="photo-counter" class="paginator-counter">1/2</div>
+				<img src="https://captainscurses.org/Images/subar.png" id="next" class="arrow rightar"
+					style="opacity: 0.6; cursor: pointer; padding: 0; width: 2rem; height: auto;">
+			</div>
+		</div>
+
+		<div id="informative-box" class="flx"
+			style="width: 85%; height: 35vh; margin: 2rem auto 0 auto; border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 15px; background: rgba(255, 255, 255, 0.05); padding: 1.5rem; display: flex; flex-direction: column; overflow-y: auto; align-items: center; justify-content: flex-start; scrollbar-width: none;">
+			<div class="flx" style="margin-bottom: 1rem; flex-shrink: 0;"><img src="https://captainscurses.org/Images/subsep.png"
+					style="height: 1.5vh; opacity: 0.5;"></div>
+			<p class=" flx sub-text"
+				style="width: 90%; font-size: 1.1rem; line-height: 1.6;opacity: 0.9;text-align: left">
+				The first Secondary Dispersal of O.Y.O!<br>
+<br>
+
+				 Left in a Little Free Library with an old image of T.C on its side. When I Dispersed Solar Secondary, I took a copy of an Isaac Asiimov book which I found.<br>
+<br>
+Fill this Little Free Library with Isaac Asiimov books. Or don't!
+He was honestly a bit of a creepy guy...<br>
+<br>
+...but that's neither here nor there.
+
+			</p>
+		</div>
+			
+			
+			<script>
+				let currAudio = 1;
+				function updateAudioPage() {
+					document.querySelectorAll('.audio-page').forEach(el => el.style.display = 'none');
+					document.querySelector(`.audio-page-${currAudio}`).style.display = 'flex';
+					document.getElementById('audio-counter').textContent = `${currAudio}/1`;
+				}
+				function prevAudioPage() { updateAudioPage(); }
+				function nextAudioPage() { updateAudioPage(); }
+			</script>
+		</div>
+
+	</div>
+	<!-- Modal & Magnifier -->
+	<div id="photo-modal" class="flx"
+		style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center;">
+		<span id="photo-modal-close"
+			style="position:absolute; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>
+		<img id="photo-modal-content" style="max-width:90%; max-height:90%; object-fit:contain;">
+	</div>
+	<div id="magnifier"
+		style="display:none; position:absolute; width:180px; height:180px; border:3px solid #fff; border-radius:50%; cursor:none; pointer-events:none; z-index:10000; box-shadow:0 0 15px rgba(0,0,0,0.5); background-repeat:no-repeat; overflow:hidden;">
+	</div>
+<div class="flx fade-in seps" style="height:9vh; margin:2.5rem 0;">
+               <video autoplay muted loop playsinline
+                style="height: 100%; width: auto; pointer-events: none;" class="total-hue-rotate">
+                <source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+            </video>
+            </div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			// --- PHOTO BROWSER ---
+			const images = [
+				"https://captainscurses.org/Images/dispersals/SDisp1/closeup.JPG",
+				"https://captainscurses.org/Images/dispersals/SDisp1/front.jpg",
+				"https://captainscurses.org/Images/dispersals/SDisp1/doorclose.JPG",
+				"https://captainscurses.org/Images/dispersals/SDisp1/Back.jpg",
+				
+			];
+			let currentIndex = 0;
+			const photo = document.getElementById("photo");
+			const counter = document.getElementById("photo-counter");
+			const prev = document.getElementById("prev");
+			const next = document.getElementById("next");
+
+			function updatePhoto() {
+				photo.src = images[currentIndex];
+				counter.textContent = `${currentIndex + 1} / ${images.length}`;
+			}
+			prev?.addEventListener("click", (e ) => {
+				e.stopPropagation();
+				currentIndex = (currentIndex - 1 + images.length) % images.length;
+				updatePhoto();
+			});
+			next?.addEventListener("click", (e) => {
+				e.stopPropagation();
+				currentIndex = (currentIndex + 1) % images.length;
+				updatePhoto();
+			});
+			if (photo) updatePhoto();
+
+			// --- MODAL & ZOOM ---
+			const modal = document.getElementById("photo-modal");
+			const modalImg = document.getElementById("photo-modal-content");
+			const closeBtn = document.getElementById("photo-modal-close");
+			const magnifier = document.getElementById("magnifier");
+			const ZOOM_LEVEL = 2.5;
+
+			photo?.addEventListener("click", () => {
+				modal.style.display = "flex";
+				modalImg.src = photo.src;
+				modalImg.onload = () => {
+					magnifier.style.backgroundImage = `url('${modalImg.src}')`;
+				};
+			});
+
+			closeBtn?.addEventListener("click", () => {
+				modal.style.display = "none";
+				magnifier.style.display = "none";
+			});
+
+			modal?.addEventListener("click", (e) => {
+				if (e.target === modal) {
+					modal.style.display = "none";
+					magnifier.style.display = "none";
+				}
+			});
+
+			function moveMagnifier(e) {
+				const pageX = e.pageX || (e.touches && e.touches[0].pageX);
+				const pageY = e.pageY || (e.touches && e.touches[0].pageY);
+				if (!pageX || !pageY) return;
+
+				const rect = modalImg.getBoundingClientRect();
+				const scrollX = window.scrollX;
+				const scrollY = window.scrollY;
+
+				// Calculate rendered image size within the modal
+				const ratio = modalImg.naturalWidth / modalImg.naturalHeight;
+				let rW, rH;
+				if (rect.width / rect.height > ratio) {
+					rH = rect.height;
+					rW = rect.height * ratio;
+				} else {
+					rW = rect.width;
+					rH = rect.width / ratio;
+				}
+
+				const imgLeft = rect.left + scrollX + (rect.width - rW) / 2;
+				const imgTop = rect.top + scrollY + (rect.height - rH) / 2;
+
+				if (pageX < imgLeft || pageX > imgLeft + rW || pageY < imgTop || pageY > imgTop + rH) {
+					magnifier.style.display = "none";
+					return;
+				}
+
+				magnifier.style.display = "block";
+				const relX = (pageX - imgLeft) / rW;
+				const relY = (pageY - imgTop) / rH;
+
+				const bgW = rW * ZOOM_LEVEL;
+				const bgH = rH * ZOOM_LEVEL;
+				magnifier.style.backgroundSize = `${bgW}px ${bgH}px`;
+				magnifier.style.backgroundPosition = `${-(relX * bgW - magnifier.offsetWidth / 2)}px ${-(relY * bgH - magnifier.offsetHeight / 2)}px`;
+
+				const offset = e.touches ? -120 : 20;
+				magnifier.style.left = `${pageX + offset}px`;
+				magnifier.style.top = `${pageY + offset}px`;
+			}
+
+			modalImg?.addEventListener("mousemove", moveMagnifier);
+			modalImg?.addEventListener("touchmove", moveMagnifier);
+			modalImg?.addEventListener("mouseleave", () => magnifier.style.display = "none");
+			modalImg?.addEventListener("touchend", () => magnifier.style.display = "none");
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,687 @@
+<!doctype html>
+<html>
+
+<head>
+  <link href="css/disp_list/disp_list.css" rel="stylesheet" type="text/css">
+  <style>
+    .disp-snow {
+      height: 3.5vh;
+      width: auto;
+      opacity: 0.8;
+      mix-blend-mode: screen;
+      filter: saturate(0.3ba) blur(1px);
+    }
+
+    @keyframes subtlePulse {
+      0%, 66.6%, 100% { opacity: 0.6; filter: drop-shadow(0 0 2px rgba(255,255,255,0.2)); }
+      33.3% { opacity: 0.9; filter: drop-shadow(0 0 10px rgba(255,255,255,0.6)); }
+    }
+    .running-count-pulse { animation: subtlePulse 9s ease-in-out infinite; }
+  </style>
+</head>
+
+<body>
+  <div
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom:1.2rem; width: 100%;">
+
+    <div id="divider"
+      style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; width: 100%; position: relative; margin: 1rem 0; height: 5vh; box-sizing: border-box;">
+
+      <!-- Far left -->
+      <div id="myBack" style="cursor:pointer; z-index: 10; margin-left: 1rem;">
+        <img src="https://captainscurses.org/Images/dispersals/backar.png" id="backar" class="ethereal-glow-img"
+          style="height: clamp(4vh, calc(2vh + 1.5vw), 4.4vh); width: auto; margin-bottom: 0; display: block; opacity:0.5">
+      </div>
+
+      <!-- Far right removed -->
+
+      <!-- Center Video -->
+      <div
+        style="position: absolute; left: 50%; top: 95%; transform: translate(-50%, -50%); height: clamp(9vh, calc(7vh + 2vw), 9.9vh); width: auto; display: flex; justify-content: center; align-items: center; z-index: -1; opacity:0.7">
+        <video id="di-vid-1" class="di-vid fade-in" autoplay muted playsinline
+          style="position: absolute; height: 100%; width: auto; mix-blend-mode: screen; transition: opacity 4.5s ease-in-out;">
+          <source src="https://captainscurses.org/webm/di%20and%20arrow.mp4" type="video/mp4">
+        </video>
+        <video id="di-vid-2" class="di-vid fade-in" muted playsinline
+          style="position: absolute; height: 100%; width: auto; mix-blend-mode: screen; transition: opacity 4.5s ease-in-out; opacity: 0;">
+          <source src="https://captainscurses.org/webm/di%20and%20arrow.mp4" type="video/mp4">
+        </video>
+      </div>
+
+    </div>
+
+    <!-- Center text repositioned below the divider entirely -->
+    <div
+      style="display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2rem; width: 100%; padding: 0 1rem; box-sizing: border-box; margin-bottom: 1.2rem; text-align: center; position: relative; z-index: 99;">
+      <span class="header-text left-text ethereal-glow-txt"
+        style="position: static; transform: none; white-space: normal; letter-spacing: 0.04rem; margin: 0; padding: 0; line-height: 1.2;">O.Y.O
+        Dispersals</span>
+      <span class="header-text right-text ethereal-glow-txt"
+        style="position: static; transform: none; white-space: normal; letter-spacing: 0.04rem; margin: 0; padding: 0; line-height: 1.2;">Complete
+        Archive</span>
+    </div>
+  </div>
+
+  </div>
+  <script>
+    document.getElementById("myBack").addEventListener("click", () => {
+      window.history.back();
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // BACK ARROW FADE IN
+      const backAr = document.getElementById('backar');
+      if (backAr) {
+        setTimeout(() => { backAr.style.opacity = '0.8'; }, 100);
+      }
+
+      // TC FACE FADE IN (Same protocol as backar)
+      const tcFace = document.getElementById('tc-face');
+      if (tcFace) {
+        setTimeout(() => { tcFace.style.opacity = '0.8'; }, 100);
+      }
+
+      // DI AND ARROW CROSSFADE LOGIC
+      function setupDiCrossfade() {
+        const v1 = document.getElementById('di-vid-1');
+        const v2 = document.getElementById('di-vid-2');
+        if (!v1 || !v2) return;
+
+        let activeV = v1;
+        let nextV = v2;
+        let isFading = false;
+
+        function checkDiCrossfade() {
+          if (activeV && activeV.duration && !isFading) {
+            // Trigger fade at 6.5s 
+            if (activeV.currentTime >= 6.5) {
+              isFading = true;
+
+              nextV.style.transition = 'none';
+              nextV.currentTime = 0;
+              nextV.play().then(() => {
+                setTimeout(() => {
+                  activeV.style.transition = 'opacity 4.5s ease-in-out';
+                  nextV.style.transition = 'opacity 4.5s ease-in-out';
+
+                  activeV.style.opacity = '0';
+                  nextV.style.opacity = '1';
+
+                  // Swap refs
+                  let oldActive = activeV;
+                  activeV = nextV;
+                  nextV = oldActive;
+
+                  setTimeout(() => {
+                    isFading = false;
+                  }, 4500);
+                }, 50);
+              }).catch(e => console.log(e));
+            }
+          }
+          requestAnimationFrame(checkDiCrossfade);
+        }
+        requestAnimationFrame(checkDiCrossfade);
+      }
+      setupDiCrossfade();
+
+      // MOON SEP FADE IN (2.8s)
+      const topSep = document.getElementById('top-sep');
+      if (topSep) {
+        setTimeout(() => { topSep.style.opacity = '1'; }, 100);
+      }
+
+      // HEART VIDEOS LOGIC
+      const hearts = document.querySelectorAll('.hearts');
+      hearts.forEach((video, index) => {
+        // Loop to 5s
+        video.addEventListener('ended', () => {
+          video.currentTime = 5;
+          video.play();
+        });
+
+        // Stagger start: 0s, 1s, 2s, 3s
+        setTimeout(() => {
+          video.play();
+        }, index * 1000);
+      });
+
+      // --- UNIFIED CANDLE WAVE (Side, Corner & Adjacent) ---
+      // Order: Left side -> TL corner -> TL adj -> BL corner -> BL adj -> BR corner -> BR adj -> TR corner -> TR adj -> Right side
+      const c1 = document.getElementById('candle-left');
+      const c2 = document.querySelector('.corner-candle.left');
+      const c2a = document.querySelector('.corner-candle-adjacent.left-adj');
+      const c3 = document.querySelector('.corner-candle.bottom-left');
+      const c3a = document.querySelector('.corner-candle-adjacent.bottom-left-adj');
+      const c4 = document.querySelector('.corner-candle.bottom-right');
+      const c4a = document.querySelector('.corner-candle-adjacent.bottom-right-adj');
+      const c5 = document.querySelector('.corner-candle.right');
+      const c5a = document.querySelector('.corner-candle-adjacent.right-adj');
+      const c6 = document.getElementById('candle-right');
+      const waveCandles = [c1, c2, c2a, c3, c3a, c4, c4a, c5, c5a, c6];
+
+      function runCandleWave() {
+        console.log("Candle Wave: Initial Batch Fade In");
+
+        // Initial: Batch Fade In (Simultaneous)
+        waveCandles.forEach(c => { if (c) { c.classList.remove('rise-out'); c.classList.add('fade-in'); } });
+
+        // Initial Hold: 10s (Fade) + 60s (Hold) = 70s
+        setTimeout(startWaveLoop, 70000);
+      }
+
+      function startWaveLoop() {
+        console.log("Candle Wave: Starting Loop (Rise Out)");
+
+        // 1. Staggered Rise Out (Left to Right)
+        waveCandles.forEach((c, i) => {
+          if (c) {
+            setTimeout(() => {
+              c.classList.remove('fade-in');
+              c.classList.add('rise-out');
+            }, i * 1500);
+          }
+        });
+
+        // Last Rise Finishes: (9 * 1500) + 10000 = 23500ms
+        const riseFinishTime = 23500;
+
+        // 2. Gap (0.5s) after Rise Finish
+        setTimeout(() => {
+          console.log("Candle Wave: Gap (0.5s) -> Reset");
+          // Reset
+          waveCandles.forEach(c => { if (c) c.classList.remove('rise-out'); });
+
+          // 3. Staggered Fade In (Left to Right)
+          setTimeout(() => {
+            console.log("Candle Wave: Staggered Fade In");
+
+            waveCandles.forEach((c, i) => {
+              if (c) {
+                setTimeout(() => {
+                  c.classList.add('fade-in');
+                }, i * 1500);
+              }
+            });
+
+            // Last Fade Finishes: (9 * 1500) + 10000 = 23500ms
+            // 4. Hold (60s)
+            setTimeout(() => {
+              console.log("Candle Wave: Holding (60s) -> Restart");
+              startWaveLoop();
+            }, 23500 + 60000); // 23.5s (Fade Seq) + 60s (Hold)
+
+          }, 500); // 0.5s gap
+
+        }, riseFinishTime);
+      }
+
+      // Start
+      runCandleWave();
+    });
+  </script>
+
+  </div>
+
+  <div class="oner"
+    style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin:0">
+    <div class="sep-container">
+      <div class="sep-inner">
+        <!-- Left Dots -->
+        <div class="dot-flank left">
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+        </div>
+
+        <img id="top-sep" src="https://captainscurses.org/Images/moon%20sep.png"
+          style="width: auto; max-width: 20%; height: auto; display: block; margin: 0 1rem; margin-top:1.5rem">
+
+        <!-- Right Dots -->
+        <div class="dot-flank right">
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+          <div class="dot-stack">
+            <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+            <div class="layer2-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+                <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+              </video></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="controls-wrapper" style="position: relative; width: 100%;">
+    <!-- TC Face Divider (Centered Background) -->
+    <video id="tc-face" autoplay muted loop playsinline>
+      <source src="https://captainscurses.org/webm/tc%20face.mp4" type="video/mp4">
+    </video>
+
+    <div id="rcandpage">
+      <div id="rc-container" class="flx" style="flex-direction: column; align-items: flex-start; gap: 0rem; font-size:2rem; padding: 0 3%">
+        <div id="title" class="ttl running-count-pulse" style="text-align: left;">Running Count:</div>
+        <div id="count" class="ttl running-count-pulse" style="text-align: left;"></div>
+      </div>
+    </div>
+
+    <div style="float:left; width:100%">
+      <div id="filter-container">
+        <div id="new-tag-filters" style="margin-bottom: 0.5rem; display: flex; gap: 1rem;">
+          <!-- Active filter removed -->
+        </div>
+
+        <div id="sort-section">
+          <select id="sortOrder">
+            <option value="newest">Newest to Oldest</option>
+            <option value="oldest">Oldest to Newest</option>
+          </select>
+        </div>
+
+        <div id="tag-filters">
+          <div class="filter-row" data-group="1">
+            <label>P <input type="checkbox" value="P" class="tag-filter"></label>
+            <label>S <input type="checkbox" value="S" class="tag-filter"></label>
+          </div>
+          <div class="filter-row" data-group="2">
+            <label>1 <input type="checkbox" value="1" class="tag-filter"></label>
+            <label>2 <input type="checkbox" value="2" class="tag-filter"></label>
+            <label>3 <input type="checkbox" value="3" class="tag-filter"></label>
+            <label>4 <input type="checkbox" value="4" class="tag-filter"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="pagination" class="flx">
+      <button id="prevBtn" class="flx smallbtn">«</button>
+
+      <div id="pagebox">
+        <div id="pageJump" class="flx">
+          <input type="number" id="numbox" min="1" value="1">
+          <span id="totalPages"></span>
+        </div>
+        <div class="flx oner"><button id="gobtn" class="flx smallbtn">•</button></div>
+      </div>
+
+      <button id="nextBtn" class="flx smallbtn">»</button>
+    </div>
+  </div>
+
+  <div id="maincont"></div>
+
+  <div id="pagenum" class="flx">
+
+    <!-- Left Dots -->
+    <div class="dot-flank left" style="margin-right:1rem">
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+    </div>
+
+    <div class="flx" style="height:100%"><img class="bottomim" src="https://captainscurses.org/Images/Seperator.png"></div>
+    <div id="page-num-text" class="flx" style="font-size:3rem"></div>
+    <div class="flx" style="height:100%"><img class="bottomim" src="https://captainscurses.org/Images/Seperator.png"
+        style="transform: scaleX(-1);"></div>
+
+    <!-- Right Dots -->
+    <div class="dot-flank right" style="margin-left:1rem">
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+      <div class="dot-stack">
+        <div class="layer1-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+        <div class="layer2-dot"><video class="dot-video no-fade disp-loop" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+          </video></div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script>
+    const dispersals = [
+      // PAGE 1
+      {
+        image: "https://captainscurses.org/Images/earth.jpg",
+        date: "04/07/2026",
+        title: "Solar Treasures",
+        link: "Ledger/dispersals/Disp1.html",
+        tags: ["P", "1"],
+        name: "-T.C",
+        color: "#F5EAFF"
+      },
+      {
+        image: "https://captainscurses.org/Images/dispersals/SDisp1/front.jpg",
+        date: "04/09/2026",
+        title: "Solar Secondary",
+        link: "Ledger/dispersals/SDisp1.html",
+        tags: ["S", "1"],
+        name: "-T.C",
+        color: "#F5EAFF"
+      }
+    ];
+
+    // ===== PAGINATION & FILTER STATE =====
+    const itemsPerPage = 9;
+    let currentPage = 1;
+    let filteredDispersals = [...dispersals];
+
+    // ===== ELEMENTS =====
+    const grid = document.getElementById("maincont");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const numbox = document.getElementById("numbox");
+    const totalPagesSpan = document.getElementById("totalPages");
+    const goBtn = document.getElementById("gobtn");
+    const bottomPageNumber = document.getElementById("page-num-text");
+    const countDisplay = document.getElementById("count");
+    const sortSelect = document.getElementById("sortOrder");
+    const filterCheckboxes = document.querySelectorAll(".tag-filter");
+
+    // ===== CREATE ITEM =====
+    function createDispersalItem(d) {
+      const item = document.createElement("a");
+      item.href = d.link;
+      item.className = "itemcon";
+
+      item.innerHTML = `
+    <div class="image">
+      <img src="${d.image}" class="ethereal-glow-img" style="width:100%; height:auto;">
+    </div>
+    <div class="date ethereal-glow-txt">${d.date}</div>
+    <div class="title ethereal-glow-txt">${d.title}</div>
+    <div class="name ethereal-glow-txt" style="color: ${d.color}">${d.name}</div>
+  `;
+
+      return item;
+    }
+
+    function addDivider() {
+      const div = document.createElement("img");
+      div.src = "Images/smalldiv.png";
+      div.className = "divider";
+      grid.appendChild(div);
+    }
+
+    // ===== UPDATE COUNT =====
+    function updateCount() {
+      // Always show total count
+      countDisplay.textContent = dispersals.length;
+    }
+
+    // ===== PARSE DATEHELPER =====
+    function parseDate(dateStr) {
+      // Expecting MM/DD/YY
+      const parts = dateStr.split('/');
+      if (parts.length === 3) {
+        let year = parseInt(parts[2], 10);
+        // Assume 20xx for 2-digit years
+        year += 2000;
+        const month = parseInt(parts[0], 10) - 1; // JS months are 0-11
+        const day = parseInt(parts[1], 10);
+        return new Date(year, month, day);
+      }
+      return new Date(0); // Fallback
+    }
+
+    // ===== FILTER & SORT LOGIC =====
+    // ===== FILTER & SORT LOGIC =====
+    function handleCheckboxChange(e) {
+      const checkbox = e.target;
+      const groupRow = checkbox.closest('.filter-row');
+
+      // Enforce mutual exclusivity within the group
+      if (checkbox.checked && groupRow) {
+        const siblings = groupRow.querySelectorAll('.tag-filter');
+        siblings.forEach(cb => {
+          if (cb !== checkbox) cb.checked = false;
+        });
+      }
+
+      applyFilters();
+    }
+
+    function applyFilters() {
+      // 1. Get selected tags for each group
+      const group1Row = document.querySelector('.filter-row[data-group="1"]');
+      const group2Row = document.querySelector('.filter-row[data-group="2"]');
+
+      const group1Val = group1Row ? Array.from(group1Row.querySelectorAll('.tag-filter:checked')).map(cb => cb.value)[0] : null;
+      const group2Val = group2Row ? Array.from(group2Row.querySelectorAll('.tag-filter:checked')).map(cb => cb.value)[0] : null;
+
+      filteredDispersals = dispersals.filter(item => {
+        if (!item.tags) return false;
+
+        // Logic: (Match Group 1 OR No Group 1 Selected) AND (Match Group 2 OR No Group 2 Selected)
+        const matchGroup1 = !group1Val || item.tags.includes(group1Val);
+        const matchGroup2 = !group2Val || item.tags.includes(group2Val);
+
+        return matchGroup1 && matchGroup2;
+      });
+
+      // 2. Sort
+      const sortValue = sortSelect.value;
+      filteredDispersals.sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        if (sortValue === 'newest') {
+          return dateB - dateA; // Descending
+        } else {
+          return dateA - dateB; // Ascending
+        }
+      });
+
+      // 3. Reset to Page 1 and Render
+      currentPage = 1;
+      updateCount();
+      renderPage(currentPage);
+    }
+
+    // ===== RENDER PAGE =====
+    function renderPage(page) {
+      grid.innerHTML = "";
+
+      // Safety check for empty results
+      if (filteredDispersals.length === 0) {
+        grid.innerHTML = "<div style='grid-column: 1 / -1; text-align: center; margin-top: 2rem;'>No results found.</div>";
+        updatePaginationUI();
+        return;
+      }
+
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageItems = filteredDispersals.slice(start, end);
+
+      pageItems.forEach((d, i) => {
+        grid.appendChild(createDispersalItem(d));
+
+        /* if ((i + 1) % 3 === 0 && i !== pageItems.length - 1) {
+          addDivider();
+        } */
+      });
+
+      updatePaginationUI();
+    }
+
+    // ===== UPDATE PAGINATION UI =====
+    function updatePaginationUI() {
+      const totalPages = Math.ceil(filteredDispersals.length / itemsPerPage);
+      // Ensure totalPages is at least 1 to avoid 0/0 issues if empty
+      const SafeTotalPages = totalPages < 1 ? 1 : totalPages;
+
+      numbox.value = currentPage;
+      bottomPageNumber.textContent = currentPage;
+
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage >= SafeTotalPages; // Use >= to be safe
+    }
+
+    // ===== NAVIGATION =====
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage(currentPage);
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const totalPages = Math.ceil(filteredDispersals.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage(currentPage);
+      }
+    });
+
+    goBtn.addEventListener("click", () => {
+      const totalPages = Math.ceil(filteredDispersals.length / itemsPerPage);
+      let value = parseInt(numbox.value);
+
+      if (isNaN(value)) value = 1;
+      if (value < 1) value = 1;
+      if (value > totalPages) value = totalPages;
+
+      currentPage = value;
+      renderPage(currentPage);
+    });
+
+    // Allow Enter key in input
+    numbox.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        goBtn.click();
+      }
+    });
+
+    // ===== EVENT LISTENERS FOR FILTERS =====
+    sortSelect.addEventListener("change", applyFilters);
+    filterCheckboxes.forEach(cb => {
+      cb.addEventListener("change", handleCheckboxChange);
+    });
+
+    // ===== INITIAL LOAD =====
+    applyFilters(); // This will sort and render initial state
+    // ===== DISP LOOP LOGIC =====
+    const LOOP_DURATION = 1.0; // 1 second loop for everything
+
+    function checkDispLoop() {
+      const videos = document.querySelectorAll(".disp-loop");
+      videos.forEach(v => {
+        if (v.currentTime >= LOOP_DURATION) {
+          v.currentTime = 0;
+          v.play().catch(() => { }); // Ignore play errors
+        }
+      });
+      requestAnimationFrame(checkDispLoop);
+    }
+    requestAnimationFrame(checkDispLoop);
+  </script>
+
+</body>
+
+</html>

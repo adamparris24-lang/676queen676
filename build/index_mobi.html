@@ -1,0 +1,898 @@
+<!doctype html>
+<html>
+
+<head>
+  <link href="css/index/index.css" rel="stylesheet" type="text/css">
+  <link href="css/txtcolor.css" rel="stylesheet" type="text/css">
+  <style>
+    @keyframes ornamentBob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-0.3rem);
+      }
+    }
+
+    .bobbing {
+      animation: ornamentBob 4s ease-in-out infinite;
+    }
+
+    .submit-ornament {
+      height: 7rem;
+      min-height: 80px;
+      width: auto;
+      opacity: 0.8;
+      display: block;
+      position: relative;
+      z-index: -1;
+      transform: translate(15%, 0%)
+    }
+
+    @keyframes treasureGlow {
+
+      0%,
+      100% {
+        opacity: 0.6;
+        text-shadow: 0 0 10px rgba(186, 163, 138, 0.4);
+        filter: saturate(0.6);
+      }
+
+      50% {
+        opacity: 0.95;
+        text-shadow: 0 0 20px rgba(186, 163, 138, 0.9), 0 0 35px rgba(186, 163, 138, 0.5);
+        filter: saturate(0.9);
+      }
+    }
+
+    .subtitle-glow {
+      animation: treasureGlow 5s ease-in-out infinite;
+      color: #BAA38A;
+      /* Desaturated gold */
+      font-family: 'Caslon Antique', serif;
+    }
+
+    @keyframes subtlePulse {
+
+      0%,
+      66.6%,
+      100% {
+        opacity: 0.6;
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
+      }
+
+      33.3% {
+        opacity: 0.9;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+      }
+    }
+
+    .running-count-pulse {
+      animation: subtlePulse 9s ease-in-out infinite;
+    }
+
+    .sub-text {
+      text-align: center;
+      font-size: 2.3rem;
+      max-width: 80%;
+      margin: 3rem auto 3rem auto;
+      width: 75%;
+    }
+
+    @keyframes etherealPulseTxt {
+
+      0%,
+      100% {
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.32), 0 0 18px rgba(255, 255, 255, 0.16);
+      }
+
+      50% {
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.45), 0 0 25px rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    @keyframes brightnessPulse {
+
+      0%,
+      100% {
+        opacity: 0.87;
+      }
+
+      50% {
+        opacity: 0.92;
+      }
+    }
+
+    .ethereal-glow-txt {
+      animation: etherealPulseTxt 5.75s ease-in-out infinite, brightnessPulse 10s ease-in-out infinite;
+    }
+
+    @keyframes gdOpacityPulse {
+
+      0%,
+      100% {
+        opacity: 0.8;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .gd-block-pulse {
+      animation: gdOpacityPulse 10s ease-in-out infinite;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes rainbowFadeSpecial {
+
+      0%,
+      100% {
+        color: #ffffff;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      }
+
+      50% {
+        color: hsl(var(--hue), 20%, 80%);
+        text-shadow: 0 0 15px hsl(var(--hue), 40%, 60%);
+      }
+    }
+
+    .rbw-letter {
+      animation: rainbowFadeSpecial 6s ease-in-out infinite;
+    }
+  </style>
+  <link href="css/txtcolor.css" rel="stylesheet" type="text/css">
+</head>
+
+
+<body>
+  <div class="glow" id="header">
+    <video class="header-magic active" id="hm1" autoplay muted loop playsinline>
+      <source src="https://captainscurses.org/webm/First%20Fin.webm" type="video/webm">
+    </video>
+    <video class="header-magic" id="hm2" muted loop playsinline>
+      <source src="https://captainscurses.org/webm/First%20Fin.webm" type="video/webm">
+    </video>
+    <img src="https://captainscurses.org/Images/oyo%20hed.png" id="headerim" class="ethereal-glow-img">
+
+    <div
+      style="display:flex; align-content: center; align-items: center; justify-content: center; gap: 2.7rem; margin-top: 1.5rem; margin-bottom: 2rem;">
+
+      <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png"
+        style="height: 0.7rem; opacity: 0.7; filter: saturate(0.5) sepia(0.3) hue-rotate(345deg) brightness(1.2);">
+
+      <div class="flx" style="letter-spacing: 0.6rem; text-align: center; height: 5vh; width: 100%;">
+        <p class="subtitle-glow" style="margin: 0;">Magical Treasure Hunting</p>
+      </div>
+
+      <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png"
+        style="height: 0.7rem; opacity: 0.7; filter: saturate(0.5) sepia(0.3) hue-rotate(345deg) brightness(1.2);">
+
+    </div>
+
+    <div class="flx" style="height:4vh; width:100%; margin:0 0 1rem 0;">
+
+
+      <img src="https://captainscurses.org/Images/Seperator.png" style="height:100%; width:auto">
+
+
+    </div>
+  </div>
+  <div id="menu">
+    <a href="dispersals_mobi.html"><img src="https://captainscurses.org/Images/Dispersals.png" id="disp" class="ethereal-glow-img"></a>
+    <a href="about_mobi.html"><img src="https://captainscurses.org/Images/About.png" id="about" class="ethereal-glow-img"></a>
+    <a href="Ledger/Ledger.html"><img src="https://captainscurses.org/Images/Ledger.png" id="ledger" class="ethereal-glow-img"></a>
+    <a href="visit_mobi.html"><img src="https://captainscurses.org/Images/Visitations.png" id="visit" class="ethereal-glow-img"></a>
+    <div>
+      <a href="submissions.html"><img src="https://captainscurses.org/Images/Submissions.png" id="sub" class="ethereal-glow-img"></a>
+      <video class="magic-video" id="candle-compound" autoplay muted loop playsinline>
+        <source src="https://captainscurses.org/webm/index%20candle%20compound.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div id="magic-decor-container">
+      <div class="magic-wrapper">
+        <video class="magic-video fade-vid active" id="magic-l1" muted playsinline>
+          <source src="https://captainscurses.org/webm/Fucking%20Magic-1.webm" type="video/webm">
+        </video>
+        <video class="magic-video fade-vid" id="magic-l2" muted playsinline>
+          <source src="https://captainscurses.org/webm/Fucking%20Magic-1.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="magic-wrapper right">
+        <video class="magic-video fade-vid right-magic active" id="magic-r1" muted playsinline>
+          <source src="https://captainscurses.org/webm/Fucking%20Magic-1.webm" type="video/webm">
+        </video>
+        <video class="magic-video fade-vid right-magic" id="magic-r2" muted playsinline>
+          <source src="https://captainscurses.org/webm/Fucking%20Magic-1.webm" type="video/webm">
+        </video>
+      </div>
+    </div>
+
+    <div class="sep-container" id="sep-wrap-2">
+      <div class="sep-inner">
+
+        <img src="https://captainscurses.org/Images/bottom%20legsep.png" id="seper2">
+
+      </div>
+    </div>
+  </div>
+
+  <div id="music">
+    <div class="echo-container left-echo">
+      <div class="torch-wrap sz-8">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-7">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-6">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-5">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-4">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-3">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-2">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <video class="mini-loop sz-1" autoplay muted loop playsinline>
+        <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+      </video>
+    </div>
+
+    <div id="ao-submit-container" style="position: relative; width: 46%; margin-top: 6%; flex-shrink: 0;">
+      <img src="https://captainscurses.org/Images/Index/Music%20of%20OYO.png" id="musictxt"
+        style="width: 100%; height: auto; margin: 0; z-index: 10; position: relative;">
+      <div style="position: absolute; top: 0; right: 0; transform: translate(-20%, -60%); z-index: -1;">
+        <div class="bobbing">
+          <video id="ao-submit-pulse" class="submit-ornament" autoplay muted loop playsinline>
+            <source src="https://captainscurses.org/webm/ao%20submit.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <div class="echo-container right-echo">
+      <div class="torch-wrap sz-1">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-2">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-3">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-4">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-5">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-6">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <div class="torch-wrap sz-7">
+        <video class="mini-loop" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+        <video class="tiny-torch" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+        </video>
+      </div>
+      <video class="mini-loop sz-8" autoplay muted loop playsinline>
+        <source src="https://captainscurses.org/webm/Torch%20L.webm" type="video/webm">
+      </video>
+    </div>
+  </div>
+
+  <img src="https://captainscurses.org/Images/moon%20sep.png" class="smalldiv" style="margin-top:2rem; margin-bottom:1rem;">
+
+  <div class="sep-container" id="sep-running-count"
+    style="margin-top: 2rem; margin-bottom: 2rem; display: flex; justify-content: center;">
+    <div class="sep-inner">
+      <div class="dot-crop left">
+        <video class="dot-video delay-5" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div id="rc" style="margin: 0;">
+        <p class="cas running-count-pulse">Running Count:</p>
+        <p class="cas running-count-pulse" id="music-total-count">0</p>
+      </div>
+      <div class="dot-crop right">
+        <video class="dot-video delay-6" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <img src="https://captainscurses.org/Images/moon%20sep.png" class="smalldiv oner">
+
+  <div id="trax">
+    <div class="track-wrap">
+      <audio id="a1" controls class="players"></audio>
+      <div id="name1" class="name tc cas"></div>
+      <div id="title1" class="title"></div>
+    </div>
+
+    <div class="track-wrap">
+      <audio id="a2" controls class="players"></audio>
+      <div id="name2" class="name al cas"></div>
+      <div id="title2" class="title"></div>
+    </div>
+  </div>
+
+  <div class="index-pagination fade-in">
+    <img src="https://captainscurses.org/Images/subar.png" id="leftar" class="leftar classy-arrow">
+
+    <div class="pagebox">
+      <div class="pageJump flx">
+        <input type="number" id="numbox" class="numbox classy-input" min="1">
+      </div>
+      <div class="flx oner"><button id="gobtn" class="classy-gobtn">•</button></div>
+    </div>
+
+    <img src="https://captainscurses.org/Images/subar.png" id="rightar" class="rightar classy-arrow">
+  </div>
+  <div id="pagenum" style="display:none;">0</div>
+  <img src="https://captainscurses.org/Images/Seperator.png" class="smalldiv header-sep-smaller oner">
+
+  <div class="sep-container" id="sep-oyo" style="margin-top: 2rem; width: 48%; display: flex; justify-content: center;">
+    <div class="sep-inner" style="width: 100%;">
+      <div class="orb-container left-orb-con">
+        <video class="orb-video flip-orb" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/left%20orb.mp4" type="video/mp4">
+        </video>
+        <video class="orb-video flip-orb" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/left%20orb.mp4" type="video/mp4">
+        </video>
+        <video class="orb-video flip-orb" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/left%20orb.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="flx" style="width: 100%; position: relative;">
+        <img src="https://captainscurses.org/Images/Images%20of%20OYO.png" style="width: 100%; height: auto; position: relative; z-index: 10;">
+        <div style="position: absolute; top: 0; right: 0; transform: translate(-20%, -60%); z-index: -1;">
+          <div class="bobbing">
+            <video id="ov-submit-pulse" class="submit-ornament" autoplay muted loop playsinline
+              style="transform: translate(-10%,0%);">
+              <source src="https://captainscurses.org/webm/Ov%20submit%20icon.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </div>
+      <div class="orb-container right-orb-con">
+        <video class="orb-video" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/right%20orb.mp4" type="video/mp4">
+        </video>
+        <video class="orb-video" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/right%20orb.mp4" type="video/mp4">
+        </video>
+        <video class="orb-video" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/right%20orb.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <img src="https://captainscurses.org/Images/moon%20sep.png" class="smalldiv" style="margin-top:2rem; margin-bottom:1rem;">
+
+  <div class="sep-container" id="sep-video-count"
+    style="margin-top: 2rem; margin-bottom: 2rem; display: flex; justify-content: center;">
+    <div class="sep-inner">
+      <div class="dot-crop left">
+        <video class="dot-video delay-9" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div id="rc-vid" style="margin: 0; display: flex; flex-direction: column; align-items: center;">
+        <p class="cas running-count-pulse">Running Count:</p>
+        <p class="cas running-count-pulse" id="video-total-count">0</p>
+      </div>
+      <div class="dot-crop right">
+        <video class="dot-video delay-10" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <img src="https://captainscurses.org/Images/moon%20sep.png" class="smalldiv flipy oner">
+
+  <div id="videosection">
+
+    <div id="videocon">
+
+      <div class="flx ytwrap" style="position:relative;">
+        <div class="ethereal-glow-txt sub-text fade-in cas"
+          style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.4; margin: 0; width: 100%; text-align: center; font-size: 1.8rem; z-index: -1;">
+          Nothing yet...</div>
+        <iframe id="v1" allowfullscreen style="position:relative; z-index: 1;"></iframe>
+        <div id="vname1" class="vname cas"></div>
+        <div id="vtitle1" class="vtitle cas"></div>
+      </div>
+
+      <div class="flx" style="margin: 0 1.5rem;">
+        <img src="https://captainscurses.org/Images/Index/videosep.png" style="height:2.25vh; max-height: 2.25vh; width:auto;">
+      </div>
+
+      <div class="ytwrap flx">
+        <iframe id="v2" allowfullscreen></iframe>
+        <div id="vname2" class="vname cas"></div>
+        <div id="vtitle2" class="vtitle cas"></div>
+      </div>
+
+    </div>
+
+    <div class="index-pagination fade-in">
+      <img src="https://captainscurses.org/Images/subar.png" id="vleft" class="leftar classy-arrow">
+
+      <div class="pagebox">
+        <div class="pageJump flx">
+          <input type="number" id="vinput" class="numbox classy-input" min="1">
+        </div>
+        <div class="flx oner"><button id="vgobtn" class="classy-gobtn">•</button></div>
+      </div>
+
+      <img src="https://captainscurses.org/Images/subar.png" id="vright" class="rightar classy-arrow">
+    </div>
+    <div id="vpagenum" style="display:none;">1</div>
+
+  </div>
+
+  <div class="sep-container" id="sep-bottom-video" style="margin-top: 1rem; width: 17%; margin-bottom:1rem">
+    <div class="sep-inner">
+      <div class="dot-crop left">
+        <video class="dot-video no-fade delay-7" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+        </video>
+      </div>
+      <img src="https://captainscurses.org/Images/bottom%20legsep.png" class="flipx" style="width: 100%; height: auto; display: block;">
+      <div class="dot-crop right">
+        <video class="dot-video no-fade delay-8" autoplay muted loop playsinline>
+          <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <div class="gd-block-pulse">
+    <div class="flx fade-in" style="height:1.4vh; margin: 3rem 0 1.5rem 0;">
+      <img src="https://captainscurses.org/Images/subsep.png" class="subtle-glow-pulse-white"
+        style="height:100%; width:auto; opacity:0.8; min-height:28px">
+    </div>
+
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-top: 1rem;">
+      As of 3 / 3 / 2026, the <span class="oyo-time">O.Y.O</span> exists in a state of preparation,
+      awaiting the Great Dispersal.
+      <br><br>
+      <span id="countdown-display" style="font-size: 2.8rem; letter-spacing: 0.2rem;">XXXXhr XXmin</span><br>
+
+      <span style="font-size: 1.7rem; opacity: 0.7;">remaining to 11:59 am 12/31/2028</span>
+    </p>
+
+    <div class="flx fade-in flipx" style="height:1.4vh; margin: 1.5rem 0 3rem 0;">
+      <img src="https://captainscurses.org/Images/subsep.png" class="subtle-glow-pulse-white"
+        style="height:95%; width:auto; opacity:0.7; min-height:28px">
+    </div>
+  </div>
+
+  <script>
+    const tracks = [
+      { name: "TC", title: "Bullfrog Ballpit", src: "https://captainscurses.org/Bullfrog%20Ballpit%202.wav" }
+    ];
+
+    const videos = [];
+
+    // =======================
+    // TRACK ELEMENTS
+    // =======================
+    let page = 0;
+    const a1 = document.getElementById("a1");
+    const a2 = document.getElementById("a2");
+    const name1 = document.getElementById("name1");
+    const name2 = document.getElementById("name2");
+    const title1 = document.getElementById("title1");
+    const title2 = document.getElementById("title2");
+    const pagenum = document.getElementById("pagenum");
+    const leftar = document.getElementById("leftar");
+    const rightar = document.getElementById("rightar");
+    const pageInput = document.getElementById("numbox");
+    const gobtn = document.getElementById("gobtn");
+    const totalPages = Math.ceil(tracks.length / 2);
+
+    // =======================
+    // VIDEO ELEMENTS
+    // =======================
+    let vpage = 0;
+    const v1 = document.getElementById("v1");
+    const v2 = document.getElementById("v2");
+    const vname1 = document.getElementById("vname1");
+    const vname2 = document.getElementById("vname2");
+    const vtitle1 = document.getElementById("vtitle1");
+    const vtitle2 = document.getElementById("vtitle2");
+    const vpagenum = document.getElementById("vpagenum");
+    const vleft = document.getElementById("vleft");
+    const vright = document.getElementById("vright");
+    const vinput = document.getElementById("vinput");
+    const vgobtn = document.getElementById("vgobtn");
+    const vtotalPages = Math.ceil(videos.length / 2);
+
+    // =======================
+    // TRACK FUNCTIONS
+    // =======================
+    function loadPage(p) {
+      if (pagenum) pagenum.textContent = p + 1;
+      if (pageInput) pageInput.value = p + 1;
+      const t1 = tracks[p * 2];
+      const t2 = tracks[p * 2 + 1];
+
+      if (t1) {
+        a1.src = t1.src;
+        name1.textContent = t1.name;
+        title1.textContent = `"${t1.title}"`;
+      } else {
+        a1.src = "";
+        name1.textContent = "";
+        title1.textContent = "";
+      }
+
+      if (t2) {
+        a2.src = t2.src;
+        name2.textContent = t2.name;
+        title2.textContent = `"${t2.title}"`;
+      } else {
+        a2.src = "";
+        name2.textContent = "";
+        title2.textContent = "";
+      }
+    }
+
+    rightar.onclick = () => {
+      if ((page + 1) * 2 < tracks.length) {
+        page++;
+        loadPage(page);
+      }
+    };
+
+    leftar.onclick = () => {
+      if (page > 0) {
+        page--;
+        loadPage(page);
+      }
+    };
+
+    gobtn.addEventListener("click", () => {
+      let wantedPage = parseInt(pageInput.value) - 1;
+      if (!isNaN(wantedPage) && wantedPage >= 0 && wantedPage < totalPages) {
+        page = wantedPage;
+        loadPage(page);
+      }
+      pageInput.value = "";
+    });
+
+    pageInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") gobtn.click();
+    });
+
+    // =======================
+    // VIDEO FUNCTIONS
+    // =======================
+    function loadVideoPage(p) {
+      if (vpagenum) vpagenum.textContent = p + 1;
+      if (vinput) vinput.value = p + 1;
+      const vid1 = videos[p * 2];
+      const vid2 = videos[p * 2 + 1];
+
+      if (vid1) {
+        v1.src = `https://www.youtube.com/embed/${vid1.youtube}`;
+        vname1.textContent = vid1.name;
+        vtitle1.textContent = `"${vid1.title}"`;
+        v1.style.visibility = 'visible';
+      } else {
+        v1.src = "";
+        vname1.textContent = "";
+        vtitle1.textContent = "";
+        v1.style.visibility = 'hidden';
+      }
+
+      if (vid2) {
+        v2.src = `https://www.youtube.com/embed/${vid2.youtube}`;
+        vname2.textContent = vid2.name;
+        vtitle2.textContent = `"${vid2.title}"`;
+        v2.style.visibility = 'visible';
+      } else {
+        v2.src = "";
+        vname2.textContent = "";
+        vtitle2.textContent = "";
+        v2.style.visibility = 'hidden';
+      }
+    }
+
+    vright.onclick = () => {
+      if ((vpage + 1) * 2 < videos.length) {
+        vpage++;
+        loadVideoPage(vpage);
+      }
+    };
+
+    vleft.onclick = () => {
+      if (vpage > 0) {
+        vpage--;
+        loadVideoPage(vpage);
+      }
+    };
+
+    vgobtn.addEventListener("click", () => {
+      let wanted = parseInt(vinput.value) - 1;
+      if (!isNaN(wanted) && wanted >= 0 && wanted < vtotalPages) {
+        vpage = wanted;
+        loadVideoPage(vpage);
+      }
+      vinput.value = "";
+    });
+
+    vinput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") vgobtn.click();
+    });
+
+    // =======================
+    // INITIAL LOAD
+    // =======================
+    loadPage(page);
+    loadVideoPage(vpage);
+
+    // Set Music Count
+    const musicTotalCount = document.getElementById("music-total-count");
+    if (musicTotalCount) {
+      musicTotalCount.textContent = tracks.length;
+    }
+
+    // Set Video Count
+    const videoTotalCount = document.getElementById("video-total-count");
+    if (videoTotalCount) {
+      videoTotalCount.textContent = videos.length;
+    }
+
+    // ==========================================
+    // SURGICAL CROSSFADE CONTROLLER (UNIFIED & PRE-BUFFERED)
+    // ==========================================
+    async function setupSurgicalSync(videoPairs, triggerOffset, fadeDurMs) {
+      const groupA = videoPairs.map(p => p[0]);
+      const groupB = videoPairs.map(p => p[1]);
+      let activeGroup = groupA, nextGroup = groupB;
+      let isFading = false;
+
+      async function prepareAndPlay(group) {
+        for (const v of group) {
+          v.currentTime = 0;
+          v.pause();
+        }
+        await new Promise(r => setTimeout(r, 100));
+        return Promise.all(group.map(v => v.play()));
+      }
+
+      // Initial playback
+      await prepareAndPlay(groupA);
+      groupB.forEach(v => { v.style.opacity = '0'; v.pause(); });
+
+      function checkLoop() {
+        const master = activeGroup[0];
+        if (master && master.duration && !isFading) {
+          if (master.currentTime >= master.duration - (fadeDurMs / 1000 + triggerOffset)) {
+            isFading = true;
+            prepareAndPlay(nextGroup).then(() => {
+              activeGroup.forEach(v => {
+                v.style.transition = `opacity ${fadeDurMs}ms ease-in-out`;
+                v.style.opacity = '0';
+                v.classList.remove('active');
+              });
+              nextGroup.forEach(v => {
+                v.style.transition = `opacity ${fadeDurMs}ms ease-in-out`;
+                v.style.opacity = '1';
+                v.classList.add('active');
+              });
+
+              const old = activeGroup;
+              activeGroup = nextGroup;
+              nextGroup = old;
+
+              setTimeout(() => {
+                old.forEach(v => {
+                  v.pause();
+                  v.style.transition = 'none';
+                });
+                isFading = false;
+              }, fadeDurMs + 500);
+            }).catch(e => {
+              console.error("Sync Play Failed", e);
+              isFading = false;
+            });
+          }
+        }
+        requestAnimationFrame(checkLoop);
+      }
+      requestAnimationFrame(checkLoop);
+    }
+
+    // Initialize synchronized instances
+    setupSurgicalSync([
+      [document.getElementById('hm1'), document.getElementById('hm2')]
+    ], 0.5, 1500);
+
+    setupSurgicalSync([
+      [document.getElementById('magic-l1'), document.getElementById('magic-l2')],
+      [document.getElementById('magic-r1'), document.getElementById('magic-r2')]
+    ], 1.0, 4000);
+
+    // =======================
+    // SUBMIT ICONS PULSE (AO & OV)
+    // =======================
+    (function () {
+      const pulseVids = [
+        document.getElementById('ao-submit-pulse'),
+        document.getElementById('ov-submit-pulse')
+      ];
+
+      let phase = 'out'; // Start by fading out from 0.8
+
+      function animatePulse() {
+        const transStr = `opacity 6s ease-in-out`;
+
+        pulseVids.forEach(vid => {
+          if (vid) {
+            vid.addEventListener('mouseenter', () => pulseVids[1].style.opacity = '1');
+            vid.addEventListener('mouseleave', () => pulseVids[1].style.opacity = '0.8');
+          }
+        });
+
+        pulseVids.forEach(vid => {
+          if (vid) {
+            vid.style.transition = transStr;
+            const targetOpacity = (phase === 'in') ? 0.8 : 0;
+            vid.style.opacity = targetOpacity;
+          }
+        });
+
+        setTimeout(() => {
+          phase = (phase === 'in') ? 'out' : 'in';
+          animatePulse();
+        }, 6000);
+      }
+
+      // Initial state
+      pulseVids.forEach(vid => {
+        if (vid) vid.style.opacity = 0.8;
+      });
+      setTimeout(animatePulse, 100);
+    })();
+
+    // =======================
+    // GREAT DISPERSAL LOGIC (TIMER & GLOW)
+    // =======================
+    (function () {
+      function updateCountdown() {
+        const targetDate = new Date('December 31, 2028 11:59:00').getTime();
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          const el = document.getElementById('countdown-display');
+          if (el) el.textContent = "00:00";
+          return;
+        }
+
+        const totalMinutes = Math.floor(diff / (1000 * 60));
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+
+        const display = `${hours.toLocaleString()}hr ${minutes.toString().padStart(2, '0')}min`;
+        const el = document.getElementById('countdown-display');
+        if (el) el.textContent = display;
+      }
+      setInterval(updateCountdown, 10000);
+      updateCountdown();
+    })();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const phrases = document.querySelectorAll('.special-phrase');
+      phrases.forEach(el => {
+        const text = el.getAttribute('data-text');
+        if(text) {
+          el.innerHTML = '';
+          for (let i = 0; i < text.length; i++) {
+            if (text[i] === ' ') {
+              el.appendChild(document.createTextNode(' '));
+            } else {
+              const span = document.createElement('span');
+              span.className = 'rbw-letter';
+              span.textContent = text[i];
+              span.style.setProperty('--hue', (i * 20));
+              el.appendChild(span);
+            }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

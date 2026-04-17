@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="Ledger/css/Ledger_main.css" rel="stylesheet" type="text/css">
+    <link href="css/txtcolor.css" rel="stylesheet" type="text/css">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Caslon Antique', serif;
+        }
+
+        .role-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .role-item {
+            font-size: 2.25rem;
+            margin-top: 0.5rem;
+            text-align: left;
+            margin-left: 1.2rem;
+            cursor: pointer;
+        }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .role-arrow {
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .role-expanded .role-arrow {
+            transform: rotate(90deg);
+        }
+
+        .role-desc {
+            display: none;
+            font-size: 1.1rem;
+            margin-left: 2.3rem;
+            /* Align text under role name */
+            margin-right: 1.2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            text-shadow: none;
+            /* remove glow from body text */
+            line-height: 1.4;
+            font-family: 'Times New Roman', Times, serif;
+            /* simple fallback */
+            text-align: left;
+            margin-left: 0;
+            padding-left: 2.3rem;
+            /* match arrow padding */
+            box-sizing: border-box;
+        }
+
+        .role-expanded .role-desc {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .role-desc img,
+        .role-desc video {
+            max-width: 100%;
+            height: auto;
+            margin: 1.2rem auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        .role-desc p {
+            margin-bottom: 0.8rem;
+            white-space: normal;
+            text-align: left;
+        }
+
+        .flx {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes finColorCycle {
+            0% {
+                filter: hue-rotate(0deg) saturate(1) brightness(1);
+            }
+
+            33% {
+                filter: hue-rotate(120deg) saturate(1.2) brightness(1.1);
+            }
+
+            66% {
+                filter: hue-rotate(240deg) saturate(0.8) brightness(0.9);
+            }
+
+            100% {
+                filter: hue-rotate(360deg) saturate(1) brightness(1);
+            }
+        }
+
+        .snow-decor {
+            height: 4vh;
+            width: auto;
+            mix-blend-mode: screen;
+            opacity: 0.8;
+            animation: finColorCycle 10s linear infinite;
+        }
+
+        .snow-decor-large {
+            height: 4.4vh;
+            /* 10% larger */
+            width: auto;
+            mix-blend-mode: screen;
+            opacity: 0.8;
+            animation: finColorCycle 10s linear infinite reverse;
+        }
+
+        #rcandpage {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+            justify-content: flex-start;
+            width: 80%;
+            padding: 0 5px;
+            margin-top: 2%;
+            margin-bottom: 2rem;
+            margin-left: clamp(1rem, 5vw, 4.5rem);
+        }
+
+        @keyframes subtlePulse {
+
+            0%,
+            66.6%,
+            100% {
+                opacity: 0.6;
+                filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
+            }
+
+            33.3% {
+                opacity: 0.9;
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6));
+            }
+        }
+
+        .running-count-pulse {
+            animation: subtlePulse 9s ease-in-out infinite;
+        }
+        /* --- PAGINATION STYLES --- */
+        .index-pagination {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .classy-arrow {
+            cursor: pointer;
+            transition: all 0.4s ease;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+            width: 1.6rem;
+            height: auto;
+        }
+
+        .classy-arrow:hover {
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) brightness(1.2);
+            transform: scale(1.1);
+        }
+
+        .classy-arrow.leftar {
+            transform: scaleX(-1);
+        }
+
+        .classy-arrow.leftar:hover {
+            transform: scaleX(-1) scale(1.1);
+        }
+
+        .pagebox {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+            gap: 0.5rem;
+        }
+
+        .pageJump {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .classy-input {
+            width: 34px !important;
+            max-width: 10vw !important;
+            height: 34px !important;
+            max-height: 10vw !important;
+            background: rgba(10, 10, 10, 0.6) !important;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.5) !important;
+            text-align: center;
+            font-size: clamp(0.7rem, 2.5vw, 1.2rem) !important;
+            font-family: 'Caslon Antique', serif !important;
+            border-radius: 6px !important;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1) !important;
+            transition: all 0.3s ease !important;
+            margin: 0 !important;
+        }
+
+        .classy-input:focus {
+            outline: none !important;
+            border-color: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important;
+            background: rgba(20, 20, 20, 0.8) !important;
+        }
+
+        .classy-gobtn {
+            background: transparent !important;
+            color: white;
+            border: none;
+            padding: 0 0.5rem;
+            cursor: pointer;
+            font-size: clamp(1rem, 4vw, 2rem) !important;
+            line-height: 1;
+            font-family: 'Caslon Antique', serif;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            align-self: center;
+            margin: 0 !important;
+        }
+
+        .classy-gobtn:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main-content" style="position: relative; z-index: 1;">
+
+        <!-- Header -->
+        <div id="headr" class="flx fade-in" style="margin-top:2rem; margin-bottom: 1rem; cursor: pointer;"
+            onclick="window.history.back();">
+            <img src="https://captainscurses.org/Images/Images%20of%20OYO.png" class="ethereal-glow-img"
+                style="height:auto; width:95%; max-width:443px; min-width:235px" alt="Roles of OYO">
+        </div>
+
+        <div class="flx oner fade-in"
+            style="height:auto; width:100%; margin-bottom: 2.5rem; flex-direction: column; text-align: center;">
+
+            <div class="flx" style="height:2vh; width:100%; margin-bottom:1rem"><img src="https://captainscurses.org/Images/subsep.png"
+                    style="height:100%; width:auto"></div>
+
+            <div class="flx" style="flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
+                <video class="snow-decor-large" autoplay muted loop playsinline style="transform: scaleX(-1);">
+                    <source src="https://captainscurses.org/webm/snow.webm" type="video/webm">
+                </video>
+                <video class="snow-decor" autoplay muted loop playsinline>
+                    <source src="https://captainscurses.org/webm/snow.webm" type="video/webm">
+                </video>
+                <p style="font-size:0.8rem; margin: 0;">Roles of <span class="wrld">O.Y.O</span></p>
+                <video class="snow-decor" autoplay muted loop playsinline style="transform: scaleX(-1);">
+                    <source src="https://captainscurses.org/webm/snow.webm" type="video/webm">
+                </video>
+                <video class="snow-decor-large" autoplay muted loop playsinline>
+                    <source src="https://captainscurses.org/webm/snow.webm" type="video/webm">
+                </video>
+            </div>
+
+            <div class="flx flipx" style="height:2vh; width:100%; margin-top:1rem"><img src="https://captainscurses.org/Images/subsep.png"
+                    style="height:100%; width:auto; transform: scaleX(-1);"></div>
+
+        </div>
+
+        <!-- Running Count -->
+        <div id="rcandpage">
+            <div id="rc-container" class="flx" style="flex-direction: row; align-items: center; gap: 0.5rem; font-size:1.2rem">
+                <div id="title" class="ttl running-count-pulse">Running Count:</div>
+                <div id="count" class="ttl running-count-pulse"></div>
+            </div>
+        </div>
+
+        <!-- Roles Container -->
+        <div class="role-list" id="role-container">
+
+            <!-- Incinterator Role -->
+            <div class="role-item incin ethereal-glow-txt" onclick="this.classList.toggle('role-expanded')">
+                <div class="role-header">
+                    <span class="role-arrow">▶</span>
+                    <span>Incinterator</span>
+                </div>
+                <div class="role-desc">
+                    <p>The Incinterator is a master of cinders and ash, charged with the solemn duty of returning
+                        worldly elements to their base states through the purifying embrace of flame.</p>
+                    <img src="https://captainscurses.org/Images/noun%20candle.png" class="ethereal-glow-img" style="width: 80px;" alt="Candle">
+                    <p>They act as catalysts of transformation. When artifacts and ethereal bindings have served their
+                        purpose, the Incinterator ensures their energies are released back into the void, preventing
+                        spiritual stagnation within the Archive.</p>
+                </div>
+            </div>
+
+            <!-- Watcher Role -->
+            <div class="role-item watc ethereal-glow-txt" onclick="this.classList.toggle('role-expanded')">
+                <div class="role-header">
+                    <span class="role-arrow">▶</span>
+                    <span>Watcher</span>
+                </div>
+                <div class="role-desc">
+                    <p>Tethered to the boundary places, the Watcher maintains vigil over the thresholds of the Archive.
+                        Their sight pierces through veils, bearing witness to both the manifested and the ethereal.</p>
+                    <img src="https://captainscurses.org/Images/FACEGATE.png" class="ethereal-glow-img" style="width: 180px;"
+                        alt="Watcher Facegate">
+                    <p>They are the silent observers, recording shifts in resonance and documenting spectral anomalies.
+                        A Watcher never interferes directly but their vigilance acts as a shield against unraveling
+                        forces.</p>
+                </div>
+            </div>
+
+            <!-- Initiate Role -->
+            <div class="role-item init ethereal-glow-txt" onclick="this.classList.toggle('role-expanded')">
+                <div class="role-header">
+                    <span class="role-arrow">▶</span>
+                    <span>Initiate</span>
+                </div>
+                <div class="role-desc">
+                    <p>Standing at the precipice of esoteric knowledge, the Initiate begins the slow descent into the
+                        mysteries of the Ordo Yule Orphic. Their tasks are minor but absolutely crucial to the
+                        foundation of deeper rites.</p>
+                    <img src="https://captainscurses.org/Images/Ledger.png" class="ethereal-glow-img" style="width: 120px;" alt="Initiate Ledger">
+                    <p>Every Initiate must prove their attunement through service and alignment. They are the newly
+                        awakened, learning to navigate the frequencies and rhythms of the arcane currents.</p>
+                </div>
+            </div>
+
+            <!-- Archivist Role -->
+            <div class="role-item arc ethereal-glow-txt" onclick="this.classList.toggle('role-expanded')">
+                <div class="role-header">
+                    <span class="role-arrow">▶</span>
+                    <span>Archivist</span>
+                </div>
+                <div class="role-desc">
+                    <p>The Archivist is the guardian of sequence and record. They catalog the influx of Gifts and ensure
+                        the Ledger remains an unbroken chain of causality.</p>
+                    <img src="https://captainscurses.org/Images/Ledger.png" class="ethereal-glow-img" style="width: 120px;" alt="Archivist Ledger">
+                    <p>Their precision is their power. To name a thing correctly is to bind it to the Archive forever.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Scribe Role -->
+            <div class="role-item scrb ethereal-glow-txt" onclick="this.classList.toggle('role-expanded')">
+                <div class="role-header">
+                    <span class="role-arrow">▶</span>
+                    <span>Scribe</span>
+                </div>
+                <div class="role-desc">
+                    <p>The Scribe translates the ephemeral whispers of the Archive into the permanent ink of the Ledger.
+                        They capture the essence of Visitations and the intent of Dispersals.</p>
+                    <p>Every stroke of their pen is a ritual in itself, a method of stabilizing the shifting realities of
+                        the O.Y.O.</p>
+                </div>
+            </div>
+
+            <!-- Herald Role -->
+            <div class="role-item herld ethereal-glow-txt" onclick="this.classList.toggle('role-expanded')">
+                <div class="role-header">
+                    <span class="role-arrow">▶</span>
+                    <span>Herald</span>
+                </div>
+                <div class="role-desc">
+                    <p>The Herald announces the shifting phases of the Archive to the outer world. They are the voice of
+                        the Ordo, calling participants to enact new rituals.</p>
+                    <p>When the Great Dispersal calls, it is the Herald who sounds the resonance.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Paginator -->
+        <div class="index-pagination fade-in">
+            <img src="https://captainscurses.org/Images/subar.png" class="leftar classy-arrow" onclick="changePage(-1)">
+            <div class="pagebox">
+                <div class="pageJump flx">
+                    <input type="number" id="page-input" class="numbox classy-input" min="1" placeholder="1">
+                </div>
+                <div class="flx oner"><button id="gobtn" class="classy-gobtn" onclick="gotoPage()">•</button></div>
+            </div>
+            <img src="https://captainscurses.org/Images/subar.png" class="rightar classy-arrow" onclick="changePage(1)">
+        </div>
+
+        <!-- Back Separator -->
+        <div class="sep-container flx" style="margin-top: 5rem; margin-bottom: 2rem; width: 100%;">
+            <a href="Ledger/Ledger.html" style="text-decoration:none; display: inline-block;">
+                <img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img"
+                    style="height:3.3vh;width:auto; max-width: 200px; opacity:0.8;" alt="Back">
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        let roles = [];
+        let currentPage = 1;
+        const rolesPerPage = 4;
+        let totalPages = 1;
+
+        // Initialize Paginator
+        function initPaginator() {
+            roles = Array.from(document.querySelectorAll('.role-item'));
+            totalPages = Math.ceil(roles.length / rolesPerPage);
+            showPage(1);
+        }
+
+        function showPage(page) {
+            currentPage = page;
+            const start = (page - 1) * rolesPerPage;
+            const end = start + rolesPerPage;
+
+            roles.forEach((role, index) => {
+                role.style.display = (index >= start && index < end) ? 'block' : 'none';
+            });
+
+            document.getElementById('page-input').placeholder = currentPage;
+            
+            // Running Count
+            const countEl = document.getElementById('count');
+            if (countEl) countEl.textContent = roles.length;
+        }
+
+        function changePage(delta) {
+            let next = currentPage + delta;
+            if (next < 1) next = totalPages;
+            if (next > totalPages) next = 1;
+            showPage(next);
+        }
+
+        function gotoPage() {
+            const input = document.getElementById('page-input');
+            let val = parseInt(input.value);
+            if (!isNaN(val) && val >= 1 && val <= totalPages) {
+                showPage(val);
+            }
+            input.value = "";
+        }
+
+        // Fade in text elements on load
+        document.addEventListener("DOMContentLoaded", () => {
+            initPaginator();
+
+            const texts = document.querySelectorAll('.ethereal-glow-txt');
+            texts.forEach((el, index) => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.style.transition = 'opacity 1.5s ease-in';
+                    el.style.opacity = '1';
+                }, 300 + (index * 200));
+            });
+        });
+    </script>
+</body>
+
+</html>

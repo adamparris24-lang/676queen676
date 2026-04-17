@@ -1,0 +1,531 @@
+/* Disp1_arch.css - Refined & Scaled */
+
+/* ================= BASE STYLES ================= */
+#numbox::-webkit-outer-spin-button,
+#numbox::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+#numbox[type=number] {
+	-moz-appearance: textfield;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	margin: 0;
+	background: black;
+	color: white;
+	font-family: 'CaslonAntique', serif;
+	font-size: 1.4rem;
+}
+
+p {
+	white-space: pre;
+	text-align: center;
+	margin: 0
+}
+
+a {
+	margin: 0;
+	color: inherit;
+	text-decoration: none;
+	font-weight: inherit;
+	cursor: pointer;
+}
+
+a:hover {
+	color: palegoldenrod;
+	text-decoration: none;
+}
+
+.flx {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.oner {
+	margin-top: 1rem;
+}
+
+/* ================= HEADER ================= */
+#divider {
+	margin-top: 1.2rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.backcont {
+	margin-top: 0.5rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: opacity 0.2s;
+}
+
+.backcont:hover {
+	opacity: 0.7;
+}
+
+#backar {
+	width: 100%;
+	max-width: 535px;
+	height: auto;
+	object-fit: contain;
+	margin-bottom: 0.5rem;
+	opacity: 0.9;
+}
+
+/* ================= CONTROLS & PAGINATION ================= */
+#controls-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 5rem;
+	margin: 0 0 2rem;
+	width: 90%;
+}
+
+#pagination {
+	gap: 4rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+#enactments-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* Buttons & Inputs (Based on disp_list but larger) */
+.smallbtn,
+#date-go {
+	background: black;
+	color: white;
+	border: 1px solid white;
+	border-radius: 10px;
+	padding: 1.2rem 1.2rem;
+	font-size: 2.7rem;
+	cursor: pointer;
+	font-family: inherit;
+	min-width: auto;
+}
+
+.smallbtn:hover,
+#date-go:hover {
+	background: #333;
+}
+
+#numbox {
+	background: black;
+	border: 1px solid white;
+	color: white;
+	text-align: center;
+	width: 72px;
+	height: 72px;
+	font-size: 2.2rem;
+	font-family: inherit;
+	border-radius: 10px;
+}
+
+/* ... (skipping unchanged parts) ... */
+
+.sidetxt {
+	font-size: 1.8rem;
+	/* Larger */
+	opacity: 0.9;
+	margin-top: 2rem;
+	/* Bigger margin */
+	margin-bottom: 25px;
+	/* Slightly more bottom margin too */
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+/* ================= TEXT CLASSES (REFACTORED) ================= */
+/* Replaces old .ttl class */
+
+.enactment-label {
+	font-size: 2rem;
+	text-align: center;
+}
+
+.enactment-count {
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+.date-text {
+	font-size: 2.5rem;
+	text-align: center;
+	color: #FFB3BA;
+	margin-top: 1rem;
+}
+
+.author-name {
+	font-size: 2.5rem;
+	text-align: center;
+	margin-top: 1.5rem;
+}
+
+.section-title {
+	margin: 4rem 0 1.5rem 0;
+	font-size: 3.5rem;
+	/* Larger */
+	width: 80%;
+	text-align: center;
+	padding-bottom: 0.8rem;
+	letter-spacing: 0.15rem;
+	color: #ffd6a5;
+	text-transform: uppercase;
+	text-shadow: 0 0 10px rgba(255, 214, 165, 0.3);
+}
+
+/* ================= DIVIDERS ================= */
+.custom-divider {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 4rem 0;
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 2rem;
+}
+
+.custom-divider::before,
+.custom-divider::after {
+	content: "";
+	height: 1px;
+	width: 15%;
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+	margin: 0 1.5rem;
+}
+
+.divider-img {
+	display: none;
+}
+
+/* ================= CONTENT SECTIONS ================= */
+
+/* Writing */
+#writing-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 90%;
+	max-width: 840px;
+	margin: 3rem 0;
+}
+
+#writing-box {
+	width: 100%;
+	height: 666px;
+	overflow-y: auto;
+	background: rgba(255, 255, 255, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	padding: 2rem;
+	border-radius: 20px;
+	box-sizing: border-box;
+	font-size: 1.7rem;
+	/* Readable scaled */
+	line-height: 1.6;
+	text-align: left;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollbar */
+#writing-box::-webkit-scrollbar {
+	width: 10px;
+}
+
+#writing-box::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+}
+
+#writing-box::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 5px;
+}
+
+#writing-controls {
+	display: flex;
+	gap: 3rem;
+	margin-top: 1.5rem;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Photos */
+#photo-browser {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 2% 0;
+	flex-direction: column;
+	width: 100%;
+}
+
+#photo-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 1.5rem 0;
+	width: 100%;
+}
+
+#photo {
+	width: 80%;
+	max-width: 530px;
+	height: auto;
+	aspect-ratio: 1 / 1;
+	/* Square crop */
+	object-fit: cover;
+	border-radius: 20px;
+	box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+	cursor: pointer;
+	transition: transform 0.2s;
+}
+
+#photo:hover {
+	transform: scale(1.02);
+}
+
+
+#photo-counter {
+	color: white;
+	margin-top: 1rem;
+	font-size: 1.4rem;
+}
+
+#arrowcon {
+	display: flex;
+	gap: 3rem;
+	margin-top: 1rem;
+}
+
+.arrow {
+	background: transparent;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	color: white;
+	font-size: 2.1rem;
+	padding: 0.2rem 1.5rem;
+	cursor: pointer;
+	font-family: inherit;
+	border-radius: 8px;
+	transition: background 0.2s;
+}
+
+.arrow:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
+/* Video */
+#videosection {
+	width: 95%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 2rem 0;
+}
+
+.ytwrap {
+	width: 100%;
+	max-width: 560px;
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+iframe {
+	width: 100%;
+	aspect-ratio: 16/9;
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.vtitle {
+	margin-top: 1rem;
+	font-size: 1.7rem;
+	color: #ccc;
+	text-align: center;
+}
+
+#videopages {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	margin-top: 1rem;
+}
+
+.vpage {
+	font-size: 1.7rem;
+}
+
+/* Audio */
+#audiocon {
+	width: 100%;
+	/* Container takes full width to allow children to size correctly */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2rem;
+	margin: 3rem 0;
+}
+
+.audio-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 85%;
+	/* REQUESTED: 85% width */
+	max-width: 1200px;
+	/* High max-width to allow growth */
+	margin: 2.5rem 0;
+}
+
+.players {
+	width: 100%;
+	height: 60px;
+	/* Slightly taller for ease of use */
+	color-scheme: dark;
+}
+
+.sidetxt {
+	font-size: 1.8rem;
+	opacity: 0.9;
+	margin-top: 2rem;
+	margin-bottom: 25px;
+	text-align: center;
+	letter-spacing: 1px;
+}
+
+#date-prev {
+	padding-top: 3rem;
+	padding-left: 4rem;
+	padding-right: 4rem
+}
+
+#date-next {
+	padding-top: 3rem;
+	padding-left: 4rem;
+	padding-right: 4rem
+}
+
+/* ===== CLASSY PAGINATION ===== */
+.index-pagination {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	margin-top: 2rem;
+	width: 100%;
+}
+
+@media (min-width: 600px) {
+	.index-pagination {
+		gap: 3rem;
+	}
+}
+
+.classy-arrow {
+	cursor: pointer;
+	transition: all 0.4s ease;
+	filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+	width: 4rem;
+	height: auto;
+}
+
+.classy-arrow:hover {
+	filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)) brightness(1.2);
+	transform: scale(1.1);
+}
+
+.classy-arrow.leftar {
+	transform: scaleX(-1);
+}
+
+.classy-arrow.leftar:hover {
+	transform: scaleX(-1) scale(1.1);
+}
+
+.pagebox {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+	gap: 0.5rem;
+}
+
+.pageJump {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.classy-input {
+	width: 82px !important;
+	max-width: 18vw !important;
+	height: 82px !important;
+	max-height: 18vw !important;
+	background: rgba(10, 10, 10, 0.6) !important;
+	backdrop-filter: blur(4px);
+	-webkit-backdrop-filter: blur(4px);
+	color: white !important;
+	border: 1px solid rgba(255, 255, 255, 0.5) !important;
+	text-align: center;
+	font-size: clamp(1.5rem, 6vw, 3rem) !important;
+	font-family: 'CaslonAntique', serif !important;
+	border-radius: 12px !important;
+	box-shadow: 0 0 10px rgba(255, 255, 255, 0.1) !important;
+	transition: all 0.3s ease !important;
+	margin: 0 !important;
+}
+
+.classy-input:focus {
+	outline: none !important;
+	border-color: rgba(255, 255, 255, 0.9) !important;
+	box-shadow: 0 0 20px rgba(255, 255, 255, 0.4) !important;
+	background: rgba(20, 20, 20, 0.8) !important;
+}
+
+.classy-gobtn {
+	background: transparent !important;
+	color: white;
+	border: none;
+	padding: 0 1rem;
+	cursor: pointer;
+	font-size: clamp(2rem, 8vw, 5rem) !important;
+	line-height: 1;
+	font-family: 'CaslonAntique', serif;
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	transition: all 0.3s ease;
+	align-self: center;
+	margin: 0 !important;
+}
+
+.classy-gobtn:hover {
+	text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6) !important;
+	transform: scale(1.1);
+}

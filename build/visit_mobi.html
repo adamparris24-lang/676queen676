@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1" charset="utf-8">
+    <title>Visitations</title>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRySDApVVmisl7oqPbInB0dCHSdvVhEjA&loading=async&callback=initMap">
+</script>
+    <link href="css/dispersals/dispersals.css" rel="stylesheet" type="text/css">
+    <link href="css/txtcolor.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+    <div id="mapcon">
+        <div id="map"></div>
+    </div>
+
+    <div id="overlay">
+        <div id="logodiv" style="height:9vh;">
+            <a href="index_mobi.html" id="logo-link" class="fade-in">
+                <img src="https://captainscurses.org/Images/dispersals/backar.png" id="logo" class="dark-ethereal-glow-img">
+            </a>
+        </div>
+           
+            <div id="links-stack" class="fade-in">
+                <a href="about_mobi.html#visitation-info" class="vis-link-box dark-ethereal-glow-txt">
+                    About
+                </a>
+                <a href="visit_list.html" class="vis-link-box dark-ethereal-glow-txt">
+                    List
+                </a>
+            </div>
+
+    </div>
+
+    <div id="pinbox">
+        <div id="pinbox-close">×</div>
+        <div id="pinbox-content"></div>
+    </div>
+
+    <div id="zoom-controls">
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() + 1)">+</button>
+        <button class="zoom-btn" onclick="map.setZoom(map.getZoom() - 1)">-</button>
+    </div>
+
+    <style>
+        /* Pin styling from dispersals.css override */
+        .pin-container {
+            position: relative;
+            width: 27.2px;
+            height: 27.2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: globalFadeIn 2s ease-out forwards;
+        }
+		.vis-link-box{
+			font-size:1.1rem
+		}
+        .pin-img {
+            height: auto;
+            width: 27.2px;
+            max-height: 40.8px;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+            object-fit: contain;
+        }
+        .pin-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, transparent 75%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pinPulseNoHue 4s infinite ease-out;
+            opacity: 0.6;
+        }
+        @keyframes pinPulseNoHue {
+            0% { transform: scale(0.8); opacity: 0.6; filter: saturate(0.3) blur(2px); }
+            100% { transform: scale(3.5); opacity: 0; filter: saturate(0.3) blur(10px); }
+        }
+        #logo-link { animation-delay: 0.5s; }
+        #links-stack { animation-delay: 1.5s; }
+    </style>
+
+    <script>
+        let map;
+        let allMarkers = [];
+
+        async function initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+            map = new Map(document.getElementById("map"), {
+                center: { lat: 37.7749, lng: -122.4194 },
+                zoom: 5,
+                disableDefaultUI: true,
+                clickableIcons: false,
+                mapTypeId: 'satellite',
+                mapId: 'DEMO_MAP_ID',
+                styles: [
+                    { featureType: "poi", stylers: [{ visibility: "off" }] },
+                    { featureType: "transit", stylers: [{ visibility: "off" }] }
+                ]
+            });
+
+            const pinAssets = {
+                primary: "https://captainscurses.org/Images/visitpin.png",
+            };
+
+            const pinBox = document.getElementById("pinbox");
+            const pinBoxContent = document.getElementById("pinbox-content");
+            const pinBoxClose = document.getElementById("pinbox-close");
+
+            pinBoxClose.addEventListener("click", () => {
+                pinBox.classList.remove("show");
+            });
+
+            function showPinBox(number, linkText, linkHref) {
+                pinBoxContent.innerHTML = `
+      <div class="pin-number">${number}</div>
+      <a href="${linkHref}" target="_blank">${linkText}</a>
+    `;
+                pinBox.classList.add("show");
+            }
+
+            const pins = [
+                {
+                    position: { lat: 40.4682778, lng: -122.2738611},
+                    title: "Shining Totem",
+                    number: 1,
+                    type: "primary",
+                    linkText: "Shining Totem",
+                    linkHref: "visit_list.html"
+                }
+            ];
+
+            pins.forEach((pin) => {
+                const container = document.createElement('div');
+                container.className = 'pin-container';
+                
+                const pulse = document.createElement('div');
+                pulse.className = 'pin-pulse';
+                
+                const img = document.createElement('img');
+                img.src = pinAssets[pin.type];
+                img.className = 'pin-img';
+                
+                container.appendChild(pulse);
+                container.appendChild(img);
+
+                const marker = new AdvancedMarkerElement({
+                    map: map,
+                    position: pin.position,
+                    title: pin.title,
+                    content: container
+                });
+
+                const randDelay = Math.random() * -4;
+                pulse.style.animationDelay = `${randDelay}s`;
+
+                marker.addListener("click", () => {
+                    showPinBox(pin.number, pin.linkText, pin.linkHref);
+                });
+            });
+        }
+    </script>
+
+</body>
+
+</html>

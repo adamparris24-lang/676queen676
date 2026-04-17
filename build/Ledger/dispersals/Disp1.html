@@ -1,0 +1,738 @@
+<!doctype html>
+<html>
+
+<head>
+	<link href="Disp.css" rel="stylesheet" type="text/css">
+	<link href="../../css/txtcolor.css" rel="stylesheet" type="text/css">
+	<link href="../../css/common.css" rel="stylesheet" type="text/css">
+	<script src="../../js/zoom.js" defer></script>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		@keyframes goldPulse {
+
+			0%,
+			100% {
+				filter: drop-shadow(0 0 8px rgba(255, 250, 224, 0.4)) drop-shadow(0 0 15px rgba(255, 250, 224, 0.2));
+			}
+
+			50% {
+				filter: drop-shadow(0 0 20px rgba(255, 250, 224, 0.7)) drop-shadow(0 0 35px rgba(255, 250, 224, 0.5));
+			}
+		}
+
+		.golden-glow-txt {
+			animation: goldPulse 4s ease-in-out infinite;
+		}
+
+		@keyframes subtleLabelPulse {
+
+			0%,
+			100% {
+				opacity: 0.7;
+				text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+			}
+
+			50% {
+				opacity: 1;
+				text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+			}
+		}
+
+		.subtle-pulse-txt {
+			animation: subtleLabelPulse 6s ease-in-out infinite;
+		}
+
+		@keyframes rainbowHueRotate {
+			from {
+				filter: hue-rotate(0deg) saturate(0.3) brightness(1.1);
+			}
+
+			to {
+				filter: hue-rotate(360deg) saturate(0.3) brightness(1.1);
+			}
+		}
+
+		.rainbow-hue-glow {
+			position: absolute;
+			top: -15px;
+			left: -15px;
+			right: -15px;
+			bottom: -15px;
+			background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 80%);
+			z-index: -1;
+			opacity: 0.2;
+			animation: rainbowHueRotate 15s linear infinite;
+			border-radius: 20px;
+			pointer-events: none;
+		}
+
+		.paginator-counter {
+			color: white;
+			font-family: 'CaslonAntique', serif;
+			font-size: 1.2rem;
+			text-align: center;
+			letter-spacing: 0.1rem;
+		}
+
+		.timeline-date {
+			color: #a0c4ff;
+		}
+
+		.timeline-author {
+			color: #f5eaff;
+			opacity: 0.8;
+		}
+
+		@keyframes rainbowFilterPulse {
+
+			0%,
+			100% {
+				backdrop-filter: saturate(1) hue-rotate(0deg);
+			}
+
+			50% {
+				backdrop-filter: saturate(0.5) hue-rotate(180deg);
+			}
+		}
+
+		.rainbow-filter-layer {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			pointer-events: none;
+			animation: rainbowFilterPulse 15s ease-in-out infinite;
+			z-index: 2;
+			/* Ensure it applies to what's behind it */
+			backdrop-filter: saturate(1) hue-rotate(0deg);
+			-webkit-backdrop-filter: saturate(1) hue-rotate(0deg);
+		}
+
+		.rainbow-wrap {
+			position: relative;
+			width: 6rem;
+			height: 6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			animation: fadeIn 2s ease-out forwards;
+		}
+
+		.rainbow-wrap.staggered {
+			animation-delay: 1s;
+		}
+
+		.rainbow-video {
+			width: 100%;
+			height: auto;
+			mix-blend-mode: screen;
+			opacity: 0.6;
+		}
+
+		@media screen and (max-width: 600px) {
+			#ttlbox p {
+				font-size: clamp(1.8rem, 10vw, 3.5rem) !important;
+			}
+
+			.rainbow-wrap {
+				width: 4rem;
+				height: 4rem;
+			}
+		}
+
+		/* Audio/Coord Parity & Pulse */
+		@keyframes bdrPulse {
+
+			0%,
+			100% {
+				border-color: rgba(255, 255, 255, 0.4);
+			}
+
+			50% {
+				border-color: rgba(255, 255, 255, 0.8);
+			}
+		}
+
+		#informative-box {
+			animation: bdrPulse 8s ease-in-out infinite;
+		}
+
+		.players {
+			height: 66px !important;
+			margin-top: 5px !important;
+		}
+
+		.name {
+			font-size: 32px !important;
+			/* 2rem @ 16px base */
+			padding-top: 10px !important;
+		}
+
+		.title {
+			font-size: 24px !important;
+			/* 1.5rem @ 16px base */
+		}
+
+		/* Collective Ritual Accordion Styles */
+		.ex-direccon {
+			background: transparent;
+			width: 100%;
+			max-height: none;
+			padding: 2rem 0 0 0;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.collritex {
+			font-size: 1.2rem;
+			/* ~20% smaller than 2.2rem */
+			text-align: left;
+			opacity: 0.9;
+			font-family: 'CaslonAntique', serif;
+			margin: 1rem auto 2rem auto;
+			width: 85%;
+			color: #FFF9E3;
+		}
+
+		@keyframes collritex-glow {
+
+			0%,
+			100% {
+				text-shadow: 0 0 10px rgba(255, 250, 224, 0.4);
+			}
+
+			50% {
+				text-shadow: 0 0 25px rgba(255, 250, 224, 0.8);
+			}
+		}
+
+		.collritex-glow {
+			animation: collritex-glow 6s ease-in-out infinite;
+		}
+
+		.dir-accordion {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			margin: 1.5rem 0;
+		}
+
+		.dir-item {
+			cursor: pointer;
+			margin-bottom: 1rem;
+			width: 100%;
+		}
+
+		.dir-header {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: linear-gradient(135deg, rgba(35, 35, 40, 0.6), rgba(15, 15, 20, 0.6));
+			padding: 0.8rem 2rem;
+			border-radius: 20px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			backdrop-filter: blur(4px);
+			transition: all 0.3s ease;
+			width: fit-content;
+			margin: 0 auto;
+		}
+
+		.dir-item:hover .dir-header {
+			border-color: rgba(255, 250, 224, 0.4);
+			background: rgba(45, 45, 50, 0.8);
+		}
+
+		.dir-arrow {
+			margin-right: 0.8rem;
+			transition: transform 0.3s ease;
+		}
+
+		.dir-expanded .dir-arrow {
+			transform: rotate(90deg);
+		}
+
+		.dir-content {
+			display: none;
+			padding: 1.5rem 2rem;
+			font-size: 1.1rem;
+			color: #e0e0e0;
+			line-height: 1.5;
+			text-align: left;
+			width: 85%;
+			margin: 0 auto;
+		}
+
+		.dir-expanded .dir-content {
+			display: block;
+			animation: fadeIn 0.4s ease;
+		}
+
+		@keyframes dotFlicker {
+
+			0%,
+			100% {
+				opacity: 0.4;
+				filter: brightness(1);
+			}
+
+			50% {
+				opacity: 1;
+				filter: brightness(1.5) drop-shadow(0 0 5px palegoldenrod);
+			}
+		}
+
+		.dot-flicker {
+			animation: dotFlicker 3s infinite alternate;
+		}
+
+		@keyframes slowHueDesatSnow {
+
+			0%,
+			100% {
+				filter: saturate(0.2) hue-rotate(0deg);
+				opacity: 0.1;
+			}
+
+			50% {
+				filter: saturate(0.4) hue-rotate(180deg);
+				opacity: 0.4;
+			}
+		}
+
+		.slow-snow-orn {
+			width: 3rem;
+			height: 3rem;
+			margin:1rem 0;
+			mix-blend-mode: screen;
+			animation: slowHueDesatSnow 45s linear infinite;
+		}
+
+		@keyframes lvGlow {
+
+			0%,
+			100% {
+				text-shadow: 0 0 5px rgba(255, 255, 255, 0.2), 0 0 10px rgba(236, 218, 255, 0.1);
+				opacity: 0.7;
+			}
+
+			50% {
+				text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 25px rgba(236, 218, 255, 0.3);
+				opacity: 1;
+			}
+		}
+
+		.lv-beauty {
+			font-family: 'CaslonAntique', serif;
+			letter-spacing: 0.4rem;
+			color: #FFF9E3;
+			animation: lvGlow 8s ease-in-out infinite;
+			text-transform: uppercase;
+			font-style: normal;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="maincon" class="flx">
+
+		<div id="header" class="ttl" onclick="window.history.back();"
+			style="cursor:pointer; height: auto; padding: 1.5rem 0; display: flex; flex-direction: row; justify-content: center; align-items: center; width: 90%; margin: 1rem 0 0.5rem 0;position: relative;">
+
+			<div class="hdside" style="flex: 0 0 auto;">
+				<div class="rainbow-wrap">
+					<video autoplay muted loop playsinline class="rainbow-video">
+						<source src="https://captainscurses.org/webm/rainbow.mp4" type="video/mp4">
+					</video>
+					<div class="rainbow-filter-layer"></div>
+				</div>
+			</div>
+
+			<div id="ttlbox" class="golden-glow-txt"
+				style="position: static; transform: none; flex: 1; display: flex; justify-content: center; z-index: 5;">
+				<p style="font-size:2rem; color: #FFF9E3; line-height: 1.1; margin: 0; text-align: center;">Solar<br>
+					Treasures</p>
+			</div>
+
+			<div class="hdside" style="flex: 0 0 auto;">
+				<div class="rainbow-wrap staggered">
+					<video autoplay muted loop playsinline class="rainbow-video" style="transform: scaleX(-1);">
+						<source src="https://captainscurses.org/webm/rainbow.mp4" type="video/mp4">
+					</video>
+					<div class="rainbow-filter-layer"></div>
+				</div>
+			</div>
+		</div>
+		<p class="lv-beauty flx" style="margin: 0.5rem 0 1.5rem 0; font-size: 1rem; width: 100%; text-align: center;">Lv. 1</p>
+		<div class="flx" style="width:100%; position: relative;">
+
+			<div class="flx" style="height:2vh; width:100%; margin-bottom:1rem"><img src="https://captainscurses.org/Images/subsep.png"
+					style="height:100%; width:auto"></div>
+
+			<div class="flx"
+				style="flex-direction:row; align-items:center; justify-content:center; gap:2rem; width:100%;">
+
+				<video autoplay muted loop playsinline class="slow-snow-orn">
+					<source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+				</video>
+
+				<div class="flx">
+
+					<p style="font-size:0.8rem">Gold and Silver <span class="gifts">Coins</span><br>
+						guarded by an old Friend.<br>
+						<br>
+
+						-<span class="tc" style="font-size:0.7">T.C</span>
+					</p>
+				</div>
+
+				<video autoplay muted loop playsinline class="slow-snow-orn" style="transform: scaleX(-1);">
+					<source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+				</video>
+
+			</div>
+
+			<div class="flx" style="height:2vh; width:100%; margin-top:1rem"><img src="https://captainscurses.org/Images/subsep.png"
+					style="height:100%; width:auto; transform: scaleX(-1);"></div>
+
+			<div class="flx"
+				style="margin: 2rem 0; flex-direction: row; align-items: center; justify-content: center; gap: 2rem; width: 100%;">
+				<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="env" style="height: 1vh; width: auto;"
+					alt="orn">
+				<a href="https://maps.app.goo.gl/KyAXSqizn2uQrB8J9" style="text-decoration: underline"><p class="env" style="font-size: 1.2rem; letter-spacing: 0.1rem; margin: 0; opacity: 0.8;">
+					40.931581, -124.134848</p></a>
+				<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="env"
+					style="height: 1vh; width: auto; transform: scaleX(-1);" alt="orn">
+			</div>
+
+		</div>
+
+
+		<div id="photo-browser" class="flx">
+			<div id="photo-container" class="flx">
+				<div class="rainbow-hue-glow"></div>
+				<img id="photo" src="" alt="First Dispersal Image" class="ethereal-glow-img zoomable-img">
+			</div>
+			<div id="arrowcon" class="flx"
+				style="flex-direction:row; gap:1.5rem; height: 5vh; align-items: center; justify-content: center; margin-top: 1rem;">
+				<img src="https://captainscurses.org/Images/subar.png" id="prev" class="arrow leftar"
+					style="opacity: 0.6; cursor: pointer; padding: 0; width: 2rem; height: auto;">
+				<div id="photo-counter" class="paginator-counter">1/5</div>
+				<img src="https://captainscurses.org/Images/subar.png" id="next" class="arrow rightar"
+					style="opacity: 0.6; cursor: pointer; padding: 0; width: 2rem; height: auto;">
+			</div>
+		</div>
+
+		<div id="youtube-container" class="flx">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+				title="YouTube video player" frameborder="0"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+				allowfullscreen>
+			</iframe>
+		</div>
+
+		<div id="informative-box" class="flx"
+			style="width: 85%; height: 35vh; margin: 2rem auto; border: 2px solid rgba(255, 255, 255, 0.4); border-radius: 15px; background: rgba(255, 255, 255, 0.05); padding: 1.5rem; display: flex; flex-direction: column; overflow-y: auto; align-items: center; justify-content: flex-start; scrollbar-width: none;">
+			<div class="flx" style="margin-bottom: 1rem; flex-shrink: 0;"><img src="https://captainscurses.org/Images/subsep.png"
+					style="height: 1.5vh; opacity: 0.5;"></div>
+			<p class=" flx sub-text"
+				style="width: 90%; font-size: 1.1rem; line-height: 1.6; text-align: justify; opacity: 0.9;">
+				A stick in the sand next to an icon of the sun among the ruins of a small shelter. <br>
+<br>
+The front of the stick is engraved with the message "Bury Coins Here."<br>
+<br>
+
+There is a wooden bench within this shelter which is prone to giving you splinters.
+			</p>
+		</div>
+
+		<div id="trax" class="flx oner" style="width: 100%;">
+			<div class="ttl flx ethereal-glow-txt" style="margin-bottom: 0.5rem; ">Audio:</div>
+			<div id="audio-pages" style="width: 100%;">
+				<!-- Audio Page 1 -->
+				<div class="audio-page audio-page-1"
+					style="display: flex; flex-direction: column; align-items:center; align-content: center; width: 100%;">
+					<div class="flx"
+						style="width:100%; flex-direction: column; justify-content: center; align-items: center; gap: 2rem;">
+
+						<div class="track-wrap">
+							<p style="margin-bottom:0.8rem; font-weight:bold; text-align: center; font-size: 1.5rem;">1.
+							</p>
+							<audio id="a1" controls class="players">
+								<source
+									src="https://captainscurses.org/___12-___8-Granulator%20III%200002%20%5B2025-12-11%20183745%5D.wav"
+									type="audio/mpeg">
+							</audio>
+							
+							<div style="margin-top:2.2rem">The sound of the <span class="fs">Sea</span>.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="flx"
+				style="flex-direction:row; gap:1.5rem; margin-top: 2rem; height: 5vh; align-items: center; justify-content: center;">
+				<img src="https://captainscurses.org/Images/subar.png" onclick="prevAudioPage()" class="arrow leftar"
+					style="opacity: 0.6; cursor: pointer; padding: 0; width: 2rem; height: auto;">
+				<span id="audio-counter" class="paginator-counter" style="font-size: 1rem;">1/1</span>
+				<img src="https://captainscurses.org/Images/subar.png" onclick="nextAudioPage()" class="arrow rightar"
+					style="opacity: 0.6; cursor: pointer; padding: 0; width: 2rem; height: auto;">
+			</div>
+			<script>
+				let currAudio = 1;
+				function updateAudioPage() {
+					document.querySelectorAll('.audio-page').forEach(el => el.style.display = 'none');
+					document.querySelector(`.audio-page-${currAudio}`).style.display = 'flex';
+					document.getElementById('audio-counter').textContent = `${currAudio}/1`;
+				}
+				function prevAudioPage() { updateAudioPage(); }
+				function nextAudioPage() { updateAudioPage(); }
+			</script>
+		</div>
+
+		<div class="flx" style="height:2.8vh; margin:3.5rem 0;">
+			<img src="file:///C:/Users/PissQueen/Desktop/!!!%20MOON%20RITUAL/@@Website/!!!dreamweaver%20mobile/Images/lettersep.png"
+				class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.9">
+		</div>
+
+		<div class="ttl flx ethereal-glow-txt"
+			style="flex-direction:row; display:flex; align-items:center; margin-top: 0;">
+			<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height: 0.3em; opacity: 0.8; margin-right: 1.5rem;"
+				alt="dot orn" class="ethereal-glow-img">
+			Timeline
+			<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height: 0.3em; opacity: 0.8; margin-left: 1.5rem;"
+				alt="dot orn" class="ethereal-glow-img">
+		</div>
+
+
+		<div class="flx oner">
+			<div id="timelinecon" style="font-size: 0.9em; box-shadow: none; border-color: rgba(255,255,255,0.1); height: 300px !important;">
+
+				<div id="timeline-phase1">
+					<div class="tline enactment" data-phase="1" style="background: transparent; box-shadow: none;">
+						<div class="coord"><span class="timeline-date">04/07/2026</span></div>
+						<div class="event" style="color:rgba(255,255,255,0.9)">Solar Treasures is Dispersed</div>
+						<div style="float:left">
+							<p class="timeline-author">T.C.</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<a href="Disp1_arch.html"
+				style="text-decoration:none; transform: scale(0.8); display: block; width: fit-content; margin: 3rem auto 0;">
+				<div class="flx ttl golden-glow-txt"
+					style="display:flex; flex-direction:row; align-items:center; justify-content:center;">
+					<span style="font-size: 1.2rem; opacity: 0.8; margin-right: 1.5rem;">.</span>
+					<p class="subm" style="margin:0">Archive</p>
+					<span style="font-size: 1.2rem; opacity: 0.8; margin-left: 1.5rem;">.</span>
+				</div>
+			</a>
+			<div class="flx" style="height:3vh; margin:3rem 0;">
+				<img src="file:///C:/Users/PissQueen/Desktop/!!!%20MOON%20RITUAL/@@Website/!!!dreamweaver%20mobile/Images/lettersep.png"
+					class="ethereal-glow-img flipx" style="height:100%; width:auto; opacity:0.9">
+			</div>
+
+			<!-- COLLECTIVE RITUAL TRANSPLANTATION -->
+			<div class="flx fade-in" style="margin-top: 0; width: 100%;">
+				<div class="flx"
+					style="flex-direction: row; align-items: center; justify-content: center; gap: 3rem; margin-bottom: 2rem;">
+					<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="dot-flicker"
+						style="height: 1.6vh; width: auto;" alt="orn">
+					<div class="flx" style="text-align: center;">
+						<p class="ethereal-glow-txt"
+							style="font-size: 0.8rem; letter-spacing: 0.3rem; opacity: 0.6; margin-bottom: 0.5rem; text-transform: uppercase;">
+							Collective Ritual</p>
+						<p class="golden-glow-txt" style="font-size: 1.7rem; margin: 0; line-height: 1;">Coin Burial</p>
+					</div>
+					<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="dot-flicker"
+						style="height: 1.6vh; width: auto; transform: scaleX(-1);" alt="orn">
+				</div>
+
+				<div class="ex-direccon" style="max-height: none; overflow: visible;">
+					<p class="collritex collritex-glow">
+						1. "On a lonely stretch of beach, there is a small shelter. Within this shelter, there is an altar."<br>
+<br>
+
+						2. "Bury coins beneath this altar."
+					</p>
+
+					<div class="dir-accordion">
+						<div class="dir-item" onclick="this.classList.toggle('dir-expanded')">
+							<div class="dir-header">
+								<span class="dir-arrow">▶</span>
+								<span>Directions</span>
+							</div>
+							<div class="dir-content">
+								<ol style="padding-left: 1.5rem; margin: 0;">
+									<li>This shelter is located at 40.931581, -124.134848
+									</li>
+									<li>Do not turn the stick around!
+									<ul>
+									<li>Gather 1 coin for 3 days of Good Luck.</li> <li>In these 3 days, you may meet an important friend. Keep an open mind.</li>
+										</ul>
+									</li>
+									<li>
+										Rebuild the shelter!
+									</li>
+								</ol>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="flx" style="width:100%; flex-direction: row; align-items: center; justify-content: center; gap: 1.5rem;">
+		<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height: 0.8vh; width: auto; opacity: 0.6;" alt="orn">
+		<div id="front-preview-con" class="flx" style="height: 45vh; cursor: pointer; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(191, 232, 255, 0.2); filter: brightness(0.8); opacity: 0.9;">
+			<img id="photo-front" src="https://captainscurses.org/Images/dispersals/SDisp1/front.jpg" style="height: 100%; width: auto;">
+		</div>
+		<img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height: 0.8vh; width: auto; opacity: 0.6; transform: scaleX(-1);" alt="orn">
+	</div>
+	<div class="flx">
+	<p class="sub-text" style="font-size:0.65rem; opacity:0.7; font-style: italic; margin:1.3rem 0">
+		Secondary Dispersal of Solar Treasures
+	</p>
+	</div>
+	
+	<div class="flx fade-in seps" style="height:9vh; margin:0.2rem 0 2rem 0;">
+		<video autoplay muted loop playsinline style="height: 100%; width: auto; pointer-events: none;">
+			<source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+		</video>
+	</div>
+	
+	
+	<!-- Modal & Magnifier -->
+	<div id="photo-modal" class="flx"
+		style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center;">
+		<span id="photo-modal-close"
+			style="position:absolute; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>
+		<img id="photo-modal-content" style="max-width:90%; max-height:90%; object-fit:contain;">
+	</div>
+	<div id="magnifier"
+		style="display:none; position:absolute; width:180px; height:180px; border:3px solid #fff; border-radius:50%; cursor:none; pointer-events:none; z-index:10000; box-shadow:0 0 15px rgba(0,0,0,0.5); background-repeat:no-repeat; overflow:hidden;">
+	</div>
+
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			// --- PHOTO BROWSER ---
+			const images = [
+			"https://captainscurses.org/Images/earth.jpg",	"https://captainscurses.org/Images/dispersals/Disp1/goodone.JPG",
+				"https://captainscurses.org/Images/dispersals/Disp1/shelter.JPG",
+				
+				"https://captainscurses.org/Images/dispersals/Disp1/sunset.JPG"
+			];
+			let currentIndex = 0;
+			const photo = document.getElementById("photo");
+			const counter = document.getElementById("photo-counter");
+			const prev = document.getElementById("prev");
+			const next = document.getElementById("next");
+
+			function updatePhoto() {
+				photo.src = images[currentIndex];
+				counter.textContent = `${currentIndex + 1} / ${images.length}`;
+			}
+			prev?.addEventListener("click", (e ) => {
+				e.stopPropagation();
+				currentIndex = (currentIndex - 1 + images.length) % images.length;
+				updatePhoto();
+			});
+			next?.addEventListener("click", (e) => {
+				e.stopPropagation();
+				currentIndex = (currentIndex + 1) % images.length;
+				updatePhoto();
+			});
+			if (photo) updatePhoto();
+
+			// --- FRONT PREVIEW ZOOM ---
+			const photoFront = document.getElementById("photo-front");
+			photoFront?.addEventListener("click", () => {
+				modal.style.display = "flex";
+				modalImg.src = photoFront.src;
+				modalImg.onload = () => {
+					magnifier.style.backgroundImage = `url('${modalImg.src}')`;
+				};
+			});
+
+			// --- MODAL & ZOOM ---
+			const modal = document.getElementById("photo-modal");
+			const modalImg = document.getElementById("photo-modal-content");
+			const closeBtn = document.getElementById("photo-modal-close");
+			const magnifier = document.getElementById("magnifier");
+			const ZOOM_LEVEL = 2.5;
+
+			photo?.addEventListener("click", () => {
+				modal.style.display = "flex";
+				modalImg.src = photo.src;
+				modalImg.onload = () => {
+					magnifier.style.backgroundImage = `url('${modalImg.src}')`;
+				};
+			});
+
+			closeBtn?.addEventListener("click", () => {
+				modal.style.display = "none";
+				magnifier.style.display = "none";
+			});
+
+			modal?.addEventListener("click", (e) => {
+				if (e.target === modal) {
+					modal.style.display = "none";
+					magnifier.style.display = "none";
+				}
+			});
+
+			function moveMagnifier(e) {
+				const pageX = e.pageX || (e.touches && e.touches[0].pageX);
+				const pageY = e.pageY || (e.touches && e.touches[0].pageY);
+				if (!pageX || !pageY) return;
+
+				const rect = modalImg.getBoundingClientRect();
+				const scrollX = window.scrollX;
+				const scrollY = window.scrollY;
+
+				// Calculate rendered image size within the modal
+				const ratio = modalImg.naturalWidth / modalImg.naturalHeight;
+				let rW, rH;
+				if (rect.width / rect.height > ratio) {
+					rH = rect.height;
+					rW = rect.height * ratio;
+				} else {
+					rW = rect.width;
+					rH = rect.width / ratio;
+				}
+
+				const imgLeft = rect.left + scrollX + (rect.width - rW) / 2;
+				const imgTop = rect.top + scrollY + (rect.height - rH) / 2;
+
+				if (pageX < imgLeft || pageX > imgLeft + rW || pageY < imgTop || pageY > imgTop + rH) {
+					magnifier.style.display = "none";
+					return;
+				}
+
+				magnifier.style.display = "block";
+				const relX = (pageX - imgLeft) / rW;
+				const relY = (pageY - imgTop) / rH;
+
+				const bgW = rW * ZOOM_LEVEL;
+				const bgH = rH * ZOOM_LEVEL;
+				magnifier.style.backgroundSize = `${bgW}px ${bgH}px`;
+				magnifier.style.backgroundPosition = `${-(relX * bgW - magnifier.offsetWidth / 2)}px ${-(relY * bgH - magnifier.offsetHeight / 2)}px`;
+
+				const offset = e.touches ? -120 : 20;
+				magnifier.style.left = `${pageX + offset}px`;
+				magnifier.style.top = `${pageY + offset}px`;
+			}
+
+			modalImg?.addEventListener("mousemove", moveMagnifier);
+			modalImg?.addEventListener("touchmove", moveMagnifier);
+			modalImg?.addEventListener("mouseleave", () => magnifier.style.display = "none");
+			modalImg?.addEventListener("touchend", () => magnifier.style.display = "none");
+		});
+	</script>
+</body>
+
+</html>

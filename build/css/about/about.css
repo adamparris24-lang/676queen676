@@ -1,0 +1,265 @@
+body {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    color: white;
+    font-family: 'CaslonAntique', serif;
+    font-size: 1rem;
+    font-size: clamp(18px, 2vw, 18px);
+    margin: 0
+}
+
+a {
+    margin: 0;
+    color: inherit;
+    text-decoration: none;
+    font-weight: inherit;
+    cursor: pointer;
+}
+
+a:hover {
+    color: palegoldenrod;
+    text-decoration: none;
+}
+
+p {
+    text-align: center;
+    margin: 0;
+    font-size: 2.3rem;
+}
+
+span {
+    display: inline;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.flx {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.ttl {
+    padding: 1rem 0;
+    font-size: 2.3rem
+}
+
+#header {
+    margin-top: 1rem;
+    width: 100%;
+    height: 35vh;
+    max-height: 590px;
+}
+
+#headerim {
+    width: auto;
+    height: 100%;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-out both;
+}
+
+.sub-text {
+    text-align: center;
+    font-size: 2.3rem;
+    max-width: 80%;
+    margin: 3rem auto 3rem auto;
+    width: 75%;
+}
+
+.ttl-wrapper {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.flipx {
+    transform: scaleX(-1);
+}
+
+#ledger-decor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.dot-crop {
+    position: absolute;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.flxr {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot-crop.center-crop {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2.6rem;
+    height: 2.6rem;
+    animation: none;
+}
+
+.center-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300%;
+    height: auto;
+    min-height: 500%;
+    opacity: 0.4;
+    mix-blend-mode: screen;
+}
+
+.candle-compound {
+    position: absolute;
+    top: 50%;
+    height: 4.8vh;
+    width: auto;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: screen;
+    filter: contrast(1.2) brightness(0.9);
+
+    animation:
+        candleDrop 3s ease-out 2s forwards,
+        bobLeft 4s ease-in-out 5s infinite;
+}
+
+.candle-compound.left {
+    right: 100%;
+    margin-right: 2.5rem;
+    transform: translateY(-50%) translateX(20%);
+}
+
+.candle-compound.right {
+    left: 100%;
+    margin-left: 2.5rem;
+    transform: translateY(-50%) translateX(-20%);
+    animation-name: candleDrop, bobRight;
+}
+
+@keyframes candleDrop {
+    0% {
+        opacity: 0;
+        margin-top: -2rem;
+    }
+
+    100% {
+        opacity: 0.6;
+        margin-top: 0;
+    }
+}
+
+@keyframes bobLeft {
+
+    0%,
+    100% {
+        transform: translateY(-48%) translateX(20%);
+    }
+
+    50% {
+        transform: translateY(-52%) translateX(20%);
+    }
+}
+
+@keyframes bobRight {
+
+    0%,
+    100% {
+        transform: translateY(-48%) translateX(-20%);
+    }
+
+    50% {
+        transform: translateY(-52%) translateX(-20%);
+    }
+}
+
+@keyframes etherealPulseImg {
+
+    0%,
+    100% {
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.32)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.16));
+    }
+
+    50% {
+        filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.25));
+    }
+}
+
+@keyframes etherealPulseTxt {
+
+    0%,
+    100% {
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.32), 0 0 18px rgba(255, 255, 255, 0.16);
+    }
+
+    50% {
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.45), 0 0 25px rgba(255, 255, 255, 0.25);
+    }
+}
+
+@keyframes opacityPulse {
+    0%, 100% { opacity: 0.87; }
+    50% { opacity: 0.92; }
+}
+
+.ethereal-glow-img {
+    animation: etherealPulseImg 5.75s ease-in-out infinite, opacityPulse 10s ease-in-out infinite;
+}
+
+/* Global Text Fade */
+p, span, a, li, em, strong, i, b, q, .ttl, .sub-text {
+    animation: opacityPulse 10s ease-in-out infinite;
+}
+
+.ethereal-glow-txt {
+    animation: etherealPulseTxt 5.75s ease-in-out infinite, opacityPulse 10s ease-in-out infinite;
+}
+
+@media (min-width: 450px) {
+    .candle-compound {
+        height: 6vh !important;
+    }
+
+    .rainbow-wrap {
+        height: 12vh !important;
+        width: 8vh !important;
+    }
+
+    .chill-mega-glow {
+        height: 7vh !important;
+    }
+}
+

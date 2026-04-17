@@ -1,0 +1,1058 @@
+#numbox::-webkit-outer-spin-button,
+#numbox::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* ===== MASTER VIDEO TINT ===== */
+/* Tints videos to match dispersals color (#BFFCC6 pale green), slightly desaturated */
+.disp-tint,
+.dot-video,
+#tc-face {
+	filter: sepia(0.35) hue-rotate(-5deg) saturate(0.5) brightness(1.15) !important;
+}
+
+.hearts {
+	filter: hue-rotate(-5deg) saturate(-1);
+	height: auto;
+	max-height: 15vh;
+	opacity: 0;
+	/* Brightened as requested, animated via fade-in */
+	width: auto;
+	max-width: 15vw;
+	/* Fitted for small screens with margins */
+	animation: candleFadeIn 5s ease-in forwards;
+}
+
+/* TC Face Divider */
+#tc-face {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: auto;
+	height: auto;
+	max-height: 80px;
+	z-index: 0;
+	opacity: 0;
+	/* Start invisible */
+	pointer-events: none;
+	/* User liked 10s, so keeping duration but using the 'backar' protocol */
+	transition: opacity 10s ease-in-out;
+}
+
+/* Ensure controls sit on top of video */
+#rcandpage,
+#filter-container,
+#pagination {
+	position: relative;
+	z-index: 2;
+}
+
+.echo-heart {
+	height: auto;
+	max-height: 10vh;
+	max-width: 10vw;
+	/* Tighter constraint */
+}
+
+/* Header Heart Margins (Responsive) */
+/* Grid handles spacing now. Removing legacy margins. */
+
+/* Arrow Size Increase - Removed transform scale to keep strict 175px limit */
+
+/* Small Screen Margins */
+@media (max-width: 600px) {
+	/* Grid handles this */
+}
+
+/* Firefox */
+#numbox[type=number] {
+	-moz-appearance: textfield;
+	appearance: textfield;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	margin: 0;
+	background: black;
+	color: white;
+	font-family: 'CaslonAntique', serif;
+	font-size: 1.4rem;
+	overflow-x: hidden;
+	/* Prevent horizontal scroll */
+	width: 100%;
+}
+
+.smallbtn {
+	border-radius: 5px
+}
+
+.oner {
+	margin-top: 1rem
+}
+
+.flx {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.ttl {
+	font-size: 2rem;
+	text-align: center;
+}
+
+.itemcon {
+	text-decoration: none;
+	/* removes underline */
+	color: inherit;
+	/* keeps your white text */
+
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+
+	padding: 20px;
+	border-radius: 18px;
+
+	background: rgba(20, 20, 20, 0.75);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+
+	box-shadow:
+		0 10px 30px rgba(0, 0, 0, 0.6),
+		0 0 25px rgba(255, 255, 255, 0.05);
+
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.itemcon:hover {
+	transform: translateY(-6px);
+	box-shadow:
+		0 20px 50px rgba(0, 0, 0, 0.8),
+		0 0 35px rgba(255, 255, 255, 0.08);
+}
+
+.image {
+	width: 100%;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	border-radius: 12px;
+	margin-bottom: 15px;
+}
+
+.image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.divider {
+	grid-column: 1 / -1;
+	/* spans both columns */
+	width: 10%;
+	justify-self: center;
+	height: 100%
+}
+
+.bottomim {
+	width: auto;
+	margin: 0 1rem 0 1rem;
+	height: 30%;
+	min-height: 30px;
+}
+
+#maincont {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	/* Changed from 2 to 3 columns */
+	gap: 2rem;
+	/* Added gap for spacing between boxes */
+	padding: 0 5%;
+	/* Slightly reduced padding for 3-col fit */
+	grid-template-rows: auto;
+	margin-top: 2rem;
+}
+
+.backcont {
+	margin-top: 9%;
+	height: 18vh;
+	min-height: 280px;
+	/* Ensures dots have vertical room and don't overlap moon sep */
+	width: auto;
+}
+
+
+#backar {
+	margin: 0 2rem;
+	height: auto;
+	max-height: 175px !important;
+	/* Strictly enforced per user request */
+	width: auto;
+	max-width: 175px !important;
+	min-height: 0;
+	/* Remove fixed min-height */
+	/* Subtle glow and haziness */
+	filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4)) brightness(1.1) contrast(0.9);
+	/* Combine transitions: filter (hover) and opacity (load) */
+	transition: filter 0.3s ease, opacity 3s ease-in;
+	opacity: 0;
+	/* JS will set to 0.8 */
+}
+
+#backar:hover {
+	filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.6)) brightness(1.2);
+}
+
+#divider {
+	width: 100%;
+	height: auto;
+	/* Fixed height gives dots vertical room */
+	position: relative;
+	display: grid;
+	grid-template-columns: auto 1fr 1fr auto 1fr 1fr auto;
+	/* candle | heart | echo | backcont | echo | heart | candle */
+	align-items: center;
+	justify-items: center;
+	z-index: 5;
+
+	/* Ensure header elements stay above content below */
+}
+
+/* Ensure contents are centered in their grid cells */
+#divider>* {
+	display: flex;
+	/* or block, but flex helps centering content */
+	justify-content: center;
+	align-items: center;
+	width: auto;
+}
+
+/* Reset margins that might interfere with grid centering */
+#divider .hearts {
+	margin: 0;
+}
+
+.header-candle {
+	margin: 0;
+	/* keep animation properties */
+}
+
+/* ===== HEADER TEXT ===== */
+.header-text {
+	position: absolute;
+	bottom: 1.5rem;
+	/* Align with candle PNG bottom, above compound hearts */
+	color: white;
+	font-family: 'CaslonAntique', serif;
+	font-size: clamp(0.85rem, 4.5vw, 1.5rem);
+	white-space: nowrap;
+	opacity: 0;
+	animation: candleFadeIn 10s ease-in forwards;
+	pointer-events: none;
+	z-index: 2;
+	/* Above compound hearts */
+}
+
+.header-text.left-text {
+	left: 0;
+	transform: translateX(-1rem);
+	padding-left: 5%;
+}
+
+.header-text.right-text {
+	right: 0;
+	transform: translateX(1rem);
+	padding-right: 5%;
+}
+
+/* ===== BACKAR WRAPPER (dots position relative to this, not stretched backcont) ===== */
+.backar-wrapper {
+	position: relative;
+	display: inline-block;
+
+}
+
+/* ===== BACKAR CENTER DOTS ===== */
+.backar-dot {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 1.9rem;
+	height: 1.9rem;
+	border-radius: 50%;
+	overflow: hidden;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.backar-dot.top-dot {
+	top: 0;
+	transform: translateX(-50%) translateY(calc(-100% - 1.8rem));
+	/* Gap of 0.4rem from top edge */
+}
+
+.backar-dot.bottom-dot {
+	bottom: 0.2rem;
+	transform: translateX(-50%) translateY(calc(100% + 1.8rem));
+	/* Gap of 0.4rem from bottom edge */
+}
+
+.backar-dot-video {
+	opacity: 0;
+	width: 500%;
+	height: 500%;
+	max-width: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	animation: candleFadeIn 10s ease-in 2s forwards;
+	/* 10s fade-in, 2s delay */
+}
+
+#title {
+	margin-top: 0
+}
+
+#count {
+	margin-top: 5%
+}
+
+#rcandpage {
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+	align-items: center;
+	justify-content: flex-start;
+	/* Keeps RC to the left */
+	/* Removed position:relative as wrapper handles it now */
+	width: 80%;
+	padding: 0 5px;
+	margin-top: 2%;
+	margin-bottom: 2rem;
+	margin-bottom: 2rem;
+	margin-left: clamp(1rem, 5vw, 4.5rem);
+	/* Responsive margin */
+}
+
+#pagination {
+	position: absolute;
+	right: 5%;
+	bottom: 0px;
+	/* Align with bottom of container */
+	top: auto;
+	/* Reset top */
+	transform: none;
+	/* Reset transform */
+	display: flex;
+	gap: 2rem;
+	/* Keep internal gap */
+	margin: 0;
+	width: auto;
+	/* Shrink to content */
+}
+
+#pagination button {
+	background: transparent;
+	width: auto;
+	color: white;
+	border: none;
+	padding: 0 1rem;
+	cursor: pointer;
+	font-size: clamp(2rem, 8vw, 5rem);
+	/* Responsive font size */
+	line-height: 1;
+	font-family: 'CaslonAntique', serif;
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	transition: all 0.3s ease;
+}
+
+#pagination button:hover:not(:disabled) {
+	text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.6);
+	transform: scale(1.1);
+}
+
+#pagination button:disabled {
+	opacity: 0.2;
+	cursor: default;
+	text-shadow: none;
+}
+
+#numbox {
+	width: 82px;
+	max-width: 18vw;
+	/* Responsive width */
+	height: 82px;
+	max-height: 18vw;
+	/* Keep aspect ratio roughly square if shrinking */
+	background: black;
+	color: white;
+	border: 1px solid white;
+	text-align: center;
+	font-size: clamp(1.5rem, 6vw, 3rem);
+	/* Responsive text size */
+	font-family: inherit;
+	border-radius: 10px;
+}
+
+#pagebox {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+}
+
+#gobtn {
+	align-self: center;
+}
+
+#pagenum {
+	height: 8vh;
+	width: 100%;
+	margin: 1rem 0 1rem
+}
+
+/* ===== FILTERS & SORT ===== */
+#filter-container {
+	display: flex;
+	flex-direction: column;
+	padding: 0 8%;
+	/* Matches #maincont padding to align left edge */
+	margin-top: 1rem;
+	gap: 1rem;
+	align-items: flex-start;
+}
+
+#sortOrder {
+	background: black;
+	color: white;
+	border: 1px solid white;
+	padding: 0.5rem;
+	font-family: inherit;
+	font-size: 1rem;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+#tag-filters {
+	display: flex;
+	flex-direction: column;
+	gap: 0.8rem;
+}
+
+.filter-row {
+	display: flex;
+	gap: 2rem;
+	/* Space between filter groups */
+}
+
+.filter-row label {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	/* Space between Label and Checkbox */
+	cursor: pointer;
+	font-size: 1.2rem;
+}
+
+.tag-filter {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 1.2rem;
+	height: 1.2rem;
+	border: 1px solid white;
+	background: black;
+	cursor: pointer;
+	position: relative;
+	display: grid;
+	place-content: center;
+}
+
+.tag-filter::before {
+	content: "";
+	width: 0.6rem;
+	height: 0.6rem;
+	background: white;
+	transform: scale(0);
+	transition: 120ms transform ease-in-out;
+}
+
+.tag-filter:checked::before {
+	transform: scale(1);
+}
+
+.cat-item:hover {
+	color: #FFA7A7;
+}
+
+.cat-dot {
+	font-size: 1.5rem;
+	margin: 0 1rem;
+	opacity: 0.5;
+}
+
+/* ============================
+   MYSTIC GLOW EFFECTS (ETHEREAL PULSE)
+   ============================ */
+@keyframes etherealPulseImg {
+
+	0%,
+	100% {
+		filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.32)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.16));
+	}
+
+	50% {
+		filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.25));
+	}
+}
+
+@keyframes etherealPulseTxt {
+
+	0%,
+	100% {
+		text-shadow: 0 0 8px rgba(255, 255, 255, 0.32), 0 0 18px rgba(255, 255, 255, 0.16);
+	}
+
+	50% {
+		text-shadow: 0 0 12px rgba(255, 255, 255, 0.45), 0 0 25px rgba(255, 255, 255, 0.25);
+	}
+}
+
+@keyframes opacityPulse {
+
+	0%,
+	100% {
+		opacity: 0.9;
+	}
+
+	50% {
+		opacity: 1;
+	}
+}
+
+.ethereal-glow-img {
+	animation: etherealPulseImg 5.75s ease-in-out infinite, opacityPulse 17.25s ease-in-out infinite;
+}
+
+.ethereal-glow-txt,
+p.ethereal-glow-txt,
+span.ethereal-glow-txt,
+div.ethereal-glow-txt {
+	animation: etherealPulseTxt 5.75s ease-in-out infinite, opacityPulse 17.25s ease-in-out infinite;
+}
+
+
+.name {
+	font-family: inherit;
+	font-size: 1.5rem;
+	margin-top: 0.5rem;
+	color: #ccc;
+}
+
+
+/* Layered Dot Decorations */
+
+.dot-flank {
+	display: flex;
+	gap: 1rem;
+	/* Fallback gap */
+	justify-content: space-between;
+	/* Evenly distribute */
+	align-items: center;
+	position: relative;
+	/* Keep in flow, prevent overflow */
+	width: auto;
+	flex: 1;
+	/* Take up available space */
+	z-index: 10;
+}
+
+.dot-flank.left {
+	margin-right: 2.5rem;
+	/* +1.5rem */
+	justify-content: flex-end;
+	/* Align towards center */
+}
+
+.dot-flank.right {
+	margin-left: 2.5rem;
+	/* +1.5rem */
+	justify-content: flex-start;
+	/* Align away from center */
+}
+
+.dot-stack {
+	position: relative;
+	width: 1.9rem;
+	/* Layer 1 Size */
+	height: 1.9rem;
+	flex-shrink: 0;
+}
+
+
+.layer1-dot {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+	overflow: hidden;
+	border-radius: 50%;
+}
+
+.dot-video {
+	opacity: 0.7;
+	width: 500%;
+	height: 500%;
+	max-width: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.layer2-dot {
+	display: none;
+}
+
+/* Ensure L2 is gone */
+
+/* Ensure Sep-Inner Spans Full Width for Edges */
+.sep-inner {
+	width: 100%;
+	/* justify-content: space-between; -- handled by flex children */
+	display: flex;
+	/* Ensure flex parent */
+	align-items: center;
+}
+
+
+/* Footer & Top Separator Styles */
+/* Footer & Top Separator Styles */
+.sep-container {
+	margin: 0 1rem;
+	/* Reduce to allow max width */
+	width: 98%;
+	/* Wider! */
+	max-width: 950px;
+	/* ~3rem more per side than 800px */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* FADE & GRADIENT SEQUENCE (12 Dots) */
+@keyframes dispDotFade {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.7;
+	}
+}
+
+@keyframes dispDotFadeBottom {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.8;
+	}
+}
+
+.disp-loop {
+	opacity: 0;
+	/* Default animation, overridden below for timing/target */
+	animation: dispDotFade 1s ease-out forwards;
+}
+
+
+/* 
+   SEQUENCE: 
+   Start Delay: 2s
+   Step: ~0.5s
+   Total: 16 steps -> 2.0s to 9.5s start times
+*/
+
+/* TOP LEFT (1-4) */
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(1) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(1) .disp-loop {
+	animation-delay: 2.0s;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(2) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(2) .disp-loop {
+	animation-delay: 2.5s;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(3) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(3) .disp-loop {
+	animation-delay: 3.0s;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(4) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.left .dot-stack:nth-child(4) .disp-loop {
+	animation-delay: 3.5s;
+}
+
+
+/* TOP RIGHT (5-8) */
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(1) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(1) .disp-loop {
+	animation-delay: 4.0s;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(2) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(2) .disp-loop {
+	animation-delay: 4.5s;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(3) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(3) .disp-loop {
+	animation-delay: 5.0s;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(4) .dot-video {
+	filter: none;
+}
+
+.sep-container:nth-of-type(1) .dot-flank.right .dot-stack:nth-child(4) .disp-loop {
+	animation-delay: 5.5s;
+}
+
+
+/* BOTTOM LEFT (9-12) - OPACITY 0.8 */
+#pagenum .dot-flank.left .dot-stack:nth-child(1) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(1) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 6.0s;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(2) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(2) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 6.5s;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(3) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(3) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 7.0s;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(4) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.left .dot-stack:nth-child(4) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 7.5s;
+}
+
+
+/* BOTTOM RIGHT (13-16) - OPACITY 0.8 */
+#pagenum .dot-flank.right .dot-stack:nth-child(1) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(1) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 8.0s;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(2) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(2) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 8.5s;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(3) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(3) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 9.0s;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(4) .dot-video {
+	filter: none;
+}
+
+#pagenum .dot-flank.right .dot-stack:nth-child(4) .disp-loop {
+	animation-name: dispDotFadeBottom;
+	animation-delay: 9.5s;
+}
+
+/* ===== HEADER CANDLES ===== */
+/* ===== HEADER CANDLES ===== */
+.header-candle {
+	height: auto;
+	width: auto;
+	opacity: 0;
+	/* Start invisible */
+	margin: 0;
+	/* Remove side margins, let Grid handle spacing */
+	align-self: center;
+	position: relative;
+	top: -2rem;
+	/* Offset upwards */
+	animation: candleIdle 3s ease-in-out infinite;
+	/* Idle animation */
+}
+
+/* ===== CORNER CANDLES ===== */
+/* Container (.backcont) must be relative */
+.backcont {
+	position: relative;
+	/* Ensure corner candles position relative to this */
+}
+
+.corner-candle {
+	position: absolute;
+	top: -5px;
+	/* Moved to top as requested */
+	/* Slight overlap with top */
+	height: 5vh;
+	/* User requested 5vh */
+	width: auto;
+	z-index: 1;
+	/* In front of arrow */
+	pointer-events: none;
+	/* ensures clicks pass to arrow */
+}
+
+.corner-candle.left {
+	left: -5px;
+	/* Hug bottom-left corner */
+}
+
+.corner-candle.right {
+	right: -5px;
+	left: auto !important;
+}
+
+.corner-candle.bottom-left {
+	left: -5px;
+	top: auto;
+	bottom: -5px;
+}
+
+.corner-candle.bottom-right {
+	right: -5px;
+	left: auto !important;
+	top: auto;
+	bottom: -5px;
+}
+
+/* ===== ADJACENT (SMALLER) CORNER CANDLE COPIES ===== */
+.corner-candle-adjacent {
+	position: absolute;
+	height: 3vh;
+	/* 60% of 5vh */
+	width: auto;
+	z-index: 1;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+/* Top-left adjacent: 2rem further left */
+.corner-candle-adjacent.left-adj {
+	top: -5px;
+	left: calc(-5px - 2rem);
+}
+
+/* Top-right adjacent: 2rem further right */
+.corner-candle-adjacent.right-adj {
+	top: -5px;
+	right: calc(-5px - 2rem);
+	left: auto !important;
+}
+
+/* Bottom-left adjacent: 2rem further left */
+.corner-candle-adjacent.bottom-left-adj {
+	bottom: -5px;
+	top: auto;
+	left: calc(-5px - 2rem);
+}
+
+/* Bottom-right adjacent: 2rem further right */
+.corner-candle-adjacent.bottom-right-adj {
+	bottom: -5px;
+	top: auto;
+	right: calc(-5px - 2rem);
+	left: auto !important;
+}
+
+/* Adjacent candle animations (same keyframes as corner candles) */
+.corner-candle-adjacent.fade-in {
+	animation: candleFadeIn 10s ease-in forwards;
+}
+
+.corner-candle-adjacent.rise-out {
+	animation: candleRiseOut 10s ease-out forwards;
+}
+
+/* Corner Candle Animations */
+.corner-candle {
+	opacity: 0;
+	transition: opacity 0.5s;
+	/* Smooth fallback */
+}
+
+.corner-candle.fade-in {
+	animation: candleFadeIn 10s ease-in forwards;
+}
+
+.corner-candle.rise-out {
+	animation: candleRiseOut 10s ease-out forwards;
+}
+
+/* Stagger side candle idle animation + vertical flip */
+#candle-right {
+	animation: candleIdleFlipped 3s ease-in-out infinite;
+	animation-delay: -1.5s;
+	/* 50% offset from left candle */
+}
+
+/* Ensure fade-in starts from 0s even if idle is staggered */
+#candle-right.fade-in {
+	animation-delay: -1.5s, 0s;
+	/* idle gets -1.5s, fade-in gets 0s */
+}
+
+/* Fix Jerk on Rise Out: Reset idle delay to 0 */
+#candle-right.rise-out {
+	animation-delay: 0s !important;
+}
+
+/* 10s Fade In (User request) */
+.header-candle.fade-in {
+	animation: candleIdle 3s ease-in-out infinite, candleFadeIn 10s ease-in forwards;
+}
+
+/* Right candle fade-in preserves vertical flip */
+#candle-right.fade-in {
+	animation: candleIdleFlipped 3s ease-in-out infinite, candleFadeIn 10s ease-in forwards;
+}
+
+/* 10s Rise Out */
+.header-candle.rise-out {
+	animation: candleRiseOut 10s ease-out forwards;
+}
+
+/* Right candle rise-out preserves vertical flip */
+#candle-right.rise-out {
+	animation: candleRiseOutFlipped 10s ease-out forwards;
+}
+
+@keyframes candleIdle {
+
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-5px);
+	}
+}
+
+@keyframes candleIdleFlipped {
+
+	0%,
+	100% {
+		transform: translateY(0) scaleX(-1);
+	}
+
+	50% {
+		transform: translateY(-5px) scaleX(-1);
+	}
+}
+
+@keyframes candleFadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 0.7;
+	}
+
+	/* Max 0.7 */
+}
+
+@keyframes candleRiseOut {
+	0% {
+		opacity: 0.7;
+		transform: translateY(0);
+	}
+
+	/* Start 0.7 */
+	100% {
+		opacity: 0;
+		transform: translateY(-80px);
+	}
+}
+
+@keyframes candleRiseOutFlipped {
+	0% {
+		opacity: 0.7;
+		transform: translateY(0) scaleX(-1);
+	}
+
+	/* Start 0.7 */
+	100% {
+		opacity: 0;
+		transform: translateY(-80px) scaleX(-1);
+	}
+}
+
+/* Top Moon Separator Animation */
+#top-sep {
+	opacity: 0;
+	transition: opacity 2.8s ease-in;
+}

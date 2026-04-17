@@ -1,0 +1,1955 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <link href="css/about/about.css" rel="stylesheet" type="text/css">
+    <link href="css/txtcolor.css" rel="stylesheet" type="text/css">
+    <link href="css/common.css" rel="stylesheet" type="text/css">
+    <script src="js/zoom.js" defer></script>
+</head>
+
+<body class="flx">
+
+    <a href="index_mobi.html">
+        <div class="flx" id="header">
+            <img id="headerim" src="https://captainscurses.org/Images/about%20oyo%20header.png" class="ethereal-glow-img">
+        </div>
+    </a>
+
+    <div class="flx fade-in" style="height:auto; min-height: 2vh; margin-top:2.5rem; margin-bottom:0">
+        <img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img"
+            style="height:auto; width:20%; min-width:200px; max-width:300px; opacity:0.9; margin-top:3rem">
+    </div>
+
+    <style>
+        @keyframes finColorCycle {
+            0% {
+                filter: hue-rotate(0deg) saturate(1) brightness(1);
+            }
+
+            33% {
+                filter: hue-rotate(120deg) saturate(1.2) brightness(1.1);
+            }
+
+            66% {
+                filter: hue-rotate(240deg) saturate(0.8) brightness(0.9);
+            }f
+        }
+
+        100% {
+            filter: hue-rotate(360deg) saturate(1) brightness(1);
+        }
+        }
+
+        .tldr {
+            font-size: 2.6rem;
+            opacity: 0.8;
+
+        }
+
+        .snow-decor {
+            margin: 0 1rem;
+            height: 9vh;
+            width: auto;
+            mix-blend-mode: screen;
+            opacity: 0.8;
+            animation: finColorCycle 10s linear infinite;
+        }
+
+        .snow-decor-large {
+            height: 4.4vh;
+            /* 10% larger */
+            width: auto;
+            mix-blend-mode: screen;
+            opacity: 0.8;
+            animation: finColorCycle 10s linear infinite reverse;
+        }
+
+        @keyframes faintBob {
+
+            0%,
+            100% {
+                top: 0;
+            }
+
+            50% {
+                top: -0.6vh;
+            }
+        }
+
+        .rainbow-wrap {
+            animation: faintBob 4s ease-in-out infinite;
+        }
+
+        @keyframes chillMegaGlow {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(180, 220, 255, 0.3));
+                transform: scale(1);
+            }
+
+            50% {
+                filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 40px rgba(180, 220, 255, 0.6));
+                transform: scale(1.05);
+            }
+        }
+
+        .chill-mega-glow {
+            animation: chillMegaGlow 4s ease-in-out infinite !important;
+        }
+
+        @keyframes diagramGlow {
+
+            0%,
+            100% {
+                border-color: rgba(255, 255, 255, 0.1);
+                box-shadow: 0 0 10px rgba(218, 247, 255, 0.05);
+            }
+
+            50% {
+                border-color: rgba(255, 255, 255, 0.3);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        .flow-diagram-box {
+            background: rgba(10, 10, 15, 0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 3rem 2.5rem 4rem;
+            width: 88%;
+            max-width: 650px;
+            margin: 4rem auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            animation: diagramGlow 10s ease-in-out infinite;
+        }
+
+        .flow-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .flow-node-label {
+            font-family: 'CaslonAntique', serif;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3rem;
+            opacity: 0.7;
+            margin: 0.5rem 0;
+        }
+
+        .dot-crop {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            z-index: 2;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .dot-video {
+            width: 180%;
+            height: 180%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain;
+        }
+
+        .flow-line {
+            height: 4rem;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- SUBMISSIONS SMALL GLOW --- */
+        @keyframes submSmallPulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 8px rgba(255, 251, 232, 0.3), 0 0 15px rgba(255, 251, 232, 0.1);
+                opacity: 0.75;
+            }
+
+            50% {
+                text-shadow: 0 0 15px rgba(255, 251, 232, 0.8), 0 0 30px rgba(255, 251, 232, 0.4);
+                opacity: 1;
+            }
+        }
+
+        .subm-small-glow {
+            font-size: calc(2.3rem - 0.2rem) !important;
+            animation: submSmallPulse 6s ease-in-out infinite !important;
+        }
+
+        .subm-info-wrap {
+            filter: saturate(0.4);
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            margin-top: 1rem
+        }
+
+        .anony-container-about {
+            position: relative;
+            height: 10vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            mix-blend-mode: screen;
+            margin-top: 2rem;
+        }
+
+        .anony-vid-about {
+            position: absolute;
+            height: 100%;
+            width: auto;
+            opacity: 0;
+            transition: opacity 5s linear;
+            pointer-events: none;
+            filter: hue-rotate(180deg) saturate(0.7);
+        }
+
+        .collritex {
+            text-align: left;
+            font-size: 3rem;
+        }
+
+        .anony-vid-about.active {
+            opacity: 1;
+        }
+
+        /* --- COLLECTIVE RITUALS LUMINOUS GLOW --- */
+        @keyframes luminousGlow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 15px rgba(255, 179, 186, 0.4), 0 0 25px rgba(255, 255, 255, 0.2);
+                opacity: 0.8;
+                filter: brightness(1);
+            }
+
+            50% {
+                text-shadow: 0 0 30px rgba(255, 179, 186, 1), 0 0 50px rgba(255, 255, 255, 0.6);
+                opacity: 1;
+                filter: brightness(1.2);
+            }
+        }
+
+        .cr-luminous-header {
+            font-family: 'CaslonAntique', serif;
+            font-size: 2.3rem;
+            letter-spacing: 0.4rem;
+            text-align: center;
+            margin: 2rem 0;
+            animation: luminousGlow 6s ease-in-out infinite;
+        }
+
+        .cr-example-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2rem;
+            width: 95%;
+            max-width: 900px;
+            margin: 3rem auto;
+        }
+
+        .cr-example-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.88rem;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cr-example-box:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 179, 186, 0.4);
+        }
+
+        .cr-example-img {
+            width: 100%;
+            height: 22.5vh;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 3rem;
+            filter: grayscale(0.5) contrast(1.1);
+            transition: filter 0.3s ease;
+        }
+
+        .cr-example-box:hover .cr-example-img {
+            filter: grayscale(0) contrast(1.1);
+        }
+
+        .cr-example-text {
+            font-family: 'CaslonAntique', serif;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            text-align: center;
+            opacity: 0.8;
+            margin: 0;
+            color: #eee;
+        }
+
+        /* --- DOT ORN STAGGERED FADE ANIMATION --- */
+        @keyframes ornFade {
+            0% {
+                opacity: 0;
+            }
+
+            43.5% {
+                opacity: 0.9;
+            }
+
+            /* 10/23s = fade in complete */
+            56.5% {
+                opacity: 0.9;
+            }
+
+            /* hold 3s */
+            100% {
+                opacity: 0;
+            }
+
+            /* 10s fade out */
+        }
+
+        @keyframes ornHue {
+            from {
+                filter: sepia(1) saturate(3) hue-rotate(0deg) brightness(1.1);
+            }
+
+            to {
+                filter: sepia(1) saturate(3) hue-rotate(360deg) brightness(1.1);
+            }
+        }
+
+        .lv1-orn-a {
+            animation: ornFade 23s ease-in-out infinite, ornHue 20s linear infinite;
+        }
+
+        .lv1-orn-b {
+            animation: ornFade 23s ease-in-out infinite, ornHue 20s linear infinite;
+            animation-delay: -11.5s, -7s;
+        }
+
+        /* --- PROFESSIONAL DEFINITION STYLING --- */
+        @keyframes brPulse {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        .cr-br-pulse {
+            animation: brPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes imperialPulse {
+
+            0%,
+            100% {
+                text-shadow: 0 0 10px rgba(255, 215, 150, 0.3), 0 0 20px rgba(255, 215, 150, 0.1);
+                filter: hue-rotate(0deg) saturate(0.2);
+            }
+
+            50% {
+                text-shadow: 0 0 25px rgba(255, 215, 150, 0.7), 0 0 45px rgba(255, 215, 150, 0.4);
+                filter: hue-rotate(15deg) saturate(0.2);
+            }
+        }
+
+        .imperial-title {
+            font-family: 'CaslonAntique', serif;
+            font-size: 3.6rem;
+            letter-spacing: 0.2rem;
+            animation: imperialPulse 12s ease-in-out infinite;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            opacity: 0.85
+        }
+
+        .blue-txt {
+            color: #0000FF;
+            text-shadow: 0 0 8px rgba(0, 0, 255, 0.4);
+        }
+
+        .cr-section-margin {
+            margin-left: 2rem;
+            width: calc(100% - 2rem);
+        }
+
+        .definition-block {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-left: 2px solid rgba(191, 232, 255, 0.15);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.015), 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem 3rem;
+            margin: 2.5rem 1.2rem;
+            width: 85%;
+            max-width: 800px;
+            text-align: left;
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .definition-block::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(191, 232, 255, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .definition-block:hover {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border-color: rgba(255, 255, 255, 0.15);
+            border-left-color: rgba(191, 232, 255, 0.4);
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.025), 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- PRIMARY DISPERSAL LEVELS GRAPHIC --- */
+        .levels-graphic-box {
+            background: rgba(15, 15, 20, 0.35);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 2.5rem 1.5rem;
+            width: 92%;
+            max-width: 750px;
+            margin: 1vh auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.02);
+        }
+
+        .level-entry {
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .level-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .level-head {
+            font-family: 'CaslonAntique', serif;
+            font-size: 1.8rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            color: #D3D4EC;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-shadow: 0 0 10px rgba(191, 232, 255, 0.4);
+        }
+
+        .ascii-arrow {
+            opacity: 0.5;
+            font-size: 1.6rem;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.6);
+        }
+
+        .level-body {
+            margin-top: 0.5rem;
+            font-size: 1.8rem;
+            letter-spacing: 0.1rem;
+            opacity: 0.7;
+            line-height: 1.5;
+            margin: 0;
+            padding-left: 1.5rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .def-header {
+            font-family: 'CaslonAntique', serif;
+            font-size: 2rem;
+            letter-spacing: 0.15rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .def-meta {
+            font-family: 'CaslonAntique', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            opacity: 0.7;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            display: block;
+            letter-spacing: 0.05rem;
+        }
+
+        .def-body {
+            font-size: 1.8rem;
+            line-height: 1.6;
+            opacity: 0.95;
+            color: #fff;
+        }
+
+        .def-body span {
+            font-weight: normal;
+        }
+
+        /* --- DIRECTIONS ACCORDION --- */
+        .dir-accordion {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .dir-item {
+            font-size: 2.25rem;
+            text-align: left;
+            margin-left: 0;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+        }
+
+        .dir-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(35, 35, 40, 0.9), rgba(15, 15, 20, 0.9));
+            padding: 0.8rem 2rem;
+            width: fit-content;
+            min-width: 250px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .dir-item:hover .dir-header {
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(45, 45, 50, 0.9), rgba(25, 25, 30, 0.9));
+        }
+
+        @keyframes subtleHuePulse {
+
+            0%,
+            100% {
+                filter: hue-rotate(0deg) saturate(0.7) brightness(1);
+                text-shadow: 0 0 4px rgba(236, 218, 255, 0.2), 0 0 10px rgba(236, 218, 255, 0.1);
+                opacity: 0.85;
+            }
+
+            50% {
+                filter: hue-rotate(180deg) saturate(0.9) brightness(1.2);
+                text-shadow: 0 0 8px rgba(236, 218, 255, 0.4), 0 0 15px rgba(236, 218, 255, 0.2);
+                opacity: 1;
+            }
+        }
+
+        .collritex-glow {
+            animation: subtleHuePulse 8s ease-in-out infinite;
+        }
+
+        .dir-arrow {
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .dir-expanded .dir-arrow {
+            transform: rotate(90deg);
+        }
+
+        .dir-content {
+            display: none;
+            font-size: 2rem;
+            margin-left: 2.3rem;
+            margin-right: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 2rem;
+            color: #e0e0e0;
+            line-height: 1.4;
+            font-family: 'CaslonAntique', serif;
+            text-align: left;
+            padding-left: 0;
+        }
+
+        @keyframes fadeInDir {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dir-expanded .dir-content {
+            display: block;
+            animation: fadeInDir 0.4s ease;
+        }
+
+        /* --- EXAMPLE SCROLLABLE WINDOW --- */
+        .ex-direccon {
+            background: transparent;
+            width: calc(100% - 2rem);
+            max-width: none;
+            max-height: 800px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 5% 0;
+            border-radius: 10px;
+            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.03);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .ex-direccon::-webkit-scrollbar {
+            display: none;
+        }
+
+        .ex-page {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .ex-page-1 {
+            display: flex;
+        }
+
+        .arrow {
+            background: transparent;
+            border: none;
+            font-family: inherit;
+            font-size: 2.5rem;
+            padding: 0.5rem 2rem;
+            cursor: pointer;
+            color: white;
+            transition: opacity 0.2s;
+        }
+
+        .arrow:hover {
+            opacity: 1;
+        }
+
+		@keyframes slowHueRotate {
+			0% { filter: hue-rotate(0deg) saturate(0.8) brightness(1.1); }
+			100% { filter: hue-rotate(360deg) saturate(0.8) brightness(1.1); }
+		}
+
+		.total-hue-rotate {
+			animation: slowHueRotate 40s linear infinite;
+			box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+		}
+
+		@keyframes slowHueGlowBehind {
+			0% { box-shadow: 0 0 25px hsla(0, 80%, 75%, 0.25); }
+			25% { box-shadow: 0 0 25px hsla(90, 80%, 75%, 0.25); }
+			50% { box-shadow: 0 0 25px hsla(180, 80%, 75%, 0.25); }
+			75% { box-shadow: 0 0 25px hsla(270, 80%, 75%, 0.25); }
+			100% { box-shadow: 0 0 25px hsla(360, 80%, 75%, 0.25); }
+		}
+
+		.hue-glow-behind {
+			animation: slowHueGlowBehind 40s linear infinite;
+			transition: box-shadow 0.3s ease;
+		}
+
+		.hue-glow-behind:hover {
+		    box-shadow: 0 0 35px hsla(var(--current-hue, 0), 80%, 75%, 0.4);
+		}
+
+		@keyframes flickerFlash {
+			0%, 100% { opacity: 0.4; filter: brightness(1); }
+			5%, 7% { opacity: 0.9; filter: brightness(1.8); }
+			6% { opacity: 0.6; filter: brightness(1.2); }
+			15%, 17% { opacity: 0.9; filter: brightness(1.5); }
+			16% { opacity: 0.5; filter: brightness(1.1); }
+		}
+
+		.flicker-orn {
+			animation: flickerFlash 4s steps(1) infinite;
+		}
+
+		/* Modal Zoom Styles */
+		#photo-modal {
+			display: none;
+			position: fixed;
+			z-index: 10000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.97);
+			align-items: center;
+			justify-content: center;
+			pointer-events: auto;
+		}
+
+		#photo-modal-content {
+			max-width: 95%;
+			max-height: 90%;
+			border-radius: 8px;
+			box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+			cursor: crosshair;
+		}
+
+
+		#photo-modal-close {
+			position: absolute;
+			top: 3vh;
+			right: 5vw;
+			color: #fff;
+			font-size: 5rem;
+			cursor: pointer;
+			z-index: 10002;
+		}
+
+		.professional-container {
+			border: 2px solid rgba(191, 232, 255, 0.15);
+			border-radius: 15px;
+			background: rgba(191, 232, 255, 0.04);
+			padding: 3rem 2.5rem;
+			width: 74%;
+			max-width: 900px;
+			margin: 2rem auto;
+			box-shadow: inset 0 0 20px rgba(191, 232, 255, 0.03), 0 10px 40px rgba(0, 0, 0, 0.2);
+		}
+    </style>
+
+    <div class="ttl-wrapper fade-in">
+
+        <div class="flx"
+            style="position: relative; flex-direction: row; align-items: center; justify-content: center; gap: 1rem;">
+
+            <video autoplay muted loop playsinline
+                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3; z-index: -1; height: 6.7vh; width: auto; pointer-events: none;">
+                <source src="https://captainscurses.org/webm/index%20candle%20compound.mp4" type="video/mp4">
+            </video>
+
+            <div class="rainbow-wrap fade-in" style="position: relative; height: 9vh; width: 6vh; margin: 0 1rem;">
+                <video id="rb-l1" class="rainbow-vid" autoplay muted playsinline
+                    style="position: absolute; bottom: 0; left: 50%; height: 100%; width: auto; mix-blend-mode: screen; transition: opacity 4.5s ease-in-out, transform 4.5s ease-in; transform: translate(-50%, 0);">
+                    <source src="https://captainscurses.org/webm/rainbow.webm" type="video/webm">
+                </video>
+                <video id="rb-l2" class="rainbow-vid" muted playsinline
+                    style="position: absolute; bottom: 0; left: 50%; height: 100%; width: auto; mix-blend-mode: screen; transition: opacity 4.5s ease-in-out, transform 4.5s ease-in; opacity: 0; transform: translate(-50%, 0);">
+                    <source src="https://captainscurses.org/webm/rainbow.webm" type="video/webm">
+                </video>
+            </div>
+
+            <p class="ttl ethereal-glow-txt" style="opacity:0.8; letter-spacing:0.2rem; margin: 0; z-index: 1;">
+                About
+                the <span class="oyo-time ethereal-glow-txt">O.Y.O</span></p>
+
+            <div class="rainbow-wrap fade-in"
+                style="position: relative; height: 9vh; width: 6vh; margin: 0 1rem; transform: scaleX(-1);">
+                <video id="rb-r1" class="rainbow-vid" autoplay muted playsinline
+                    style="position: absolute; bottom: 0; left: 50%; height: 100%; width: auto; mix-blend-mode: screen; transition: opacity 4.5s ease-in-out, transform 4.5s ease-in; transform: translate(-50%, 0);">
+                    <source src="https://captainscurses.org/webm/rainbow.webm" type="video/webm">
+                </video>
+                <video id="rb-r2" class="rainbow-vid" muted playsinline
+                    style="position: absolute; bottom: 0; left: 50%; height: 100%; width: auto; mix-blend-mode: screen; transition: opacity 4.5s ease-in-out, transform 4.5s ease-in; opacity: 0; transform: translate(-50%, 0);">
+                    <source src="https://captainscurses.org/webm/rainbow.webm" type="video/webm">
+                </video>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="flx fade-in" style="height:auto; min-height: 2vh; margin-bottom: 1rem;">
+        <img src="https://captainscurses.org/Images/moon%20sep.png" class="subtle-glow-pulse-white"
+            style="height:auto; width:20%; min-width:200px; max-width:300px; opacity:0.9; margin-bottom:1.5rem">
+    </div>
+
+    <p class="sub-text fade-in ethereal-glow-txt">
+        The <span class="oyo ethereal-glow-txt">Ordo Yule Orphic</span>
+        (<span class="oyo-time ethereal-glow-txt">O.Y.O</span>) is an <span class="subm">Anonymous</span><span
+            class="gifts ethereal-glow-txt">
+            Gift-Giving
+            Society.</span>
+        <br><br>
+
+        We hide
+        <span class="gifts">Treasures</span> in the spaces between.<br>
+        <br>
+
+        There is no membership of <span class="oyo-time ethereal-glow-txt">O.Y.O</span> &mdash;<br>
+        only <span class="part ethereal-glow-txt">Participation</span>.<br>
+<br>
+<span class="oyo-time">O.Y.O</span> represents a natural expansion of <span class="rgc">Geocaching</span> to encompass a broader range of experiences beyond simple discovery. 
+    </p>
+
+    <div class="flx fade-in seps" style="height:0.3vh; margin: 3rem 0;">
+        <img src="https://captainscurses.org/Images/3dotsep.png" class="subtle-glow-pulse-white"
+            style="height:100%; width:auto; opacity:0.65; min-height:20px">
+    </div>
+
+        <div class="flx fade-in professional-container">
+            <div style="display:flex; align-content: center; align-items: center; justify-content: center; margin-bottom: 3.5rem;">
+                <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="flicker-orn" style="height:1.2vh; width:auto; margin-right:2rem; filter: saturate(0.5) brightness(1.2);">
+                <p style="font-size:4rem; font-style: italic; text-align: left; letter-spacing: 0.3rem;" class="gd-glow">TL;DR</p>
+                <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="flicker-orn" style="height:1.2vh; width:auto; margin-left: 2rem; filter: saturate(0.5) brightness(1.2);">
+            </div>
+            
+            <p class="tldr gd-glow" style="margin-bottom:0; text-align: center; width: 100%; opacity: 0.9;">The O.Y.O is a system for creating, propagating and
+                documenting novel public ritual forms in the wider world. <br>
+                <br>
+                O.Y.O participants share blueprints for these rituals in the form of stories in which strangers are the
+                characters. <br>
+                <br>
+                The O.Y.O systemizes a universal human behavior (leaving something behind/arranging a place in the world
+                to invite meaningful action) in an attempt to unlock its full potential.
+            </p>
+  
+
+            <div class="flx"
+                style="filter:brightness(1.3) contrast(1.15); width:100%; height:22vh; margin:3.5rem 0 0 0;">
+                <img src="https://captainscurses.org/Images/thebox.jpg" class="zoomable-img total-hue-rotate" style="height:100%; width:auto; border-radius: 8px;">
+            </div>
+            <div class="flx fade-in seps" style="height:1.2vh; margin: 4rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img flipx"
+                    style="height:100%; width:auto; opacity:0.5; min-height:24px">
+            </div>
+            <p style="font-size:2rem; width:80%">
+
+            <div style="display:flex; align-content: center; justify-content: center; align-items:center">
+                <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height:1vh; width:auto; margin-right: 2rem"><span
+                    style="font-size:4rem">Little Free Library</span><img src="https://captainscurses.org/Images/dispersals/dot%20orn.png"
+                    style="height:1vh; width:auto; margin-left: 2rem">
+            </div>
+            </p>
+            <p style="font-size:2rem; width:80%; margin-top:4rem">
+
+
+                "A container is left on a public road where it may be easily found. Take a book from this library and
+                then leave your own, or otherwise take/deposit books without an exchange."<br>
+                <br>
+                -Pre-O.Y.O, unwritten/emergent<br>
+                <br>
+
+            </p>
+
+            <div class="flx" style=" width:100%; height:21vh; margin:3.5rem 0;">
+                <img src="https://captainscurses.org/Images/library.jpg" class="zoomable-img hue-glow-behind" style="height:100%; width:auto; border-radius: 8px;">
+            </div>
+
+            <div class="flx fade-in seps" style="height:1.2vh; margin: 4rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+                    style="height:100%; width:auto; opacity:0.5; min-height:24px">
+            </div>
+
+            <div style="display:flex; align-content: center; justify-content: center; align-items:center">
+                <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height:1vh; width:auto; margin-right: 2rem"><span
+                    style="font-size:4rem">Pet Tree</span><img src="https://captainscurses.org/Images/dispersals/dot%20orn.png"
+                    style="height:1vh; width:auto; margin-left: 2rem">
+            </div>
+            <p style="font-size:2rem; width:80%; margin-top:4rem">
+                "Somewhere quiet and concealed, there is a small, dead tree. Nearby this tree, there is a journal
+                stashed within a glass container.<br>
+                <br>
+                Approach this tree as the sun sets and affix a name tag from an animal
+                companion you have lost. Inside the hidden journal, write a fond memory of this companion.
+                <br>
+                <br>
+                The sound of the wind is recorded."<br>
+                <br>
+                -O.Y.O (<span class="tc">T.C</span>)
+            </p>
+
+            <div class="flx"
+                style="filter:brightness(1.1) contrast(1.15); width:100%; height:18vh; margin:3.5rem 0 0 0;">
+                <img src="https://captainscurses.org/Images/thetree.jpg" class="zoomable-img hue-glow-behind" style="height:100%; width:auto; border-radius: 8px;">
+            </div>
+
+            <div class="flx fade-in seps" style="height:1vh; margin:5rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" lclass="ethereal-glow-img flipx"
+                    style="height:100%; width:auto; opacity:0.8; min-height:24px">
+            </div>
+
+            <p class="tldr gd-glow">
+
+                These are purposefully simple examples; there is no upper limit to the complexity of these rituals
+                or the number of people who may participate in them. <br>
+                <br>
+
+
+                When multiple participants are involved, they often act independently on unique sets of directions. The
+                only limits exist in your imagination.
+            </p>
+            <div class="flx fade-in seps" style="height:1vh; margin:4rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img flipx"
+                    style="height:100%; width:auto; opacity:0.4; min-height:24px">
+            </div>
+            <p class="tldr gd-glow">
+                The O.Y.O website functions as an archival structure for documenting these rituals and hosting the
+                artistic works that emerge from them.<br>
+                <br>
+
+               
+
+                Anyone may <a href="submissions.html" style="text-decoration: underline">submit</a> their own
+                ritual conceptions at any time, and one ritual may have any number of variants and
+                iterations.<br>
+                <br>
+                We invite you to look out into the world and give yourself freely to dreaming.
+            </p>
+
+            <p class="tldr gd-glow" style="margin-top:2rem; width:80%">
+                Even if you have no interest in this, you probably know somebody who might, especially if they are a
+                <span class="oyo">Musician</span>.
+            </p>
+
+
+    <div class="flx" style="filter:brightness(0.8) contrast(1.15); width:100%; height:20vh; margin:3.5rem 0;">
+        <img src="https://captainscurses.org/Images/oldguitar.jpg" class="zoomable-img hue-glow-behind" style="height:100%; width:auto; border-radius: 8px;">
+    </div>
+          </div>
+    <div class="flx fade-in seps" style="height:0.3vh; margin: 1rem 0;">
+        <img src="https://captainscurses.org/Images/3dotsep.png" class="subtle-glow-pulse-white"
+            style="height:100%; width:auto; opacity:0.65; min-height:20px">
+    </div>
+
+    <p class="sub-text fade-in ethereal-glow-txt">
+        Within the <span class="oyo-time">O.Y.O</span>, these blueprints for novel <span class="rgc">Ritual</span> forms
+        embedded within the <span class="wrld">Wider World</span> are known as <span class="coll-rit">Collective
+            Rituals</span>.<br>
+        <br>
+        <a href="CR_list.html" style="color: #F1EAFF; text-decoration: underline">List of Collective Rituals</a>
+        <br>
+        <br>
+
+        The <span class="env">Environments</span> where <span class="coll-rit">Collective Rituals</span> take form are
+        known as <span class="disp">Dispersals</span>.
+    </p>
+
+    <div class="flx fade-in seps" style="height:1.2vh; margin: 1rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+            style="height:100%; width:auto; opacity:0.5; min-height:24px">
+    </div>
+
+    <div class="flx gd-glow" style="width:100%; height:27vh; margin:3rem 0;">
+
+        <img src="https://captainscurses.org/Images/collritanddisp.png" class="gd-glow zoomable-img slow-hue-glow" style="height:100%; width:auto; border-radius: 8px;">
+
+    </div>
+
+    <div class="flx fade-in seps" style="height:1.2vh; margin: 1rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img flipx"
+            style="height:100%; width:auto; opacity:0.5; min-height:24px">
+    </div>
+    <!-- DEFINITIONS PAGINATOR -->
+    <div id="def-paginator" class="fade-in"
+        style="width:100%; display:flex; flex-direction:column; align-items:center;">
+        <a id="disp-definition" style="position:absolute; margin-top:-10vh; pointer-events:none;"></a>
+
+        <!-- Definition Page 1: Collective Ritual -->
+        <div class="def-page" id="def-page-1"
+            style="display:flex; flex-direction:column; align-items:center; width:100%;">
+            <div class="definition-block gd-glow-box fade-in">
+                <span class="def-header gd-glow ethereal-glow-txt" style="font-style:italic">Collective
+                    Ritual</span>
+                <span class="def-meta">(noun)</span>
+                <div class="def-body">
+                    1. An archetypal narrative structure which describes a prepared <span class="env">Enviornment</span>
+                    and sequence of <span class="rgc">Ritual</span> encounters to be enacted by <span
+                        class="oyo-time">O.Y.O</span> <span class="part">Participants</span>. Physical spaces in this
+                    narrative are described in general terms, allowing the <span class="rgc">Ritual</span> to manifest
+                    across many disparate locations. A song of events.<br>
+                    <br>
+                    2. A text detailing the <span class="rgc">Ritual</span> encounters which may be enacted at a <span
+                        class="disp">Dispersal</span> of <span class="oyo-time">O.Y.O</span> and the <span
+                        class="env">Environment</span> in which this <span class="disp">Dispersal</span> manifests
+                    itself. The soul of a <span class="disp">Dispersal</span>.
+                </div>
+            </div>
+        </div>
+
+        <!-- Definition Page 2: Dispersal -->
+        <div class="def-page" id="def-page-2"
+            style="display:none; flex-direction:column; align-items:center; width:100%;">
+            <div class="definition-block gd-glow-box fade-in">
+                <span class="def-header gd-glow ethereal-glow-txt" style="font-style: italic">Dispersal</span>
+                <span class="def-meta">(noun)</span>
+                <div class="def-body">
+                    1. A single physical <span class="env">Environment</span>, or array of <span
+                        class="env">Environments</span>, prepared by <span class="wrld ethereal-glow-txt">O.Y.O</span>
+                    <span class="part">Participants</span> to facilitate
+                    the enactmant of a <span class="coll-rit">Collective Ritual</span>.<br><br>
+                    2. A physical location, or a series of interrelated physical locations, designated for the
+                    discovery, documentation, or
+                    continuation
+                    of an <span class="wrld ethereal-glow-txt">O.Y.O</span> <span
+                        class="cr-header-glow ethereal-glow-txt coll-rit">Collective Ritual</span>, often involving
+                    hidden
+                    <span class="gifts ethereal-glow-txt">Gifts</span> and <span class="coll-rit">Ceremonial
+                        Games</span>
+                    which propagate over time.
+                </div>
+            </div>
+        </div>
+
+        <!-- Paginator -->
+        <div class="flx oner"
+            style="flex-direction:row; gap:1.5rem; margin-top:0.5rem; height:5vh; align-items:center; justify-content:center; margin-bottom:2rem">
+            <img src="https://captainscurses.org/Images/subar.png" onclick="prevDefPage()" class="arrow leftar flipx"
+                style="opacity:0.6; cursor:pointer; padding:0; width:5rem; height:auto;">
+            <span id="def-counter" class="sub-text"
+                style="font-size:1.88rem; color:#ffcccc; font-family:'CaslonAntique', serif;">1/2</span>
+            <img src="https://captainscurses.org/Images/subar.png" onclick="nextDefPage()" class="arrow rightar"
+                style="opacity:0.6; cursor:pointer; padding:0; width:5rem; height:auto;">
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var defCurrentPage = 1;
+            var defTotalPages = 2;
+
+            window.nextDefPage = function () {
+                defCurrentPage = (defCurrentPage % defTotalPages) + 1;
+                updateDefPages();
+            };
+
+            window.prevDefPage = function () {
+                defCurrentPage = ((defCurrentPage - 2 + defTotalPages) % defTotalPages) + 1;
+                updateDefPages();
+            };
+
+            function updateDefPages() {
+                for (var i = 1; i <= defTotalPages; i++) {
+                    var page = document.getElementById('def-page-' + i);
+                    if (page) {
+                        page.style.display = (i === defCurrentPage) ? 'flex' : 'none';
+                    }
+                }
+                document.getElementById('def-counter').textContent = defCurrentPage + '/' + defTotalPages;
+            }
+        })();
+
+        // Auto-navigate to dispersal definition if URL hash requests it
+        (function() {
+            if (window.location.hash === '#disp-definition') {
+                // Wait for DOM then jump to page 2
+                var waitForDef = setInterval(function() {
+                    var p2 = document.getElementById('def-page-2');
+                    var p1 = document.getElementById('def-page-1');
+                    var counter = document.getElementById('def-counter');
+                    if (p2 && p1 && counter) {
+                        clearInterval(waitForDef);
+                        p1.style.display = 'none';
+                        p2.style.display = 'flex';
+                        counter.textContent = '2/2';
+                        setTimeout(function() {
+                            document.getElementById('disp-definition').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 300);
+                    }
+                }, 50);
+            }
+        })();
+    </script>
+
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-bottom:0">
+        The pregenator to the <span class="oyo-time">O.Y.O</span> <span class="disp">Dispersal</span> is the <span
+            class="rgc">Public Ritual</span>.<br><br>
+
+        You have most likely interacted with many <span class="rgc">Public Ritual</span> forms which are similar to
+        <span class="oyo-time">O.Y.O</span> <span class="coll-rit">Collective Rituals</span> over the course of your
+        life. <br>
+        <br>
+        If you know what to look for, you will begin to see them everywhere. Familiar examples include...
+    </p>
+    <p class="sub-text fade-in" style="margin:3rem; font-size:2.2rem; opacity:0.7">
+        wishing wells, little free libraries, roadside memorials, commemorative benches, hotel
+        ledgers/guestbooks, Geocaches, love locks, note walls, sticker clusters, grafitti, community boards,
+        neighborhood gardens, tip jars, religious shrines, free
+        boxes, sites of pilgrimage, ARGs, public instruments, chalk left on the sidewalk, community art swaps, painted
+        rocks, the blarney stone, seed exchanges, smoothed statues ...<br><br>
+        …and countless others.
+    </p>
+
+    <div class="fade-in"
+        style="width: 86%; max-width: 680px; margin: 2rem auto 3rem auto; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+            <iframe src="https://www.youtube.com/embed/nRJLq8vZQxk?si=V4tXQlc2o-y5u5YI" title="O.Y.O" frameborder="0"
+                allow="accelerometer; autoplay;" allowfullscreen
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;">
+            </iframe>
+        </div>
+    </div>
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-bottom:0">
+        <span class="rgc">Public Rituals</span> such as these typically arise spontaneously. They often operate off of
+        unwritten rules, and these rules are almost <br>
+        always very simple.<br>
+        <br>
+        This simplicity is borne of necessity. If the purpose of a <span class="rgc">Public Ritual</span> is too
+        obscure, it vanishes and dies. If nobody knew what a wishing well was, we would only see fountains.<br>
+        <br>
+        This makes it difficult for novel <span class="rgc">Public Ritual</span> forms to establish themselves.
+    </p>
+    <div class="flx fade-in seps" style="height:2.5vh; margin: 4rem 0; transform: translateY(-1)">
+        <img src="https://captainscurses.org/Images/lettersep.png" style="height:100%; width:auto; opacity:0.8; min-height:40px">
+    </div>
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-top:0; margin-bottom:0">
+        Our solution to this problem is the <span class="coll-rit">Collective Ritual</span>. Each one is a reproducable
+        <span class="rgc">Ritual</span> schematic which may be interprited, manifested and re-imagined in an infinite
+        variety of
+        ways.<br>
+        <br>
+
+
+        The <span class="oyo-time">O.Y.O</span> harnesses the power of the <span class="rgc">Public Ritual</span> by
+        giving it structure.
+        We are an engine for the conception and propegation of<br>
+        unique <span class="rgc">Ritual</span> forms.<br>
+        <br>
+
+    </p>
+    <div class="flx fade-in seps" style="height:1vh; margin: 3rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img flipx"
+            style="height:100%; width:auto; opacity:0.4; min-height:28px">
+    </div>
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-top:0; margin-bottom:0">
+        <span class="coll-rit">Collective Rituals</span> such as the Pet Tree example are interpreted by <span
+            class="part">Participants</span> and manifested in the <span class="wrld
+">Wider World</span> as <span class="disp">Dispersals</span>.<br>
+        <br>
+        Afterward, their locations are marked on our <a href="dispersals_mobi.html"
+            style="text-decoration: underline">Map</a>. Seeking out these <span class="disp">Dispersals</span> can
+        create an experience similar to a kind of <span class="rgc">Ritual Geocaching</span>.
+    </p>
+    <div style="display:flex; align-content: center; justify-content: center; align-items: center">
+        <div style="height:1vh; width:auto; margin-right:3rem;">
+            <img src="https://captainscurses.org/Images/dot%20orn.png" class="gd-glow" style="height:100%; width:auto; opacity: 0.5;">
+        </div>
+        <div class="flx" style="filter:brightness(0.8) contrast(1.3); width:100%; height:40vh; margin:3.5rem 0 0 0;">
+            <img src="https://captainscurses.org/Images/earth.jpg" class="zoomable-img hue-glow-behind" style="height:100%; width:auto; border-radius: 8px;">
+        </div>
+        <div style="height:1vh; width:auto; margin-left:3rem;">
+            <img src="https://captainscurses.org/Images/dot%20orn.png" class="gd-glow" style="height:100%; width:auto; opacity: 0.5; transform: scaleX(-1);">
+        </div>
+    </div>
+    <p class="sub-text" style="margin-top:3rem; margin-bottom:0; opacity:0.6; font-size:1.8rem">
+        "Bury coins here."<br>
+<br>
+(<span class="coll-rit">Collective Ritual</span>: Coin Burial<br>
+<span class="disp">Dispersal</span>: Solar Treasures)
+    </p>
+
+    <div class="flx fade-in seps" style="height:1vh; margin: 3rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+            style="height:100%; width:auto; opacity:0.4; min-height:28px">
+    </div>
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-top:0; margin-bottom:0">
+        Each <span class="disp">Dispersal</span> has its own set of Directions interwoven with the <span
+            class="coll-rit">Collective Ritual</span> that it is based upon.
+        These Directions are specific to the <span class="env">Environment(s)</span> the <span
+            class="disp">Dispersal</span> manifests itself within and the intentions of the <span
+            class="part">Participant</span> manifesting it. <br>
+        <br>
+
+        These Directions are displayed with quotations of the <span class="coll-rit">Collective Ritual</span> text on
+        each
+        <span class="disp">Dispersal's</span> ledger page.
+    </p>
+    <div class="flx fade-in"
+        style="height:auto; margin-top:8rem; margin-bottom:4rem; gap: 3rem; width:100%; margin-bottom:0">
+        <div style="height:2vh;"><img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img"
+                style="height:100%; width:auto; opacity:0.9"></div>
+        <div
+            style="display:flex; align-content: center; justify-content: center; align-items:center; margin-top:1rem; margin-bottom:2rem">
+            <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height:1vh; width:auto; margin-right: 2rem">
+            <span style="font-size:4rem" class="ethereal-glow-txt">Pet Tree #1</span>
+            <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height:1vh; width:auto; margin-left: 2rem">
+        </div>
+    </div>
+
+    <div class="flx" style="width:100%;">
+        <div class="ex-direccon ethereal-glow-txt">
+            <div id="ex-con" class="flx" style="width:100%;">
+
+                <!-- Page 1 -->
+                <div class="ex-page ex-page-1 fade-in">
+                    <div class="flx direcbox"
+                        style="align-items: center; text-align: left; padding: 1.5rem 0; width: 100%;">
+                        <p class="sub-text collritex collritex-glow" style="margin-top:0">"Somewhere quiet and
+                            concealed, there is a small, dead tree.<br>
+                            <br>
+                            Nearby this tree, there is a journal stashed within a glass container."
+                        </p>
+
+                        <div class="dir-accordion">
+                            <div class="dir-item ethereal-glow-txt" onclick="this.classList.toggle('dir-expanded')">
+                                <div class="dir-header">
+                                    <span class="dir-arrow">▶</span>
+                                    <span>Directions 1</span>
+                                </div>
+                                <div class="dir-content">
+                                    <ol style="font-size:2rem; width:70%; margin-top:0;">
+                                        <li>This tree is located at 40°32'00.3"N 122°21'24.7"W</li>
+                                        <li>This journal may be found to the left of the tree, hidden within this
+                                            bush.
+                                        </li>
+                                        
+                                    </ol>
+                                    <div class="flx" style="height:15vh; width:100%">
+	<img src="https://captainscurses.org/Images/thebush.jpg" class="zoomable-img hue-glow-behind" style="margin:2rem 0;height:100%; width:auto; border-radius: 8px;">
+</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="sub-text collritex collritex-glow" style="margin-top: 3rem;">
+                            "Approach the tree as the sun sets and affix a name tag from an animal
+                            companion you have lost.<br>
+                            <br>
+                            Inside the journal, a fond memory of your companion is recorded."
+                        </p>
+
+                        <div class="dir-accordion">
+                            <div class="dir-item ethereal-glow-txt" onclick="this.classList.toggle('dir-expanded')">
+                                <div class="dir-header">
+                                    <span class="dir-arrow">▶</span>
+                                    <span>Directions 2</span>
+                                </div>
+                                <div class="dir-content">
+                                    <ol style="font-size:2rem; width:70%; margin-top:0;">
+                                        <li>When you arrive, before anything, place a small coin at the base of this
+                                            tree.</li>
+                                        <li>
+                                            Record both a fond memory and an unpleasant memory
+                                        </li>
+                                        <li>
+                                            Draw a small picture of your companion as you saw them.
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="height:2vh; margin:6rem 0; opacity:0.7"><img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+            style="height:100%; width:auto; opacity:0.9; "></div>
+
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-top:0; margin-bottom:0">
+        A <span class="disp">Dispersal's</span> Directions may contain absolutely anything (within reason) so long as
+        the narrative pulses of the
+        <span class="coll-rit">Collective Ritual</span> may still be felt. They are often widly divergent. <br>
+        <br>
+        The <span class="coll-rit">Collective Ritual</span> may be thought of as a dream and the <span
+            class="disp">Dispersal</span> is this dream spilling over into reality. The <span
+            class="disp">Dispersal</span> is the earth, the <span class="coll-rit">Collective Ritual</span> is the
+        heavens.
+
+    </p>
+
+   <div class="flx"
+                style="filter:brightness(1) contrast(1.1); width:100%; height:22vh; margin:3.5rem 0 0 0;">
+                <img src="https://captainscurses.org/Images/heavens.jpg" class="zoomable-img hue-glow-behind" style="height:100%; width:auto; border-radius: 8px;">
+            </div>
+   
+    <div class="flx fade-in seps" style="height:1.3vh; margin: 5rem 0; opacity:0.5">
+        <img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img"
+            style="height:100%; width:auto; opacity:0.45; min-height:30px">
+    </div>
+    <p class="sub-text fade-in ethereal-glow-txt" style="margin-top:0; margin-bottom:0">
+        Within our framework, there are 4 Levels of <span class="coll-rit">Collective Ritual</span>/<span
+            class="disp">Dispersal</span>. <br>
+        <br>
+        The examples above are analogous to Level 1 <span class="coll-rit">Collective Rituals</span>.
+    </p>
+    <div class="flx fade-in seps" style="height:1vh; margin: 5rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+            style="height:100%; width:auto; opacity:0.4; min-height:28px">
+    </div>
+    <div class="levels-graphic-box fade-in" style="margin-top:0">
+        <div class="level-entry">
+            <span class="level-head">Level 1 <span class="ascii-arrow">→</span></span>
+            <p class="level-body">1 Participant per enactment, simple Directions, one location.<br>
+                <br>
+                "Toss a coin into this well and make a wish."
+            </p>
+        </div>
+        <div class="level-entry">
+            <span class="level-head">Level 2 <span class="ascii-arrow">→</span></span>
+            <p class="level-body">1 Participant per enactment, complex Directions, one or more locations.<br>
+                <br>
+                "Toss a coin into this well, take a rock near the well home with you and paint it. When you return
+                with the rock, toss in a more valuable coin. Make a wish for a friend."
+            </p>
+        </div>
+        <div class="level-entry">
+            <span class="level-head">Level 3 <span class="ascii-arrow">→</span></span>
+            <p class="level-body">2+ Participants per enactment, one or more locations. All Participants share a common
+                physical space during enactment.<br>
+                <br>
+                "2 Participants approach the same wishing well on opposite sides. They each toss in a coin and make
+                contradictory wishes. Results are recorded in a journal hidden nearby."
+            </p>
+        </div>
+        <div class="level-entry">
+            <span class="level-head">Level 4 <span class="ascii-arrow">→</span></span>
+            <p class="level-body">2+ Participants per enactment, one or more locations. Participants/groups of
+                Participants
+                are distributed across great distances during enactment.<br>
+                <br>
+                "2 participants find 2 wishing wells 100 miles apart (+/- 1 mile). They toss a coin and cast the same
+                wish at the same time.
+            </p>
+        </div>
+
+
+    </div>
+    <div class="flx fade-in seps" style="height:1vh; margin: 5rem 0;">
+        <img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img "
+            style="height:100%; width:auto; opacity:0.4; min-height:28px">
+    </div>
+    <p class="sub-text">Now, these <span class="disp">Dispersals</span> wouldn't be much fun if nobody could find
+        them, would they? <br>
+        <br>
+        There are 2 main methods of<br>
+ propagating <span class="disp">Dispersals</span>...
+    </p>
+    <div class="flx fade-in seps" style="height:1vh; margin: 5rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img flipx"
+            style="height:100%; width:auto; opacity:0.4; min-height:28px">
+    </div>
+    <p id="secdisp-header" class="ethereal-glow-txt"
+        style="font-size: 2.2rem; letter-spacing: 0.4rem; margin-bottom: 1.5vh; font-family: 'CaslonAntique', serif; display: flex; align-items: center; justify-content: center; gap: 1.5rem;">
+        <span style="font-size: 1.2rem;">• •</span> Secondary Dispersals <span style="font-size: 1.2rem;">• •</span>
+    </p>
+
+    <p class="sub-text fade-in ethereal-glow-txt">
+        A <span class="second ethereal-glow-txt">Secondary Dispersal</span> is a transcription of a (Primary) <span
+            class="disp">Dispersal's</span> Directions and its <span class="coll-rit">Collective Ritual</span> hidden in
+        the <span class="wrld ethereal-glow-txt">Wider World</span>. <br>
+<br>
+It may also contain links to our website or
+        photographs/illustrations of the <span class="disp">Dispersal</span>. This is a <span class="disp">Dispersal's</span> main
+        vector of propagation.
+    </p>
+    <div class="flx fade-in" style="height: 45vh; width: 100%; margin: 3rem 0; gap: 2rem; align-items: center; justify-content: center;">
+        <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="lv1-orn-a" style="height: 0.8vh; width: auto; opacity: 0.6;">
+        <img src="https://captainscurses.org/Images/dispersals/SDisp1/front.jpg" class="zoomable-img hue-glow-behind" style="height: 100%; width: auto; border-radius: 8px; box-shadow: 0 0 20px rgba(191, 232, 255, 0.2);">
+        <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" class="lv1-orn-b" style="height: 0.8vh; width: auto; opacity: 0.6; transform: scaleX(-1);">
+    </div>
+    <p class="sub-text fade-in ethereal-glow-txt">
+        The pairing of the Secondary/Primary <span class="disp">Dispersal</span> represents a complete system of
+        creation and propagation. This system functions entirely independently of our website.<br>
+<br>
+There may be multiple Primary <span class="disp">Dispersals</span> portrayed on a single <span class="second">Secondary Dispersal.</span>
+    </p>
+
+    <div class="flow-diagram-box fade-in" style="margin-bottom:0; margin-top:0">
+        <span class="flow-node-label ethereal-glow-txt">Secondary Dispersals</span>
+
+        <div class="flow-connector">
+            <div class="flow-line"></div>
+
+            <div style="display: flex; align-items: center; position: relative;">
+                <div class="dot-crop">
+                    <video class="dot-video" autoplay muted loop playsinline>
+                        <source src="https://captainscurses.org/webm/dot.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <span class="ethereal-glow-txt"
+                    style="position: absolute; left: 100%; margin-left: 2rem; font-size: 1.2rem; opacity: 0.5; font-style: italic; white-space: nowrap;">
+                    Lead you to
+                </span>
+            </div>
+
+            <div class="flow-line"></div>
+        </div>
+
+        <span class="flow-node-label ethereal-glow-txt" style="opacity: 1; letter-spacing: 0.4rem;">Primary
+            Dispersals</span>
+
+
+
+    </div>
+
+    <div class="flx fade-in seps" style="height:1vh; margin: 5rem 0;">
+        <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+            style="height:100%; width:auto; opacity:0.4; min-height:28px">
+    </div>
+    <div id="visitation-info" class="flx fade-in" style="margin-top:1rem; width: 100%; align-items: center;">
+        <p id="visitation-header" class="ethereal-glow-txt"
+            style="font-size: 2.2rem; letter-spacing: 0.4rem; margin-bottom: 1.5vh; font-family: 'CaslonAntique', serif; display: flex; align-items: center; justify-content: center; gap: 1.5rem;">
+            <span style="font-size: 1.2rem;">• •</span> Visitations <span style="font-size: 1.2rem;">• •</span>
+        </p>
+
+        <p class="sub-text fade-in ethereal-glow-txt">
+            <span class="ethereal-glow-txt">Visitations</span> are ephemeral marks pointing toward anything related to
+            <span class="oyo-time ethereal-glow-txt">O.Y.O</span>. They can be:<br><br>
+            <span style="font-size:1.9rem; opacity:0.7">A symbol on a wall&hellip;<br>
+                A short message written in chalk&hellip;<br>
+                Coordinates on parchment&hellip;<br>
+                Our URL tucked into a book&hellip;<br>
+                A painted stone left under a bridge&hellip;</span><br><br>
+            Or anything else that you could possibly think of.<br><br>
+            You need only provide a single photograph and a title to <a href="submissions.html"
+                class="gifts ethereal-glow-txt" style="text-decoration:none;">Submit</a> a <span
+                class="ethereal-glow-txt">Visitation</span>, but you are encouraged to <a href="submissions.html"
+                class="gifts ethereal-glow-txt" style="text-decoration:none;">Submit</a> an audio file as well. <br>
+            <br>
+            You could easily create a <span class="ethereal-glow-txt">Visitation</span> right now!
+        </p>
+
+        <div class="flx fade-in seps" style="height:1vh; margin: 5rem 0;">
+            <img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img "
+                style="height:100%; width:auto; opacity:0.4; min-height:28px">
+        </div>
+        <p class="sub-text fade-in ethereal-glow-txt" style="margin-bottom:0">
+            <span class="oyo-time ethereal-glow-txt">O.Y.O</span> comprises a complete framework and archival
+            architecture for
+            creating art that develops a life of its own as a narrative microcosm.<br><br>
+            Essentially, <span class="oyo-time ethereal-glow-txt">O.Y.O</span> may be viewed as a vast body of
+            collaborative
+            artistic <span class="works-red ethereal-glow-txt">Works</span>, all inexorably linked by shared
+            physical
+            spaces.
+            As <span class="oyo-time ethereal-glow-txt">O.Y.O</span> processes mature, a natural history develops which
+            shrouds
+            these places in ambiance and intention. <br>
+<br>
+This power concentrates itself and manifests in our <span class="works-red ethereal-glow-txt">Works</span> as layers of hidden complexity and richness.<br>
+<br>
+			Every <span class="part">Participant</span> of <span class="oyo-time">O.Y.O</span> is an intimate collaborator. We refer to this communal creative 
+method as <span
+                class="fold-time ethereal-glow-txt"><span style="animation-delay: 0s">F</span><span
+                    style="animation-delay: 0.1s">o</span><span style="animation-delay: 0.2s">l</span><span
+                    style="animation-delay: 0.3s">d</span><span style="animation-delay: 0.4s">i</span><span
+                    style="animation-delay: 0.5s">n</span><span style="animation-delay: 0.6s">g</span>&nbsp;<span
+                    style="animation-delay: 0.7s">T</span><span style="animation-delay: 0.8s">i</span><span
+                    style="animation-delay: 0.9s">m</span><span style="animation-delay: 1.0s">e</span></span>. <br>
+            <br>
+        </p>
+
+        <div class="flx fade-in seps" style="height:1.4vh; margin: 1rem 0;">
+            <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img"
+                style="height:100%; width:auto; opacity:0.8; min-height:28px">
+        </div>
+        <p class="sub-text fade-in ethereal-glow-txt">
+            <span class="part ethereal-glow-txt">Participation</span> in <span
+                class="wrld ethereal-glow-txt">O.Y.O</span>
+            means contributing to an emergent scripture and watching your contributions expand themselves.<br><br>
+            When you are in <span class="oyo-time ethereal-glow-txt">O.Y.O Time</span>, you are focused on a concrete
+            and
+            readily attainable goal. Nothing has the ability to reach you. No matter what happens, your actions have a
+            greater purpose within the trajectory of <span class="wrld ethereal-glow-txt"> O.Y.O</span>. <br>
+            <br>
+            We are both a mission and a destination, a reason to explore and a framework of construction.<br>
+<br>
+The <span class="oyo-time">O.Y.O</span> was born 3/3/2026, 3:33 on the edge of Castle Lake, CA. Its <span class="init">Initiation</span> was signalled at the peak of the <span class="oyo-time ethereal-glow-txt">Blood Moon Eclipse</span>.
+		</p>
+
+   <div class="flx"
+                style="filter:brightness(1.2) contrast(1.1); width:100%; height:22vh; margin:0 0 0 0;">
+                <img src="https://captainscurses.org/Images/themoon.jpg" class="zoomable-img hue-glow-behind" style="height:100%; width:auto; border-radius: 8px;">
+            </div>
+            
+           <p class="sub-text fade-in ethereal-glow-txt">
+Currently, we are still in our infancy.
+        </p>
+
+        <div class="flx fade-in seps" style="height:1.3vh; margin: 1rem 0;">
+            <img src="https://captainscurses.org/Images/moon%20sep.png" class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.9;">
+        </div>
+
+        <style>
+            @keyframes osc30s {
+
+                0%,
+                100% {
+                    filter: brightness(0.65);
+                    opacity: 0.7;
+                }
+
+                50% {
+                    filter: brightness(1.3);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes subtleHB {
+
+                0%,
+                100% {
+                    filter: brightness(1);
+                    transform: scale(1);
+                }
+
+                12% {
+                    filter: brightness(1.2);
+                    transform: scale(1.02);
+                }
+
+                24% {
+                    filter: brightness(1);
+                    transform: scale(1);
+                }
+
+                36% {
+                    filter: brightness(1.2);
+                    transform: scale(1.02);
+                }
+
+                48%,
+                100% {
+                    filter: brightness(1);
+                    transform: scale(1);
+                }
+            }
+
+            .osc-30s-wrap {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                margin-top: 2rem;
+            }
+
+            .hb-pulse {
+                animation: subtleHB 8s ease-in-out infinite;
+                margin-top: 0 !important;
+            }
+        </style>
+        <div class="osc-30s-wrap">
+            <p class="ttl ethereal-glow-txt salary-oyo hb-pulse"
+                style="font-size: 3.5rem; letter-spacing: 0.2rem; text-align: center; letter-spacing:1rem">
+                Create &hearts; O.Y.O
+            </p>
+
+            <style>
+                .salary-oyo-subtle {
+                    color: hsl(0, 100%, 85%);
+                    text-shadow: 0 0 10px rgba(255, 100, 100, 0.4);
+                }
+                @keyframes subtleHBSubtle {
+                    0%, 100% { filter: brightness(1); transform: scale(1); }
+                    12% { filter: brightness(1.1); transform: scale(1.01); }
+                    24% { filter: brightness(1); transform: scale(1); }
+                    36% { filter: brightness(1.1); transform: scale(1.01); }
+                    48%, 100% { filter: brightness(1); transform: scale(1); }
+                }
+                .hb-pulse-subtle {
+                    animation: subtleHBSubtle 8s ease-in-out infinite;
+                    display: inline-block;
+                }
+                @keyframes rainbowFadeSpecial {
+                    0%, 100% {
+                        color: #ffffff;
+                        text-shadow: 0 0 8px rgba(255,255,255,0.3);
+                    }
+                    50% {
+                        color: hsl(var(--hue), 20%, 80%);
+                        text-shadow: 0 0 15px hsl(var(--hue), 40%, 60%);
+                    }
+                }
+                .rbw-letter {
+                    animation: rainbowFadeSpecial 6s ease-in-out infinite;
+                }
+            </style>
+
+            <p class="sub-text fade-in ethereal-glow-txt" style="margin-top:4rem;">
+                The <span class="wrld ethereal-glow-txt">O.Y.O</span> is hosted and curated by me, a 23 year old Witch named <span class="tc ethereal-glow-txt">T.C.</span><br><br>
+                I live nomadically and spend my days travelling, spreading the <span class="wrld ethereal-glow-txt">O.Y.O</span> everywhere I rest my head. I have dedicated the whole of my life to the creation of the <span class="oyo-time ethereal-glow-txt">Ordo Yule Orphic</span>.
+            </p>
+
+            <div class="flx fade-in seps" style="height:1.4vh; margin: 1rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.9;">
+            </div>
+
+            <p class="sub-text fade-in ethereal-glow-txt" style="margin-bottom:0">
+                The most direct way to help <span class="salary-oyo-subtle hb-pulse-subtle">Create ❣️ O.Y.O</span> is to <a href="submissions.html" class="subm ethereal-glow-txt" style="text-decoration:none">Submit</a> your own <span class="coll-rit ethereal-glow-txt">Collective Rituals</span>, <span class="disp ethereal-glow-txt">Dispersals</span> and <span class="ethereal-glow-txt" style="color:#d4e6ff; text-shadow:0 0 10px #87ceeb;">Visitations</span>.<br>
+<br>
+ These three systems form a closed loop of creation, propagation, and documentation<br>
+of novel <span class="rgc">Ritual</span> forms that anyone may utilize at any time.
+            </p>
+
+            <div class="flx fade-in seps" style="height:1.4vh; margin: 5rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.9;">
+            </div>
+
+            <p class="sub-text fade-in ethereal-glow-txt" style="margin:0">
+                If you would like to help me dedicate as much of myself to the <span class="wrld ethereal-glow-txt">O.Y.O</span> as I am physically able, you may join my Patreon.<br><br>
+                There is a single tier priced at $1.00 per month.
+            </p>
+            <div class="flx fade-in seps" style="height:9vh; margin:5rem 0; flex-direction:row; justify-content:center; gap:2rem;">
+              <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height:1vh; width:auto; opacity:0.7; filter: saturate(0.5) sepia(0.3) hue-rotate(345deg) brightness(1.2);">
+              <video autoplay muted loop playsinline
+                style="height: 100%; width: auto; pointer-events: none;">
+                <source src="https://captainscurses.org/webm/patre.mp4" type="video/mp4">
+            </video>
+              <img src="https://captainscurses.org/Images/dispersals/dot%20orn.png" style="height:1vh; width:auto; opacity:0.7; filter: saturate(0.5) sepia(0.3) hue-rotate(345deg) brightness(1.2);">
+            </div>
+            <div class="flx fade-in seps" style="height:1.4vh; margin: 1rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.9;">
+            </div>
+
+            <p class="sub-text fade-in ethereal-glow-txt">
+                This grants access to a growing personal archive of audio, video, writing, scans, coordinates, scores, unlisted <span class="coll-rit ethereal-glow-txt">Collective Rituals</span>, secret <span class="disp ethereal-glow-txt">Dispersals</span> and more.<br><br>
+                You will also gain access to the <br>
+<span class="tc ethereal-glow-txt">T.C.</span> Submission category.<br>
+<br>
+
+                Through this, you may submit 
+<span class="special-phrase" data-text="Special Collective Rituals"></span> for me to personally interpret as <br>
+<span class="special-phrase" data-text="Special Dispersals"></span>.<br><br>
+                Almost as if you’re controlling <br>
+as a puppet. Weird!
+            </p>
+
+            <div class="flx fade-in seps" style="height:1.4vh; margin: 1rem 0;">
+                <img src="https://captainscurses.org/Images/subsep.png" class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.9;">
+            </div>
+
+            <p class="sub-text fade-in ethereal-glow-txt">
+                By supporting this work, you are creating a real life <span class="osc ethereal-glow-txt" id="osc-text" style="font-weight: bold; cursor: pointer;">Santa Clause</span> whose life is frozen in a perpetual cycle of nomadic gift giving and sacrificial creation.<br><br>
+                If you hear movement through the trees, it might only be the wind. Or it may really be me there, floating through the night, leaving gold for you to discover in the morning.
+            </p>
+
+            <div class="flx fade-in seps" style="height:2.5vh; margin: 2rem 0;">
+                <img src="https://captainscurses.org/Images/lettersep.png" class="ethereal-glow-img" style="height:100%; width:auto; opacity:0.6;">
+            </div>
+
+            <p class="sub-text fade-in ethereal-glow-txt">
+                If your creations are condemned to live forever in obscure un-death, we will provide you with the means of giving them a spectacular death. <br>
+<br>
+<span class="wrld ethereal-glow-txt">O.Y.O</span> is a tool to free your creative process from the neverending cycle of commodification and disposability. If your art is condemned to be garbage, then we will create a space for it to exist as treasure.<br><br>
+                In the same way, <span class="wrld ethereal-glow-txt">O.Y.O</span> frees you physically, giving you a place to go where you have something important to do.<br><br>
+                You were never meant to walk alone.
+            </p>
+
+            <p class="tc flx sub-text fade-in ethereal-glow-txt" style="font-family: 'CaslonAntique', serif; font-size: 2.2rem; text-align: right; margin-top: 1vh; font-style: italic;">
+                -T.C.
+            </p>
+
+            <div class="flx fade-in seps" style="height:9vh; margin:0.2rem 0 3rem 0;">
+               <video autoplay muted loop playsinline
+                style="height: 100%; width: auto; pointer-events: none;" class="total-hue-rotate">
+                <source src="https://captainscurses.org/webm/snow.mp4" type="video/mp4">
+            </video>
+            </div>
+
+           
+            <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                    const phrases = document.querySelectorAll('.special-phrase');
+                    phrases.forEach(el => {
+                        const text = el.getAttribute('data-text');
+                        el.innerHTML = '';
+                        for (let i = 0; i < text.length; i++) {
+                            if (text[i] === ' ') {
+                                el.appendChild(document.createTextNode(' '));
+                            } else {
+                                const span = document.createElement('span');
+                                span.className = 'rbw-letter';
+                                span.textContent = text[i];
+                                span.style.setProperty('--hue', (i * 20));
+                                el.appendChild(span);
+                            }
+                        }
+                    });
+                });
+            </script>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                // LFO Application wrapper
+                const wraps = document.querySelectorAll('.rainbow-wrap');
+                let lfoStart = Date.now() / 1000;
+                function animateLFO() {
+                    let now = Date.now() / 1000;
+                    let elapsed = now - lfoStart;
+                    // 0 to 1 over 16 seconds (8s up, 8s down)
+                    let cycle = (Math.sin(elapsed / 16 * Math.PI * 2 - Math.PI / 2) + 1) / 2;
+                    let noise = (Math.random() * 0.04) + (Math.sin(elapsed * 50) * 0.01);
+                    let mod = (cycle * 0.2) + noise;
+
+                    let opac = 1.0 - mod;
+                    let bright = 1.0 + mod;
+
+                    wraps.forEach(w => {
+                        w.style.opacity = opac;
+                        w.style.filter = `brightness(${bright})`;
+                    });
+                    requestAnimationFrame(animateLFO);
+                }
+                animateLFO();
+
+                // Crossfade logic for rainbow oyo Elements
+                function setupCrossfade(v1Id, v2Id) {
+                    const v1 = document.getElementById(v1Id);
+                    const v2 = document.getElementById(v2Id);
+                    if (!v1 || !v2) return;
+
+                    let activeV = v1;
+                    let nextV = v2;
+                    let isFading = false;
+
+                    function checkCrossfade() {
+                        if (activeV && activeV.duration && !isFading) {
+                            // Assuming the rainbow video loops nicely, we trigger fade at 6.5s in to the playback
+                            if (activeV.currentTime >= 6.5) {
+                                isFading = true;
+
+                                nextV.style.transition = 'none';
+                                nextV.style.transform = 'translate(-50%, 0)';
+                                nextV.currentTime = 0;
+                                nextV.play().then(() => {
+                                    setTimeout(() => {
+                                        activeV.style.transition = 'opacity 4.5s ease-in-out, transform 4.5s ease-in';
+                                        nextV.style.transition = 'opacity 4.5s ease-in-out';
+
+                                        activeV.style.transform = 'translate(-50%, -4vh)';
+                                        activeV.style.opacity = '0';
+                                        nextV.style.opacity = '1';
+
+                                        // Swap refs
+                                        let oldActive = activeV;
+                                        activeV = nextV;
+                                        nextV = oldActive;
+
+                                        setTimeout(() => {
+                                            isFading = false;
+                                        }, 4500);
+                                    }, 50);
+                                }).catch(e => console.log(e));
+                            }
+                        }
+                        requestAnimationFrame(checkCrossfade);
+                    }
+                    requestAnimationFrame(checkCrossfade);
+                }
+
+                setupCrossfade('rb-l1', 'rb-l2');
+                setupCrossfade('rb-r1', 'rb-r2');
+
+                // Custom animation for About Dispersals Header, Lettersep, and Great Dispersal Link
+                const adHeaderIm = document.getElementById("ad-headerim");
+                const letterSepIm = document.getElementById("lettersep");
+                const adDispHeader = document.getElementById("ad-disp-header");
+                const adDispHeader = document.getElementById("ad-disp-header");
+                const levelHeads = document.querySelectorAll(".level-head");
+                const gdLinks = document.querySelectorAll(".gd-glow");
+                const wrldEls = document.querySelectorAll(".wrld");
+
+                if (adHeaderIm || letterSepIm || adDispHeader || levelHeads.length > 0 || gdLinks.length > 0 || wrldEls.length > 0) {
+                    let adStart = Date.now() / 1000;
+                    function animateAdHeader() {
+                        let now = Date.now() / 1000;
+                        let elapsed = now - adStart;
+
+                        // Blood Moon Pulse timing (6s period - 3x slower)
+                        let pulse = (Math.sin(elapsed * Math.PI / 3 - Math.PI / 2) + 1) / 2;
+
+                        let b1 = 5 + pulse * 5;
+                        let o1 = 0.4 + pulse * 0.3;
+                        let b2 = 10 + pulse * 10;
+                        let o2 = 0.2 + pulse * 0.3;
+
+                        let baseSine = Math.sin(elapsed * 0.5);
+                        let noise = (Math.random() * 0.2 - 0.1);
+                        let hueVal = ((baseSine + noise) * 180 + elapsed * 15) % 360;
+
+                        // 15s hue cycle for the specific dispersive header
+                        let slowHueVal = (elapsed * 24) % 360;
+
+                        // 30s hue cycle for the levels box (2x slower)
+                        let verySlowHueVal = (elapsed * 12) % 360;
+
+                        let hsla1 = `hsla(${hueVal.toFixed(1)}, 50%, 85%, ${o1.toFixed(3)})`;
+                        let hsla2 = `hsla(${hueVal.toFixed(1)}, 50%, 85%, ${o2.toFixed(3)})`;
+
+                        let slowHsla1 = `hsla(${slowHueVal.toFixed(1)}, 50%, 85%, ${o1.toFixed(3)})`;
+                        let slowHsla2 = `hsla(${slowHueVal.toFixed(1)}, 50%, 85%, ${o2.toFixed(3)})`;
+
+                        let vsHsla1 = `hsla(${verySlowHueVal.toFixed(1)}, 50%, 85%, ${(o1 * 0.5).toFixed(3)})`;
+                        let vsHsla2 = `hsla(${verySlowHueVal.toFixed(1)}, 50%, 85%, ${(o2 * 0.5).toFixed(3)})`;
+
+                        let ds1 = `drop-shadow(0 0 ${b1.toFixed(1)}px ${hsla1})`;
+                        let ds2 = `drop-shadow(0 0 ${b2.toFixed(1)}px ${hsla2})`;
+                        let ts1 = `0 0 ${b1.toFixed(1)}px ${hsla1}, 0 0 ${b2.toFixed(1)}px ${hsla2}`;
+
+                        let filterStr = `${ds1} ${ds2}`;
+
+                        if (adHeaderIm) adHeaderIm.style.filter = filterStr;
+                        if (letterSepIm) letterSepIm.style.filter = filterStr;
+
+                        if (adDispHeader) {
+                            let sds1 = `drop-shadow(0 0 ${b1.toFixed(1)}px ${slowHsla1})`;
+                            let sds2 = `drop-shadow(0 0 ${b2.toFixed(1)}px ${slowHsla2})`;
+                            adDispHeader.style.filter = `${sds1} ${sds2}`;
+                        }
+
+                        if (levelHeads.length > 0) {
+                            let ts_h = `0 0 ${b1.toFixed(1)}px ${vsHsla1}, 0 0 ${b2.toFixed(1)}px ${vsHsla2}`;
+                            levelHeads.forEach(head => {
+                                head.style.textShadow = ts_h;
+                            });
+                        }
+
+                        gdLinks.forEach(link => {
+                            link.style.textShadow = ts1;
+                        });
+
+                        requestAnimationFrame(animateAdHeader);
+                    }
+                    animateAdHeader();
+                }
+
+                // Chill and Smooth Visitation Header Glow
+                const visHeader = document.getElementById("visitation-header");
+                if (visHeader) {
+                    let visStart = Date.now() / 1000;
+                    function animateVisGlow() {
+                        let now = Date.now() / 1000;
+                        let elapsed = now - visStart;
+
+                        // Very slow phase (10s period)
+                        let slowPulse = (Math.sin(elapsed * Math.PI / 5 - Math.PI / 2) + 1) / 2;
+
+                        // Chill blue/teal range with slow hue drift
+                        let hue = (180 + Math.sin(elapsed * 0.2) * 30) % 360;
+                        let b1 = 8 + slowPulse * 4;
+                        let b2 = 15 + slowPulse * 15;
+
+                        let glow1 = `rgba(135, 206, 235, ${0.3 + slowPulse * 0.2})`; // Sky blue
+                        let glow2 = `hsla(${hue}, 40%, 70%, ${0.1 + slowPulse * 0.2})`;
+
+                        visHeader.style.textShadow = `0 0 ${b1.toFixed(1)}px ${glow1}, 0 0 ${b2.toFixed(1)}px ${glow2}`;
+                        visHeader.style.opacity = 0.7 + slowPulse * 0.25;
+
+                        requestAnimationFrame(animateVisGlow);
+                    }
+                    animateVisGlow();
+                }
+            });
+            // Level Selector Logic
+            window.showLevelInfo = window.showLevelInfo || function (level) {
+                for (let i = 1; i <= 4; i++) {
+                    const info = document.getElementById('level-' + i + '-info');
+                    const btn = document.querySelector('.level-selector-btn[data-level="' + i + '"]');
+                    if (info && btn) {
+                        if (i === level) {
+                            info.style.display = 'flex';
+                            btn.style.opacity = '1';
+                            btn.classList.add('active');
+                        } else {
+                            info.style.display = 'none';
+                            btn.style.opacity = '0.5';
+                            btn.classList.remove('active');
+                        }
+                    }
+                }
+            };
+
+            // Collective Ritual Examples Pagination Logic
+            let currCR = 1;
+            window.updateCRPage = window.updateCRPage || function () {
+                document.querySelectorAll('.cr-example-page').forEach(el => el.style.display = 'none');
+                const activePage = document.querySelector(`.cr-example-page-${currCR}`);
+                if (activePage) activePage.style.display = 'flex';
+                document.getElementById('cr-counter').textContent = `${currCR}/4`;
+            };
+            window.prevCRPage = window.prevCRPage || function () {
+                currCR = currCR === 1 ? 4 : currCR - 1;
+                updateCRPage();
+            };
+            window.nextCRPage = window.nextCRPage || function () {
+                currCR = currCR === 4 ? 1 : currCR + 1;
+                updateCRPage();
+            };
+        </script>
+
+        <script>
+            // --- OSC HEARTBEAT ANIMATION ---
+            (function () {
+                const oscEl = document.getElementById('osc-text');
+                if (!oscEl) return;
+
+                const BASE_CYCLE_MS = 15000;
+                const BEAT_INTERVAL_MS = 1300;
+
+                function animateOSC() {
+                    const now = Date.now();
+                    const baseOpacity = 0.6 + 0.4 * Math.sin((now / BASE_CYCLE_MS) * (Math.PI * 2));
+                    const beatTime = now % BEAT_INTERVAL_MS;
+                    let pulse = 0;
+
+                    if (beatTime < 150) pulse = (beatTime / 150) * 0.2;
+                    else if (beatTime < 300) pulse = 0.2 - ((beatTime - 150) / 150) * 0.2;
+
+                    const secondBeatStart = 350;
+                    if (beatTime >= secondBeatStart && beatTime < secondBeatStart + 150) pulse = ((beatTime - secondBeatStart) / 150) * 0.25;
+                    else if (beatTime >= secondBeatStart + 150 && beatTime < secondBeatStart + 300) pulse = 0.25 - ((beatTime - (secondBeatStart + 150)) / 150) * 0.25;
+
+                    const finalOpacity = Math.min(1.0, baseOpacity + pulse);
+                    oscEl.style.opacity = finalOpacity;
+                    oscEl.style.textShadow = `0 0 ${10 + pulse * 25}px rgba(255, 94, 94, ${0.4 + pulse * 1.5})`;
+                    requestAnimationFrame(animateOSC);
+                }
+                animateOSC();
+            })();
+        </script>
+
+</body>
+
+</html>
